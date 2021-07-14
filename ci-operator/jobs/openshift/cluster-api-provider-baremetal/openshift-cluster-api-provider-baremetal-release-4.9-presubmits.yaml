@@ -4,15 +4,14 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/e2e-metal-ipi
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-api-provider-baremetal-release-4.9-e2e-metal-ipi
+    optional: true
     rerun_command: /test e2e-metal-ipi
     spec:
       containers:
@@ -72,15 +71,14 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/e2e-metal-ipi-ovn-dualstack
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-api-provider-baremetal-release-4.9-e2e-metal-ipi-ovn-dualstack
+    optional: true
     rerun_command: /test e2e-metal-ipi-ovn-dualstack
     spec:
       containers:
@@ -140,11 +138,9 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/e2e-metal-ipi-ovn-ipv6
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -208,15 +204,14 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/e2e-metal-ipi-upgrade
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-api-provider-baremetal-release-4.9-e2e-metal-ipi-upgrade
+    optional: true
     rerun_command: /test e2e-metal-ipi-upgrade
     spec:
       containers:
@@ -276,15 +271,14 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/e2e-metal-ipi-virtualmedia
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-cluster-api-provider-baremetal-release-4.9-e2e-metal-ipi-virtualmedia
+    optional: true
     rerun_command: /test e2e-metal-ipi-virtualmedia
     spec:
       containers:
@@ -344,11 +338,9 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/generate-check
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -392,11 +384,9 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/gofmt
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -440,11 +430,9 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/govet
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -488,11 +476,9 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/images
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
@@ -505,7 +491,6 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
-        - --target=[release:latest]
         command:
         - ci-operator
         image: ci-operator:latest
@@ -537,11 +522,9 @@ presubmits:
     always_run: true
     branches:
     - release-4.9
-    cluster: build02
+    cluster: build01
     context: ci/prow/unit
     decorate: true
-    decoration_config:
-      skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"

@@ -1,0 +1,15 @@
+workflow:
+  as: baremetalds-assisted-operator-ztp
+  steps:
+    pre:
+    - ref: baremetalds-assisted-operator-conf
+    - chain: baremetalds-ipi-pre
+    - ref: baremetalds-assisted-operator-setup
+    - ref: baremetalds-assisted-operator-ztp
+    post:
+    - ref: baremetalds-assisted-operator-gather
+    - chain: baremetalds-ipi-post
+  documentation: |-
+    Using hub-cluster with Assisted Service operator to deploy extra workers as spoke clusters.
+    Installation will be following ZTP flow (Zero Touch Provisioning), meaning no explicit
+    provisioning actions will be made outside of the system.

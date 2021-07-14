@@ -48,9 +48,10 @@ items:
         serviceAccountName: tide
         containers:
         - name: tide
-          image: gcr.io/k8s-prow/tide:v20210318-eec798552c
+          image: gcr.io/k8s-prow/tide:v20210714-ac233fa9c6
           args:
           - --config-path=/etc/config/config.yaml
+          - --supplemental-prow-config-dir=/etc/config
           - --dry-run=false
           - --github-token-path=/etc/github/oauth
           - --job-config-path=/etc/job-config

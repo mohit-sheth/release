@@ -4,31 +4,35 @@ base_images:
     namespace: ocp
     tag: base
   elasticsearch-operator-src:
-    name: "5.1"
+    name: "5.2"
     namespace: logging
     tag: elasticsearch-operator-src
   elasticsearch-proxy:
-    name: "5.1"
+    name: "5.2"
     namespace: logging
     tag: elasticsearch-proxy
+  log-file-metric-exporter:
+    name: "5.2"
+    namespace: logging
+    tag: log-file-metric-exporter
   logging-curator5:
-    name: "5.1"
+    name: "5.2"
     namespace: logging
     tag: logging-curator5
   logging-elasticsearch6:
-    name: "5.1"
+    name: "5.2"
     namespace: logging
     tag: logging-elasticsearch6
   logging-eventrouter:
-    name: "5.1"
+    name: "5.2"
     namespace: logging
     tag: logging-eventrouter
   logging-fluentd:
-    name: "5.1"
+    name: "5.2"
     namespace: logging
     tag: logging-fluentd
   logging-kibana6:
-    name: "5.1"
+    name: "5.2"
     namespace: logging
     tag: logging-kibana6
   oauth-proxy:
@@ -65,30 +69,35 @@ images:
   from: elasticsearch-operator-src
   to: cluster-logging-operator-e2e
 promotion:
-  name: "5.1"
+  name: "5.2"
   namespace: logging
+releases:
+  latest:
+    release:
+      channel: stable
+      version: "4.7"
 resources:
   '*':
     requests:
       cpu: 200m
       memory: 200Mi
-tag_specification:
-  name: "4.7"
-  namespace: ocp
 tests:
+- as: lint
+  commands: make lint
+  container:
+    from: src
 - as: unit
   commands: make test-unit
   container:
     from: src
-- as: e2e-operator
+- as: e2e-gcp
   steps:
-    cluster_profile: aws
-    env:
-      COMPUTE_NODE_TYPE: m5.4xlarge
+    cluster_profile: gcp
     test:
     - as: test
       cli: latest
-      commands: FAKE_HOME_DIR=/tmp/home LOG_DIR=${ARTIFACT_DIR}/logging-logs ARTIFACT_DIR=${ARTIFACT_DIR}/logging-artifacts make test-e2e-olm
+      commands: FAKE_HOME_DIR=/tmp/home LOG_DIR=${ARTIFACT_DIR}/logging-logs ARTIFACT_DIR=${ARTIFACT_DIR}/logging-artifacts
+        make test-e2e-olm
       dependencies:
       - env: IMAGE_CLUSTER_LOGGING_OPERATOR_REGISTRY
         name: pipeline:cluster-logging-operator-registry
@@ -108,20 +117,21 @@ tests:
         name: pipeline:logging-kibana6
       - env: IMAGE_LOGGING_EVENTROUTER
         name: pipeline:logging-eventrouter
+      - env: IMAGE_LOG_FILE_METRIC_EXPORTER
+        name: pipeline:log-file-metric-exporter
       from: pipeline:cluster-logging-operator-e2e
       resources:
         requests:
           cpu: 100m
-    workflow: openshift-e2e-aws-hosted-loki
+    workflow: openshift-e2e-gcp-hosted-loki
 - as: functional
   steps:
-    cluster_profile: aws
-    env:
-      COMPUTE_NODE_TYPE: m5.4xlarge
+    cluster_profile: gcp
     test:
     - as: test
       cli: latest
-      commands: FAKE_HOME_DIR=/tmp/home LOG_DIR=${ARTIFACT_DIR}/logging-logs ARTIFACT_DIR=${ARTIFACT_DIR}/logging-artifacts make test-functional
+      commands: FAKE_HOME_DIR=/tmp/home LOG_DIR=${ARTIFACT_DIR}/logging-logs ARTIFACT_DIR=${ARTIFACT_DIR}/logging-artifacts
+        make test-functional
       dependencies:
       - env: IMAGE_CLUSTER_LOGGING_OPERATOR_REGISTRY
         name: pipeline:cluster-logging-operator-registry
@@ -141,11 +151,13 @@ tests:
         name: pipeline:logging-kibana6
       - env: IMAGE_LOGGING_EVENTROUTER
         name: pipeline:logging-eventrouter
+      - env: IMAGE_LOG_FILE_METRIC_EXPORTER
+        name: pipeline:log-file-metric-exporter
       from: pipeline:cluster-logging-operator-e2e
       resources:
         requests:
           cpu: 100m
-    workflow: openshift-e2e-aws
+    workflow: openshift-e2e-gcp
 zz_generated_metadata:
   branch: master
   org: openshift

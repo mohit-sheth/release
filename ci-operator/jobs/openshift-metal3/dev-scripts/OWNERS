@@ -6,13 +6,13 @@ approvers:
 - celebdor
 - cybertron
 - derekhiggins
-- dhellmann
 - dtantsur
+- flaper87
 - hardys
 - markmc
 - russellb
+- sadasu
 - stbenjam
-- vrutkovs
 - zaneb
 options: {}
 reviewers:
@@ -20,11 +20,11 @@ reviewers:
 - celebdor
 - cybertron
 - derekhiggins
-- dhellmann
 - dtantsur
+- flaper87
 - hardys
 - markmc
 - russellb
+- sadasu
 - stbenjam
-- vrutkovs
 - zaneb

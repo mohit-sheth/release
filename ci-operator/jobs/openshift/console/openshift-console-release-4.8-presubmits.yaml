@@ -97,7 +97,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )backend,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.8
     cluster: build02
@@ -110,6 +110,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-console-release-4.8-ceph-storage-plugin
     rerun_command: /test ceph-storage-plugin
+    run_if_changed: frontend/packages/ceph-storage-plugin
     spec:
       containers:
       - args:
@@ -220,9 +221,9 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
+              name: cluster-secrets-gcp-openshift-gce-devel-ci-2
           - configMap:
-              name: cluster-profile-gcp
+              name: cluster-profile-gcp-openshift-gce-devel-ci-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -299,6 +300,7 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
+        - --target=[release:latest]
         - --target=src
         command:
         - ci-operator
@@ -328,7 +330,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )images,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.8
     cluster: build02
@@ -341,6 +343,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-console-release-4.8-kubevirt-plugin
     rerun_command: /test kubevirt-plugin
+    run_if_changed: frontend/packages/kubevirt-plugin
     spec:
       containers:
       - args:

@@ -7,8 +7,6 @@ presubmits:
     cluster: build02
     context: ci/prow/e2e-agnostic-upgrade
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -64,9 +62,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
-          - configMap:
-              name: cluster-profile-gcp
+              name: cluster-secrets-azure4
       - name: github-credentials-openshift-ci-robot-private-git-cloner
         secret:
           secretName: github-credentials-openshift-ci-robot-private-git-cloner
@@ -84,8 +80,6 @@ presubmits:
     cluster: build02
     context: ci/prow/e2e-aws-console
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -159,8 +153,6 @@ presubmits:
     cluster: build02
     context: ci/prow/e2e-aws-operator
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -234,8 +226,6 @@ presubmits:
     cluster: build02
     context: ci/prow/e2e-aws-single-node
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -309,8 +299,6 @@ presubmits:
     cluster: build02
     context: ci/prow/e2e-gcp
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -386,8 +374,6 @@ presubmits:
     cluster: build02
     context: ci/prow/images
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -443,8 +429,6 @@ presubmits:
     cluster: build02
     context: ci/prow/unit
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -500,8 +484,6 @@ presubmits:
     cluster: build02
     context: ci/prow/verify
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"

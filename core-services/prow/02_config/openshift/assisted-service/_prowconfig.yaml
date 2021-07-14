@@ -1,0 +1,48 @@
+branch-protection:
+  orgs:
+    openshift:
+      repos:
+        assisted-service:
+          branches:
+            master:
+              protect: true
+              required_status_checks:
+                contexts:
+                - ci.ext.devshift.net PR build
+                - continuous-integration/jenkins/pr-merge
+          protect: false
+tide:
+  merge_method:
+    openshift/assisted-service: squash
+  queries:
+  - includedBranches:
+    - ocm-2.3
+    labels:
+    - approved
+    - bugzilla/valid-bug
+    - lgtm
+    missingLabels:
+    - backports/unvalidated-commits
+    - bugzilla/invalid-bug
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - downstream-change-needed
+    - needs-rebase
+    repos:
+    - openshift/assisted-service
+  - excludedBranches:
+    - ocm-2.3
+    labels:
+    - approved
+    - lgtm
+    missingLabels:
+    - backports/unvalidated-commits
+    - bugzilla/invalid-bug
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - downstream-change-needed
+    - needs-rebase
+    repos:
+    - openshift/assisted-service

@@ -3,8 +3,6 @@ periodics:
   cluster: build02
   cron: 0 0 * * *
   decorate: true
-  decoration_config:
-    skip_cloning: true
   extra_refs:
   - base_ref: master
     org: openshift
@@ -70,8 +68,6 @@ periodics:
   cluster: build02
   cron: 0 0 * * *
   decorate: true
-  decoration_config:
-    skip_cloning: true
   extra_refs:
   - base_ref: master
     org: openshift
@@ -79,7 +75,7 @@ periodics:
   labels:
     ci-operator.openshift.io/prowgen-controlled: "true"
     pj-rehearse.openshift.io/can-be-rehearsed: "true"
-  name: periodic-ci-openshift-insights-operator-master-insights-operator-tests-periodic
+  name: periodic-ci-openshift-insights-operator-master-insights-operator-test-time-periodic
   spec:
     containers:
     - args:
@@ -87,8 +83,8 @@ periodics:
       - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
       - --lease-server-credentials-file=/etc/boskos/credentials
       - --report-credentials-file=/etc/report/credentials
-      - --secret-dir=/usr/local/insights-operator-tests-periodic-cluster-profile
-      - --target=insights-operator-tests-periodic
+      - --secret-dir=/usr/local/insights-operator-test-time-periodic-cluster-profile
+      - --target=insights-operator-test-time-periodic
       command:
       - ci-operator
       image: ci-operator:latest
@@ -101,7 +97,7 @@ periodics:
       - mountPath: /etc/boskos
         name: boskos
         readOnly: true
-      - mountPath: /usr/local/insights-operator-tests-periodic-cluster-profile
+      - mountPath: /usr/local/insights-operator-test-time-periodic-cluster-profile
         name: cluster-profile
       - mountPath: /secrets/gcs
         name: gcs-credentials

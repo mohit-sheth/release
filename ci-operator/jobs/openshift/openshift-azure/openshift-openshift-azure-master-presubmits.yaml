@@ -1,28 +1,10 @@
 presubmits:
   openshift/openshift-azure:
   - agent: kubernetes
-    always_run: true
-    branches:
-    - master
-    cluster: build02
-    context: codecov
-    decorate: true
-    name: pull-ci-azure-master-codecov
-    rerun_command: /test codecov
-    skip_report: true
-    spec:
-      containers:
-      - args:
-        - hack/tests/codecov.sh
-        image: registry.ci.openshift.org/azure/ci-base:latest
-        name: ""
-        resources: {}
-    trigger: (?m)^/test( | .* )codecov,?($|\s.*)
-  - agent: kubernetes
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-applysecurityupdates
     decorate: true
     name: pull-ci-azure-master-e2e-applysecurityupdates
@@ -51,7 +33,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: conformance
     decorate: true
     name: pull-ci-azure-master-e2e-azure-conformance
@@ -86,7 +68,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-carotation
     decorate: true
     name: pull-ci-azure-master-e2e-carotation
@@ -113,7 +95,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-changeloglevel
     decorate: true
     name: pull-ci-azure-master-e2e-changeloglevel
@@ -142,7 +124,7 @@ presubmits:
     always_run: true
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-create-20190430
     decorate: true
     name: pull-ci-azure-master-e2e-create-20190430
@@ -171,7 +153,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-create-20190930
     decorate: true
     name: pull-ci-azure-master-e2e-create-20190930
@@ -200,7 +182,7 @@ presubmits:
     always_run: true
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-create-20191027-private
     decorate: true
     name: pull-ci-azure-master-e2e-create-20191027-private
@@ -231,7 +213,7 @@ presubmits:
     always_run: true
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-create-20191027-public
     decorate: true
     name: pull-ci-azure-master-e2e-create-20191027-public
@@ -260,7 +242,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-etcdbackuprecovery
     decorate: true
     name: pull-ci-azure-master-e2e-etcdbackuprecovery
@@ -287,7 +269,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-forceupdate
     decorate: true
     name: pull-ci-azure-master-e2e-forceupdate
@@ -314,7 +296,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-keyrotation
     decorate: true
     name: pull-ci-azure-master-e2e-keyrotation
@@ -341,7 +323,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-reimagevm
     decorate: true
     name: pull-ci-azure-master-e2e-reimagevm
@@ -368,7 +350,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: e2e-scaleupdown
     decorate: true
     name: pull-ci-azure-master-e2e-scaleupdown
@@ -395,7 +377,7 @@ presubmits:
     always_run: true
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: unit
     decorate: true
     name: pull-ci-azure-master-unit
@@ -413,127 +395,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
-    context: upgrade-private-v15.0
-    decorate: true
-    name: pull-ci-azure-master-upgrade-private-v15.0
-    rerun_command: /test upgrade-private-v15.0
-    spec:
-      containers:
-      - args:
-        - hack/tests/e2e-upgrade.sh
-        - v15.0
-        env:
-        - name: API_VERSION
-          value: 2019-10-27-preview
-        - name: PRIVATE_API_SERVER
-          value: "true"
-        image: registry.ci.openshift.org/azure/ci-base:latest
-        name: ""
-        resources: {}
-        volumeMounts:
-        - mountPath: /secrets
-          name: secrets
-      volumes:
-      - name: secrets
-        secret:
-          secretName: cluster-secrets-azure
-    trigger: (?m)^/test( | .* )upgrade-private-v15.0,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - master
-    cluster: build02
-    context: upgrade-private-v16.1
-    decorate: true
-    name: pull-ci-azure-master-upgrade-private-v16.1
-    rerun_command: /test upgrade-private-v16.1
-    spec:
-      containers:
-      - args:
-        - hack/tests/e2e-upgrade.sh
-        - v16.1
-        env:
-        - name: API_VERSION
-          value: 2019-10-27-preview
-        - name: PRIVATE_API_SERVER
-          value: "true"
-        image: registry.ci.openshift.org/azure/ci-base:latest
-        name: ""
-        resources: {}
-        volumeMounts:
-        - mountPath: /secrets
-          name: secrets
-      volumes:
-      - name: secrets
-        secret:
-          secretName: cluster-secrets-azure
-    trigger: (?m)^/test( | .* )upgrade-private-v16.1,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - master
-    cluster: build02
-    context: upgrade-private-v17.0
-    decorate: true
-    name: pull-ci-azure-master-upgrade-private-v17.0
-    rerun_command: /test upgrade-private-v17.0
-    spec:
-      containers:
-      - args:
-        - hack/tests/e2e-upgrade.sh
-        - v17.0
-        env:
-        - name: API_VERSION
-          value: 2019-10-27-preview
-        - name: PRIVATE_API_SERVER
-          value: "true"
-        image: registry.ci.openshift.org/azure/ci-base:latest
-        name: ""
-        resources: {}
-        volumeMounts:
-        - mountPath: /secrets
-          name: secrets
-      volumes:
-      - name: secrets
-        secret:
-          secretName: cluster-secrets-azure
-    trigger: (?m)^/test( | .* )upgrade-private-v17.0,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - master
-    cluster: build02
-    context: upgrade-private-v19.0
-    decorate: true
-    name: pull-ci-azure-master-upgrade-private-v19.0
-    rerun_command: /test upgrade-private-v19.0
-    spec:
-      containers:
-      - args:
-        - hack/tests/e2e-upgrade.sh
-        - v19.0
-        env:
-        - name: API_VERSION
-          value: 2019-10-27-preview
-        - name: PRIVATE_API_SERVER
-          value: "true"
-        image: registry.ci.openshift.org/azure/ci-base:latest
-        name: ""
-        resources: {}
-        volumeMounts:
-        - mountPath: /secrets
-          name: secrets
-      volumes:
-      - name: secrets
-        secret:
-          secretName: cluster-secrets-azure
-    trigger: (?m)^/test( | .* )upgrade-private-v19.0,?($|\s.*)
-  - agent: kubernetes
-    always_run: false
-    branches:
-    - master
-    cluster: build02
+    cluster: build01
     context: upgrade-private-v20.0
     decorate: true
     name: pull-ci-azure-master-upgrade-private-v20.0
@@ -563,7 +425,7 @@ presubmits:
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: upgrade-private-v21.0
     decorate: true
     name: pull-ci-azure-master-upgrade-private-v21.0
@@ -590,19 +452,24 @@ presubmits:
           secretName: cluster-secrets-azure
     trigger: (?m)^/test( | .* )upgrade-private-v21.0,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - master
-    cluster: build02
-    context: upgrade-v15.0
+    cluster: build01
+    context: upgrade-private-v22.0
     decorate: true
-    name: pull-ci-azure-master-upgrade-v15.0
-    rerun_command: /test upgrade-v15.0
+    name: pull-ci-azure-master-upgrade-private-v22.0
+    rerun_command: /test upgrade-private-v22.0
     spec:
       containers:
       - args:
         - hack/tests/e2e-upgrade.sh
-        - v15.0
+        - v22.0
+        env:
+        - name: API_VERSION
+          value: 2019-10-27-preview
+        - name: PRIVATE_API_SERVER
+          value: "true"
         image: registry.ci.openshift.org/azure/ci-base:latest
         name: ""
         resources: {}
@@ -613,87 +480,12 @@ presubmits:
       - name: secrets
         secret:
           secretName: cluster-secrets-azure
-    trigger: (?m)^/test( | .* )upgrade-v15.0,?($|\s.*)
+    trigger: (?m)^/test( | .* )upgrade-private-v22.0,?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
     - master
-    cluster: build02
-    context: upgrade-v16.1
-    decorate: true
-    name: pull-ci-azure-master-upgrade-v16.1
-    rerun_command: /test upgrade-v16.1
-    spec:
-      containers:
-      - args:
-        - hack/tests/e2e-upgrade.sh
-        - v16.1
-        image: registry.ci.openshift.org/azure/ci-base:latest
-        name: ""
-        resources: {}
-        volumeMounts:
-        - mountPath: /secrets
-          name: secrets
-      volumes:
-      - name: secrets
-        secret:
-          secretName: cluster-secrets-azure
-    trigger: (?m)^/test( | .* )upgrade-v16.1,?($|\s.*)
-  - agent: kubernetes
-    always_run: true
-    branches:
-    - master
-    cluster: build02
-    context: upgrade-v17.0
-    decorate: true
-    name: pull-ci-azure-master-upgrade-v17.0
-    rerun_command: /test upgrade-v17.0
-    spec:
-      containers:
-      - args:
-        - hack/tests/e2e-upgrade.sh
-        - v17.0
-        image: registry.ci.openshift.org/azure/ci-base:latest
-        name: ""
-        resources: {}
-        volumeMounts:
-        - mountPath: /secrets
-          name: secrets
-      volumes:
-      - name: secrets
-        secret:
-          secretName: cluster-secrets-azure
-    trigger: (?m)^/test( | .* )upgrade-v17.0,?($|\s.*)
-  - agent: kubernetes
-    always_run: true
-    branches:
-    - master
-    cluster: build02
-    context: upgrade-v19.0
-    decorate: true
-    name: pull-ci-azure-master-upgrade-v19.0
-    rerun_command: /test upgrade-v19.0
-    spec:
-      containers:
-      - args:
-        - hack/tests/e2e-upgrade.sh
-        - v19.0
-        image: registry.ci.openshift.org/azure/ci-base:latest
-        name: ""
-        resources: {}
-        volumeMounts:
-        - mountPath: /secrets
-          name: secrets
-      volumes:
-      - name: secrets
-        secret:
-          secretName: cluster-secrets-azure
-    trigger: (?m)^/test( | .* )upgrade-v19.0,?($|\s.*)
-  - agent: kubernetes
-    always_run: true
-    branches:
-    - master
-    cluster: build02
+    cluster: build01
     context: upgrade-v20.0
     decorate: true
     name: pull-ci-azure-master-upgrade-v20.0
@@ -718,7 +510,7 @@ presubmits:
     always_run: true
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: upgrade-v21.0
     decorate: true
     name: pull-ci-azure-master-upgrade-v21.0
@@ -740,10 +532,35 @@ presubmits:
           secretName: cluster-secrets-azure
     trigger: (?m)^/test( | .* )upgrade-v21.0,?($|\s.*)
   - agent: kubernetes
+    always_run: true
+    branches:
+    - master
+    cluster: build01
+    context: upgrade-v22.0
+    decorate: true
+    name: pull-ci-azure-master-upgrade-v22.0
+    rerun_command: /test upgrade-v22.0
+    spec:
+      containers:
+      - args:
+        - hack/tests/e2e-upgrade.sh
+        - v22.0
+        image: registry.ci.openshift.org/azure/ci-base:latest
+        name: ""
+        resources: {}
+        volumeMounts:
+        - mountPath: /secrets
+          name: secrets
+      volumes:
+      - name: secrets
+        secret:
+          secretName: cluster-secrets-azure
+    trigger: (?m)^/test( | .* )upgrade-v22.0,?($|\s.*)
+  - agent: kubernetes
     always_run: false
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: vmimage
     decorate: true
     name: pull-ci-azure-master-vmimage
@@ -768,7 +585,7 @@ presubmits:
     always_run: true
     branches:
     - master
-    cluster: build02
+    cluster: build01
     context: ci/prow/images
     decorate: true
     decoration_config:
@@ -816,9 +633,9 @@ presubmits:
     always_run: true
     branches:
     - master
-    cluster: build02
+    cluster: build01
     decorate: true
-    name: verify
+    name: pull-ci-openshift-openshift-azure-master-verify
     rerun_command: /test verify
     spec:
       containers:

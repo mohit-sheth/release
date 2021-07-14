@@ -11,7 +11,6 @@ build_root:
     tag: golang-1.13
 canonical_go_repository: github.com/openshift/openshift-tests-private
 promotion:
-  disabled: true
   name: 4.8-priv
   namespace: ocp-private
 releases:
@@ -47,7 +46,8 @@ tests:
     test:
     - as: critical-test
       cli: latest
-      commands: ./bin/extended-platform-tests run all --dry-run|grep -iv "VMonly"|grep -E "OLM.*Critical"|./bin/extended-platform-tests run -f -
+      commands: ./bin/extended-platform-tests run all --dry-run|grep -iv "VMonly"|grep
+        -E "OLM.*Critical"|./bin/extended-platform-tests run -f -
       from: bin
       resources:
         requests:
@@ -56,20 +56,6 @@ tests:
     - as: pr-test
       cli: latest
       commands: make pr-test
-      from: bin
-      resources:
-        requests:
-          cpu: "2"
-          memory: 4Gi
-    workflow: ipi-aws
-- as: sanity
-  cron: 0 */8 * * *
-  steps:
-    cluster_profile: aws
-    test:
-    - as: periodic-e2e-test
-      cli: latest
-      commands: make nightly-test
       from: bin
       resources:
         requests:

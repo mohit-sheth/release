@@ -1,453 +1,3 @@
-approve:
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: false
-  lgtm_acts_as_approve: true
-  repos:
-  - openshift/ci-docs
-  - openshift/ci-ns-ttl-controller
-  - openshift/ci-search
-  - openshift/ci-tools
-  - openshift/release
-  - openshift/release-controller
-  - openshift/sippy
-  - redhat-operator-ecosystem/release
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: false
-  lgtm_acts_as_approve: true
-  repos:
-  - openshift/enterprise-images
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - openshift-priv/cluster-api
-  - openshift-priv/cluster-api-actuator-pkg
-  - openshift-priv/cluster-api-provider-aws
-  - openshift-priv/cluster-api-provider-azure
-  - openshift-priv/cluster-api-provider-gcp
-  - openshift-priv/cluster-api-provider-kubemark
-  - openshift-priv/cluster-api-provider-libvirt
-  - openshift-priv/cluster-api-provider-openstack
-  - openshift-priv/cluster-autoscaler-operator
-  - openshift-priv/cluster-machine-approver
-  - openshift-priv/kubernetes-autoscaler
-  - openshift-priv/machine-api-operator
-  - openshift/cluster-api
-  - openshift/cluster-api-actuator-pkg
-  - openshift/cluster-api-provider-aws
-  - openshift/cluster-api-provider-azure
-  - openshift/cluster-api-provider-gcp
-  - openshift/cluster-api-provider-kubemark
-  - openshift/cluster-api-provider-libvirt
-  - openshift/cluster-api-provider-openstack
-  - openshift/cluster-autoscaler-operator
-  - openshift/cluster-machine-approver
-  - openshift/kubernetes-autoscaler
-  - openshift/machine-api-operator
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  lgtm_acts_as_approve: true
-  repos:
-  - openshift
-  - openshift-priv
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - tnozicka/openshift-acme
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/operator-lifecycle-manager
-  - openshift-priv/operator-registry
-  - operator-framework/operator-lifecycle-manager
-  - operator-framework/operator-registry
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - openshift/odo
-  - openshift/odo-init-image
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift/enhancements
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - redhat-developer/devconsole-api
-  - redhat-developer/devconsole-operator
-  - redhat-developer/git-service
-  - redhat-developer/service-binding-operator
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - redhat-developer/gitops-backend
-  - redhat-developer/gitops-operator
-  - redhat-developer/kam
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - shipwright-io/build
-  - shipwright-io/cli
-  - shipwright-io/operator
-  - shipwright-io/website
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: false
-  repos:
-  - codeready-toolchain/api
-  - codeready-toolchain/host-operator
-  - codeready-toolchain/member-operator
-  - codeready-toolchain/registration-service
-  - codeready-toolchain/toolchain-common
-  - codeready-toolchain/toolchain-e2e
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: false
-  repos:
-  - integr8ly/ansible-tower-configuration
-  - integr8ly/application-monitoring-operator
-  - integr8ly/cloud-resource-operator
-  - integr8ly/delorean
-  - integr8ly/grafana-operator
-  - integr8ly/heimdall
-  - integr8ly/installation
-  - integr8ly/integreatly-operator
-  - integr8ly/rhmi-utils
-  - integr8ly/workload-web-app
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  lgtm_acts_as_approve: true
-  repos:
-  - openshift-knative
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  lgtm_acts_as_approve: true
-  repos:
-  - coreos/coreos-assembler
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  lgtm_acts_as_approve: true
-  repos:
-  - coreos/bootupd
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  lgtm_acts_as_approve: true
-  repos:
-  - ostreedev/ostree
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/file-integrity-operator
-  - openshift/file-integrity-operator
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - openshift-kni/baremetal-deploy
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - openshift-metal3/dev-scripts
-  - openshift-priv/dev-scripts
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: false
-  repos:
-  - openshift-priv/installer
-  - openshift/installer
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift/hypershift-toolkit
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-psap/ci-artifacts
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift/ibm-roks-toolkit
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-kni/performance-addon-operators
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-kni/cnf-features-deploy
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-kni/node-label-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-kni/poison-pill
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/cluster-csi-snapshot-controller-operator
-  - openshift/cluster-csi-snapshot-controller-operator
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/openshift-tests
-  - openshift-priv/openshift-tests-private
-  - openshift/openshift-tests
-  - openshift/openshift-tests-private
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - jianzhangbjz/learn-operator
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/csi-driver-nfs
-  - openshift/csi-driver-nfs
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/windows-machine-config-operator
-  - openshift/windows-machine-config-operator
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/csi-driver-manila-operator
-  - openshift/csi-driver-manila-operator
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/aws-pod-identity-webhook
-  - openshift/aws-pod-identity-webhook
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  lgtm_acts_as_approve: true
-  repos:
-  - open-cluster-management
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/bond-cni
-  - openshift/bond-cni
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/kubernetes-nmstate
-  - openshift/kubernetes-nmstate
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/cincinnati-operator
-  - openshift/cincinnati-operator
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - devfile
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - code-ready/crc
-  - openshift-priv/crc
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - code-ready/snc
-  - openshift-priv/egress-router-cni
-  - openshift/egress-router-cni
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/assisted-installer
-  - openshift-priv/assisted-installer-agent
-  - openshift-priv/assisted-service
-  - openshift-priv/assisted-test-infra
-  - openshift/assisted-installer
-  - openshift/assisted-installer-agent
-  - openshift/assisted-service
-  - openshift/assisted-test-infra
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - che-incubator/chectl
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - che-incubator/che-test-harness
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - kata-containers/runtime
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/csi-driver-projected-resource
-  - openshift/csi-driver-projected-resource
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift-priv/redhat-subscription-injection-webhook
-  - openshift/redhat-subscription-injection-webhook
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  lgtm_acts_as_approve: true
-  repos:
-  - openshift-priv/ocs-operator
-  - openshift/ocs-operator
-  require_self_approval: true
-- commandHelpLink: ""
-  repos:
-  - ansible-collections/community.okd
-  - openshift-priv/community.okd
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - operator-framework/operator-lib
-  require_self_approval: true
-- commandHelpLink: https://go.k8s.io/bot-commands
-  ignore_review_state: true
-  repos:
-  - operator-framework/olm-docs
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/cluster-baremetal-operator
-  - openshift/cluster-baremetal-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/openstack-cinder-csi-driver-operator
-  - openshift/openstack-cinder-csi-driver-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - kubevirt/must-gather
-  - openshift-priv/must-gather
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - kubevirt/must-gather
-  - openshift-priv/must-gather
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/osd-metrics-exporter
-  - openshift/osd-metrics-exporter
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift/procfs
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift/okd-machine-os
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/gcp-pd-csi-driver-operator
-  - openshift/gcp-pd-csi-driver-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/gcp-pd-csi-driver
-  - openshift/gcp-pd-csi-driver
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/egress-router-cni
-  - openshift/egress-router-cni
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - app-sre/deployment-validation-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - freeipa/freeipa-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/vsphere-problem-detector
-  - openshift/vsphere-problem-detector
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/special-resource-operator
-  - openshift/special-resource-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/app-netutil
-  - openshift/app-netutil
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/cluster-cloud-controller-manager-operator
-  - openshift/cluster-cloud-controller-manager-operator
-  require_self_approval: true
-- commandHelpLink: ""
-  repos:
-  - openstack-k8s-operators/osp-director-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - 3scale/3scale-operator
-  - openshift-priv/hypershift
-  - openshift/hypershift
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift/rook
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/azure-disk-csi-driver-operator
-  - openshift/azure-disk-csi-driver-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/azure-disk-csi-driver
-  - openshift/azure-disk-csi-driver
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/cloud-network-config-controller
-  - openshift/cloud-network-config-controller
-  require_self_approval: false
-- commandHelpLink: https://go.k8s.io/bot-commands
-  repos:
-  - openshift/operator-framework-olm
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift/oc-compliance
-- commandHelpLink: ""
-  repos:
-  - openshift/ceph-csi
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - eclipse-che/che-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/driver-toolkit
-  - openshift/driver-toolkit
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/vmware-vsphere-csi-driver-operator
-  - openshift/vmware-vsphere-csi-driver-operator
-  require_self_approval: false
-- commandHelpLink: ""
-  repos:
-  - openshift-priv/vmware-vsphere-csi-driver
-  - openshift/vmware-vsphere-csi-driver
-  require_self_approval: false
 blunderbuss:
   max_request_count: 2
   request_count: 2
@@ -463,6 +13,8 @@ bugzilla:
       - status: VERIFIED
       - status: RELEASE_PENDING
       - resolution: ERRATA
+        status: CLOSED
+      - resolution: CURRENTRELEASE
         status: CLOSED
       is_open: true
       state_after_close:
@@ -482,6 +34,25 @@ bugzilla:
       validate_by_default: false
     fcos:
       validate_by_default: false
+    main:
+      add_external_link: true
+      allowed_groups:
+      - redhat
+      - qe_staff
+      exclude_defaults: true
+      is_open: true
+      state_after_close:
+        status: NEW
+      state_after_merge:
+        status: MODIFIED
+      state_after_validation:
+        status: POST
+      target_release: 4.9.0
+      valid_states:
+      - status: NEW
+      - status: ASSIGNED
+      - status: ON_DEV
+      - status: POST
     master:
       add_external_link: true
       allowed_groups:
@@ -495,7 +66,7 @@ bugzilla:
         status: MODIFIED
       state_after_validation:
         status: POST
-      target_release: 4.8.0
+      target_release: 4.9.0
       valid_states:
       - status: NEW
       - status: ASSIGNED
@@ -565,10 +136,29 @@ bugzilla:
     openshift-4.8:
       dependent_bug_states:
       - status: MODIFIED
+      - status: ON_QA
       - status: VERIFIED
       dependent_bug_target_releases:
       - 4.9.0
       target_release: 4.8.0
+      validate_by_default: true
+    openshift-4.9:
+      dependent_bug_states:
+      - status: MODIFIED
+      - status: ON_QA
+      - status: VERIFIED
+      dependent_bug_target_releases:
+      - 4.10.0
+      target_release: 4.9.0
+      validate_by_default: true
+    openshift-4.10:
+      dependent_bug_states:
+      - status: MODIFIED
+      - status: ON_QA
+      - status: VERIFIED
+      dependent_bug_target_releases:
+      - 4.11.0
+      target_release: 4.10.0
       validate_by_default: true
     release-3.11:
       add_external_link: true
@@ -634,170 +224,35 @@ bugzilla:
     release-4.8:
       dependent_bug_states:
       - status: MODIFIED
+      - status: ON_QA
       - status: VERIFIED
       dependent_bug_target_releases:
       - 4.9.0
       target_release: 4.8.0
       validate_by_default: true
-  orgs:
-    openshift:
-      repos:
-        ceph-csi:
-          branches:
-            '*':
-              add_external_link: true
-              allowed_groups:
-              - redhat
-              - qe_staff
-              exclude_defaults: true
-              is_open: true
-              state_after_close:
-                status: NEW
-              state_after_merge:
-                status: MODIFIED
-              state_after_validation:
-                status: POST
-              valid_states:
-              - status: NEW
-              - status: ASSIGNED
-              - status: ON_DEV
-              - status: POST
-            master:
-              exclude_defaults: true
-              target_release: OCS 4.8.0
-            release-4.6:
-              target_release: OCS 4.6.0
-              validate_by_default: true
-            release-4.7:
-              target_release: OCS 4.7.0
-              validate_by_default: true
-            release-4.8:
-              target_release: OCS 4.8.0
-              validate_by_default: false
-        ocs-operator:
-          branches:
-            '*':
-              add_external_link: true
-              allowed_groups:
-              - redhat
-              - qe_staff
-              exclude_defaults: true
-              is_open: true
-              state_after_close:
-                status: NEW
-              state_after_merge:
-                status: MODIFIED
-              state_after_validation:
-                status: POST
-              valid_states:
-              - status: NEW
-              - status: ASSIGNED
-              - status: ON_DEV
-              - status: POST
-            master:
-              exclude_defaults: true
-              target_release: OCS 4.7.0
-            release-4.2:
-              exclude_defaults: true
-              target_release: OCS 4.2.0
-              validate_by_default: true
-            release-4.3:
-              exclude_defaults: true
-              target_release: OCS 4.3.0
-              validate_by_default: true
-            release-4.4:
-              exclude_defaults: true
-              target_release: OCS 4.4.0
-              validate_by_default: true
-            release-4.5:
-              exclude_defaults: true
-              target_release: OCS 4.5.0
-              validate_by_default: true
-            release-4.6:
-              target_release: OCS 4.6.0
-              validate_by_default: true
-            release-4.7:
-              target_release: OCS 4.7.0
-              validate_by_default: true
-        openshift-tests:
-          branches:
-            '*':
-              allowed_groups:
-              - redhat
-              - qe_staff
-              validate_by_default: false
-        openshift-tests-private:
-          branches:
-            '*':
-              allowed_groups:
-              - redhat
-              - qe_staff
-              validate_by_default: false
-    openshift-priv:
-      repos:
-        ocs-operator:
-          branches:
-            '*':
-              add_external_link: true
-              allowed_groups:
-              - redhat
-              - qe_staff
-              exclude_defaults: true
-              is_open: true
-              state_after_close:
-                status: NEW
-              state_after_merge:
-                status: MODIFIED
-              state_after_validation:
-                status: POST
-              valid_states:
-              - status: NEW
-              - status: ASSIGNED
-              - status: ON_DEV
-              - status: POST
-            master:
-              exclude_defaults: true
-              target_release: OCS 4.7.0
-            release-4.2:
-              exclude_defaults: true
-              target_release: OCS 4.2.0
-              validate_by_default: true
-            release-4.3:
-              exclude_defaults: true
-              target_release: OCS 4.3.0
-              validate_by_default: true
-            release-4.4:
-              exclude_defaults: true
-              target_release: OCS 4.4.0
-              validate_by_default: true
-            release-4.5:
-              exclude_defaults: true
-              target_release: OCS 4.5.0
-              validate_by_default: true
-            release-4.6:
-              target_release: OCS 4.6.0
-              validate_by_default: true
-            release-4.7:
-              target_release: OCS 4.7.0
-              validate_by_default: true
-        openshift-tests:
-          branches:
-            '*':
-              allowed_groups:
-              - redhat
-              - qe_staff
-              validate_by_default: false
-        openshift-tests-private:
-          branches:
-            '*':
-              allowed_groups:
-              - redhat
-              - qe_staff
-              validate_by_default: false
+    release-4.9:
+      dependent_bug_states:
+      - status: MODIFIED
+      - status: ON_QA
+      - status: VERIFIED
+      dependent_bug_target_releases:
+      - 4.10.0
+      target_release: 4.9.0
+      validate_by_default: true
+    release-4.10:
+      dependent_bug_states:
+      - status: MODIFIED
+      - status: ON_QA
+      - status: VERIFIED
+      dependent_bug_target_releases:
+      - 4.11.0
+      target_release: 4.10.0
+      validate_by_default: true
 cat: {}
 cherry_pick_unapproved:
   branchregexp: ^release-.*$
-  comment: This PR is not for the master branch but does not have the `cherry-pick-approved`  label. Adding the `do-not-merge/cherry-pick-not-approved`  label.
+  comment: This PR is not for the master branch but does not have the `cherry-pick-approved`  label.
+    Adding the `do-not-merge/cherry-pick-not-approved`  label.
 config_updater:
   gzip: false
   maps:
@@ -823,6 +278,7 @@ config_updater:
       clusters:
         app.ci:
         - ci
+      gzip: true
       name: ci-operator-misc-configs
     ci-operator/config/**/*-main.yaml:
       clusters:
@@ -834,6 +290,7 @@ config_updater:
       clusters:
         app.ci:
         - ci
+      gzip: true
       name: ci-operator-master-configs
     ci-operator/config/**/*-ocp-ci-integration.yaml:
       clusters:
@@ -859,7 +316,7 @@ config_updater:
         - ci
       gzip: true
       name: ci-operator-3.x-configs
-    ci-operator/config/**/*openshift-4.1*.yaml:
+    ci-operator/config/**/*openshift-4.1.yaml:
       clusters:
         app.ci:
         - ci
@@ -911,7 +368,14 @@ config_updater:
       clusters:
         app.ci:
         - ci
+      gzip: true
       name: ci-operator-4.9-configs
+    ci-operator/config/**/*openshift-4.10*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-4.10-configs
     ci-operator/config/**/*openshift-v4*.yaml:
       clusters:
         app.ci:
@@ -942,7 +406,7 @@ config_updater:
         - ci
       gzip: true
       name: ci-operator-3.x-configs
-    ci-operator/config/**/*release-4.1*.yaml:
+    ci-operator/config/**/*release-4.1.yaml:
       clusters:
         app.ci:
         - ci
@@ -994,7 +458,14 @@ config_updater:
       clusters:
         app.ci:
         - ci
+      gzip: true
       name: ci-operator-4.9-configs
+    ci-operator/config/**/*release-4.10*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-4.10-configs
     ci-operator/config/**/*release-next*.yaml:
       clusters:
         app.ci:
@@ -1002,6 +473,12 @@ config_updater:
       gzip: true
       name: ci-operator-misc-configs
     ci-operator/config/**/*release-v*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
+    ci-operator/config/**/assisted-*/*-ocm-*.yaml:
       clusters:
         app.ci:
         - ci
@@ -1023,8 +500,21 @@ config_updater:
       clusters:
         app.ci:
         - ci
+      gzip: true
       name: ci-operator-misc-configs
     ci-operator/config/**/elasticsearch-operator/openshift*-elasticsearch-operator-feature*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
+    ci-operator/config/**/eventrouter/openshift*-eventrouter-release-5.*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
+    ci-operator/config/**/log-file-metric-exporter/ViaQ-log-file-metric-exporter-release-5.*.yaml:
       clusters:
         app.ci:
         - ci
@@ -1060,7 +550,25 @@ config_updater:
         - ci
       gzip: true
       name: ci-operator-misc-configs
+    ci-operator/config/3scale/3scale-operator/*-3scale-2.11-*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
+    ci-operator/config/che-incubator/chectl/*-7.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
     ci-operator/config/code-ready/snc/*4.*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
+    ci-operator/config/coreos/**/*-rhcos*.yaml:
       clusters:
         app.ci:
         - ci
@@ -1072,12 +580,19 @@ config_updater:
         - ci
       gzip: true
       name: ci-operator-misc-configs
-    ci-operator/config/eclipse-che/che-operator/*-master.yaml:
+    ci-operator/config/eclipse-che/che-operator/*-main.yaml:
       clusters:
         app.ci:
         - ci
-      name: ci-operator-master-configs
+      gzip: true
+      name: ci-operator-misc-configs
     ci-operator/config/integr8ly/integreatly-operator/integr8ly-integreatly-operator-*-next-*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
+    ci-operator/config/integr8ly/integreatly-operator/integr8ly-integreatly-operator-MGDAPI-*-*.yaml:
       clusters:
         app.ci:
         - ci
@@ -1119,6 +634,12 @@ config_updater:
         - ci
       gzip: true
       name: ci-operator-misc-configs
+    ci-operator/config/open-cluster-management/**/*-release-2.4*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
     ci-operator/config/openshift-priv/kubernetes/openshift-priv-kubernetes-{oc,origin,sdn}-*.yaml:
       clusters:
         app.ci:
@@ -1138,6 +659,12 @@ config_updater:
       gzip: true
       name: ci-operator-misc-configs
     ci-operator/config/red-hat-data-services/**/*-v1*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: ci-operator-misc-configs
+    ci-operator/config/redhat-operator-ecosystem/cvp/*-ocp-4.*.yaml:
       clusters:
         app.ci:
         - ci
@@ -1177,67 +704,52 @@ config_updater:
       clusters:
         app.ci:
         - ci
+      gzip: true
       name: ci-operator-4.9-configs
     ci-operator/jobs/**/*-branch-openshift-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*-fcos-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*-hive-ocm-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*-logging*/openshift*-logging*-release-5.*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*-logging*/openshift*logging*-tech-preview*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*-main-periodics.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-master
     ci-operator/jobs/**/*-main-postsubmits.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-master
     ci-operator/jobs/**/*-main-presubmits.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
@@ -1246,323 +758,280 @@ config_updater:
       clusters:
         app.ci:
         - ci
+      gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*enterprise-3.*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-3.x
     ci-operator/jobs/**/*infra-periodics*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*master*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-master
     ci-operator/jobs/**/*openshift-3.*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-3.x
-    ci-operator/jobs/**/*openshift-4.1*.yaml:
+    ci-operator/jobs/**/*openshift-4.1-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.1
     ci-operator/jobs/**/*openshift-4.2*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.2
     ci-operator/jobs/**/*openshift-4.3*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.3
     ci-operator/jobs/**/*openshift-4.4*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.4
     ci-operator/jobs/**/*openshift-4.5*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.5
     ci-operator/jobs/**/*openshift-4.6*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.6
     ci-operator/jobs/**/*openshift-4.7*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.7
     ci-operator/jobs/**/*openshift-4.8*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.8
     ci-operator/jobs/**/*openshift-4.9*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.9
+    ci-operator/jobs/**/*openshift-4.10*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: job-config-4.10
     ci-operator/jobs/**/*openshift-v4*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*podman-v1.*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*release-0.*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*release-1.*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*release-3.*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-3.x
-    ci-operator/jobs/**/*release-4.1*.yaml:
+    ci-operator/jobs/**/*release-4.1-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.1
     ci-operator/jobs/**/*release-4.2*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.2
     ci-operator/jobs/**/*release-4.3*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.3
     ci-operator/jobs/**/*release-4.4*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.4
     ci-operator/jobs/**/*release-4.5*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.5
     ci-operator/jobs/**/*release-4.6*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.6
     ci-operator/jobs/**/*release-4.7*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.7
     ci-operator/jobs/**/*release-4.8*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.8
     ci-operator/jobs/**/*release-4.9*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.9
+    ci-operator/jobs/**/*release-4.10*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: job-config-4.10
     ci-operator/jobs/**/*release-next*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/*release-v*.yaml:
       clusters:
-        api.ci:
+        app.ci:
         - ci
+      gzip: true
+      name: job-config-misc
+    ci-operator/jobs/**/assisted-*/*-ocm-*.yaml:
+      clusters:
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/cluster-logging-operator/openshift*-cluster-logging-operator-feature*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/elasticsearch-*/openshift*-release-5.*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/elasticsearch-operator/openshift*-elasticsearch-operator-feature*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/elasticsearch-operator/openshift-elasticsearch-operator-tech-preview*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/elasticsearch-proxy/openshift-elasticsearch-proxy-tech-preview*.yaml:
       clusters:
-        api.ci:
+        app.ci:
         - ci
+      gzip: true
+      name: job-config-misc
+    ci-operator/jobs/**/eventrouter/openshift-eventrouter-release-5.*.yaml:
+      clusters:
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/infra-image-mirroring.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/oauth-proxy/openshift*-oauth-proxy-samples-operator-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/origin-aggregated-logging/openshift*-origin-aggregated-logging-feature*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/tektoncd-pipeline-operator/openshift-tektoncd-pipeline-operator-v*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/windows-machine-config-bootstrapper/*windows-machine-config-bootstrapper-community-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/**/windows-machine-config-operator/*-community-*.yaml:
       clusters:
-        api.ci:
+        app.ci:
         - ci
+      gzip: true
+      name: job-config-misc
+    ci-operator/jobs/3scale/3scale-operator/*-3scale-2.11-*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: job-config-misc
+    ci-operator/jobs/che-incubator/chectl/*7-presubmits.yaml:
+      clusters:
         app.ci:
         - ci
       gzip: true
@@ -1573,159 +1042,146 @@ config_updater:
         - ci
       gzip: true
       name: job-config-misc
+    ci-operator/jobs/coreos/**/*-rhcos-*.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: job-config-misc
     ci-operator/jobs/eclipse-che/che-operator/*-7*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
+      gzip: true
       name: job-config-misc
-    ci-operator/jobs/eclipse-che/che-operator/*-master.yaml:
+    ci-operator/jobs/eclipse-che/che-operator/*-main.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
-      name: job-config-master
+      gzip: true
+      name: job-config-misc
     ci-operator/jobs/integr8ly/integreatly-operator/integr8ly-integreatly-operator-*-next-*.yaml:
       clusters:
-        api.ci:
+        app.ci:
         - ci
+      gzip: true
+      name: job-config-misc
+    ci-operator/jobs/integr8ly/integreatly-operator/integr8ly-integreatly-operator-MGDAPI-*-*.yaml:
+      clusters:
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/open-cluster-management/**/*-prow-experiment-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/open-cluster-management/**/*-release-2.0*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/open-cluster-management/**/*-release-2.1*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/open-cluster-management/**/*-release-2.2*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/open-cluster-management/**/*-release-2.3*.yaml:
       clusters:
-        api.ci:
+        app.ci:
         - ci
+      gzip: true
+      name: job-config-misc
+    ci-operator/jobs/open-cluster-management/**/*-release-2.4*.yaml:
+      clusters:
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/openshift-priv/kubernetes/openshift-priv-kubernetes-{oc,origin,sdn}-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/openshift/kubernetes/openshift-kubernetes-{oc,origin,sdn}-*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/operator-framework/*/*feature*.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/red-hat-data-services/**/*-v1*.yaml:
       clusters:
-        api.ci:
+        app.ci:
         - ci
+      gzip: true
+      name: job-config-misc
+    ci-operator/jobs/redhat-operator-ecosystem/cvp/*-ocp-4.*.yaml:
+      clusters:
         app.ci:
         - ci
       gzip: true
       name: job-config-misc
     ci-operator/jobs/redhat-operator-ecosystem/playground/*-cvp-ocp-4.4.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.4
     ci-operator/jobs/redhat-operator-ecosystem/playground/*-cvp-ocp-4.5.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.5
     ci-operator/jobs/redhat-operator-ecosystem/playground/*-cvp-ocp-4.6.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.6
     ci-operator/jobs/redhat-operator-ecosystem/playground/*-cvp-ocp-4.7.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.7
     ci-operator/jobs/redhat-operator-ecosystem/playground/*-cvp-ocp-4.8.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.8
     ci-operator/jobs/redhat-operator-ecosystem/playground/*-cvp-ocp-4.9.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       gzip: true
       name: job-config-4.9
     ci-operator/step-registry/**/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
+      gzip: true
       name: step-registry
     ci-operator/templates/master-sidecar-3.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1735,36 +1191,8 @@ config_updater:
         vsphere:
         - ci
       name: prow-job-master-sidecar-3
-    ci-operator/templates/master-sidecar-4.2.yaml:
-      clusters:
-        api.ci:
-        - ci
-        app.ci:
-        - ci
-        build01:
-        - ci
-        build02:
-        - ci
-        vsphere:
-        - ci
-      name: prow-job-master-sidecar-4.2
-    ci-operator/templates/master-sidecar-4.3.yaml:
-      clusters:
-        api.ci:
-        - ci
-        app.ci:
-        - ci
-        build01:
-        - ci
-        build02:
-        - ci
-        vsphere:
-        - ci
-      name: prow-job-master-sidecar-4.3
     ci-operator/templates/master-sidecar-4.4.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1776,8 +1204,6 @@ config_updater:
       name: prow-job-master-sidecar-4.4
     ci-operator/templates/master-sidecar-4.6.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1789,8 +1215,6 @@ config_updater:
       name: prow-job-master-sidecar-4.6
     ci-operator/templates/openshift/endurance/endurance-install.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1802,8 +1226,6 @@ config_updater:
       name: prow-job-endurance-install
     ci-operator/templates/openshift/endurance/endurance-test.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1815,8 +1237,6 @@ config_updater:
       name: prow-job-endurance-test
     ci-operator/templates/openshift/installer/cluster-launch-installer-custom-test-image.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1828,8 +1248,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-custom-test-image
     ci-operator/templates/openshift/installer/cluster-launch-installer-e2e.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1841,8 +1259,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-e2e
     ci-operator/templates/openshift/installer/cluster-launch-installer-libvirt-e2e.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1854,8 +1270,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-libvirt-e2e
     ci-operator/templates/openshift/installer/cluster-launch-installer-metal-e2e.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1867,8 +1281,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-metal-e2e
     ci-operator/templates/openshift/installer/cluster-launch-installer-openstack-e2e.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1880,8 +1292,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-openstack-e2e
     ci-operator/templates/openshift/installer/cluster-launch-installer-openstack-upi-e2e.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1893,8 +1303,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-openstack-upi-e2e
     ci-operator/templates/openshift/installer/cluster-launch-installer-remote-libvirt-e2e.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1906,8 +1314,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-remote-libvirt-e2e
     ci-operator/templates/openshift/installer/cluster-launch-installer-src.yaml:
       clusters:
-        api.ci:
-        - ci
         build01:
         - ci
         build02:
@@ -1917,8 +1323,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-src
     ci-operator/templates/openshift/installer/cluster-launch-installer-upi-e2e.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1930,8 +1334,6 @@ config_updater:
       name: prow-job-cluster-launch-installer-upi-e2e
     ci-operator/templates/openshift/openshift-ansible/cluster-launch-e2e-openshift-ansible.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1941,36 +1343,8 @@ config_updater:
         vsphere:
         - ci
       name: prow-job-cluster-launch-e2e-openshift-ansible
-    ci-operator/templates/openshift/openshift-ansible/cluster-launch-e2e-openshift-jenkins.yaml:
-      clusters:
-        api.ci:
-        - ci
-        app.ci:
-        - ci
-        build01:
-        - ci
-        build02:
-        - ci
-        vsphere:
-        - ci
-      name: prow-job-cluster-launch-e2e-openshift-jenkins
-    ci-operator/templates/openshift/openshift-ansible/cluster-launch-e2e-upgrade.yaml:
-      clusters:
-        api.ci:
-        - ci
-        app.ci:
-        - ci
-        build01:
-        - ci
-        build02:
-        - ci
-        vsphere:
-        - ci
-      name: prow-job-cluster-launch-e2e-upgrade
     ci-operator/templates/openshift/openshift-ansible/cluster-launch-e2e.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -1980,23 +1354,8 @@ config_updater:
         vsphere:
         - ci
       name: prow-job-cluster-launch-e2e
-    ci-operator/templates/openshift/openshift-ansible/cluster-launch-src.yaml:
-      clusters:
-        api.ci:
-        - ci
-        app.ci:
-        - ci
-        build01:
-        - ci
-        build02:
-        - ci
-        vsphere:
-        - ci
-      name: prow-job-cluster-launch-src
     ci-operator/templates/openshift/openshift-ansible/cluster-scaleup-e2e-40.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2008,8 +1367,6 @@ config_updater:
       name: prow-job-cluster-scaleup-e2e-40
     cluster/test-deploy/aws-4.0/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2021,8 +1378,6 @@ config_updater:
       name: cluster-profile-aws-centos-40
     cluster/test-deploy/aws-atomic/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2034,8 +1389,6 @@ config_updater:
       name: cluster-profile-aws-atomic
     cluster/test-deploy/aws-centos/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2047,8 +1400,6 @@ config_updater:
       name: cluster-profile-aws-centos
     cluster/test-deploy/aws-gluster/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2060,8 +1411,6 @@ config_updater:
       name: cluster-profile-aws-gluster
     cluster/test-deploy/gcp-4.0/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2073,8 +1422,6 @@ config_updater:
       name: cluster-profile-gcp-40
     cluster/test-deploy/gcp-crio/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2086,8 +1433,6 @@ config_updater:
       name: cluster-profile-gcp-crio
     cluster/test-deploy/gcp-ha-static/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2099,8 +1444,6 @@ config_updater:
       name: cluster-profile-gcp-ha-static
     cluster/test-deploy/gcp-ha/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2112,8 +1455,6 @@ config_updater:
       name: cluster-profile-gcp-ha
     cluster/test-deploy/gcp-logging/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2123,10 +1464,19 @@ config_updater:
         vsphere:
         - ci
       name: cluster-profile-gcp-logging
+    cluster/test-deploy/gcp-openshift-gce-devel-ci-2/*:
+      clusters:
+        app.ci:
+        - ci
+        build01:
+        - ci
+        build02:
+        - ci
+        vsphere:
+        - ci
+      name: cluster-profile-gcp-openshift-gce-devel-ci-2
     cluster/test-deploy/gcp/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2138,8 +1488,6 @@ config_updater:
       name: cluster-profile-gcp
     cluster/test-deploy/ovirt/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2151,8 +1499,6 @@ config_updater:
       name: cluster-profile-ovirt
     cluster/test-deploy/packet/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
         build01:
@@ -2189,20 +1535,28 @@ config_updater:
       clusters:
         build01:
         - bastion-ppc64le-libvirt
+        build02:
+        - bastion-ppc64le-libvirt
       name: sshd-config-ppc64le-libvirt
     clusters/build-clusters/01_cluster/sshd-bastion/ppc64le/sshd_config:
       clusters:
         build01:
+        - bastion-ppc64le
+        build02:
         - bastion-ppc64le
       name: sshd-config-ppc64le
     clusters/build-clusters/01_cluster/sshd-bastion/telco/sshd_config:
       clusters:
         build01:
         - bastion-telco
+        build02:
+        - bastion-telco
       name: sshd-config-telco
     clusters/build-clusters/01_cluster/sshd-bastion/z/sshd_config:
       clusters:
         build01:
+        - bastion-z
+        build02:
         - bastion-z
       name: sshd-config-z
     core-services/ci-secret-bootstrap/_config.yaml:
@@ -2217,66 +1571,59 @@ config_updater:
       name: ci-secret-generator
     core-services/image-mirroring/**/mapping_*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       name: image-mirror-mappings
+    core-services/prow/02_config/**/_pluginconfig.yaml:
+      clusters:
+        app.ci:
+        - ci
+      name: plugins
+      use_full_path_as_key: true
+    core-services/prow/02_config/**/_prowconfig.yaml:
+      clusters:
+        app.ci:
+        - ci
+      gzip: true
+      name: config
+      use_full_path_as_key: true
     core-services/prow/02_config/_boskos.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       key: boskos.yaml
       name: resources
     core-services/prow/02_config/_config.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
+      gzip: true
       key: config.yaml
       name: config
     core-services/prow/02_config/_labels.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       key: labels.yaml
       name: labels
     core-services/prow/02_config/_plugins.yaml:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       key: plugins.yaml
       name: plugins
     core-services/prow/02_config/deck-extensions/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       name: deck-extensions
     core-services/prow/02_config/deck-internal-extensions/*:
       clusters:
-        api.ci:
-        - ci
         app.ci:
         - ci
       name: deck-internal-extensions
-    core-services/release-controller/_releases/*:
-      clusters:
-        api.ci:
-        - ocp
-      name: releases
     core-services/release-controller/_repos/*:
       clusters:
-        api.ci:
-        - ocp
         app.ci:
         - ocp
         build01:
@@ -2286,971 +1633,6 @@ config_updater:
         vsphere:
         - ocp
       name: base-repos
-    core-services/secret-mirroring/_mapping.yaml:
-      clusters:
-        api.ci:
-        - ci
-        app.ci:
-        - ci
-        build01:
-        - ci
-        build02:
-        - ci
-      key: mapping.yaml
-      name: secret-mirroring
-external_plugins:
-  3scale/3scale-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  ComplianceAsCode/content:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  ansible-collections/community.okd:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  app-sre/deployment-validation-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  che-incubator/che-test-harness:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  che-incubator/chectl:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  code-ready/crc:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  code-ready/snc:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  codeready-toolchain/api:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  codeready-toolchain/host-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  codeready-toolchain/member-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  codeready-toolchain/registration-service:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  codeready-toolchain/toolchain-common:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  codeready-toolchain/toolchain-e2e:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  containers/buildah:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  containers/common:
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  containers/dnsname:
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  containers/podman:
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  coreos/bootupd:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  coreos/coreos-assembler:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  coreos/rpm-ostree:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  cri-o:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  devfile:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  eclipse-che/che-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  - endpoint: http://backport-verifier
-    events:
-    - issue_comment
-    - pull_request
-    name: backport-verifier
-  - endpoint: http://cherrypick
-    events:
-    - pull_request
-    - issue_comment
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  freeipa/freeipa-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/ansible-tower-configuration:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/application-monitoring-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/cloud-resource-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/delorean:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/grafana-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/heimdall:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/installation:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/integreatly-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/rhmi-utils:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  integr8ly/workload-web-app:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  jianzhangbjz/learn-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  kata-containers/runtime:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  kiegroup/kie-cloud-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  kube-reporting:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  kubernetes-sigs/security-profiles-operators:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  kubevirt/kubevirt-tekton-tasks:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  kubevirt/must-gather:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  open-cluster-management:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  opendatahub-io/manifests:
-  - endpoint: http://needs-rebase
-    events:
-    - issue_comment
-    - pull_request
-    name: needs-rebase
-  opendatahub-io/odh-manifests:
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  opendatahub-io/opendatahub-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  - endpoint: http://backport-verifier
-    events:
-    - issue_comment
-    - pull_request
-    name: backport-verifier
-  openshift-cnv:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-knative:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-kni/baremetal-deploy:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-kni/cnf-features-deploy:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-kni/node-label-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-kni/performance-addon-operators:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-kni/poison-pill:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-metal3/dev-scripts:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-priv:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  - endpoint: http://publicize
-    events:
-    - issue_comment
-    name: publicize
-  openshift-psap/ci-artifacts:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-psap/special-resource-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-psap/wireguard-worker:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openshift-s2i:
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  openstack-k8s-operators/osp-director-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  operator-framework:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  ostreedev/ostree:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  red-hat-data-services/opendatahub-operator:
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  redhat-developer/gitops-backend:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  redhat-developer/gitops-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  redhat-developer/helm:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  redhat-developer/jenkins-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  redhat-developer/jenkins-operator-bundle:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  redhat-developer/kam:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  redhat-developer/openshift-jenkins-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  redhat-developer/service-binding-operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  redhat-operator-ecosystem:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  shipwright-io/build:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  shipwright-io/cli:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  shipwright-io/operator:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  shipwright-io/website:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
-  tnozicka/openshift-acme:
-  - endpoint: http://refresh
-    events:
-    - issue_comment
-    name: refresh
-  - endpoint: http://cherrypick
-    events:
-    - issue_comment
-    - pull_request
-    name: cherrypick
-  - endpoint: http://needs-rebase
-    events:
-    - pull_request
-    name: needs-rebase
 golint: {}
 goose:
   key_path: /etc/unsplash-api/api-key
@@ -3262,6 +1644,7 @@ help:
 jira:
   disabled_jira_projects:
   - enterprise
+  - patch
 label:
   additional_labels:
   - platform/aws
@@ -3278,3407 +1661,25 @@ label:
   - docs-approved
   - qe-approved
   - downstream-change-needed
-lgtm:
-- repos:
-  - opendatahub-io/manifests
-  - opendatahub-io/odh-manifests
-  - opendatahub-io/opendatahub-operator
-  review_acts_as_lgtm: true
-- repos:
-  - red-hat-data-services/opendatahub-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/odo
-  - openshift/odo-init-image
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/ci-docs
-  - openshift/ci-ns-ttl-controller
-  - openshift/ci-tools
-  - openshift/release
-  - openshift/release-controller
-  review_acts_as_lgtm: true
-  trusted_team_for_sticky_lgtm: openshift-team-developer-productivity-test-platform
-- repos:
-  - redhat-operator-ecosystem/release
-  review_acts_as_lgtm: true
-  trusted_team_for_sticky_lgtm: openshift-team-developer-productivity-test-platform
-- repos:
-  - openshift-priv/file-integrity-operator
-  - openshift/file-integrity-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/hypershift-toolkit
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/ibm-roks-toolkit
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-kni/performance-addon-operators
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-kni/cnf-features-deploy
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-kni/node-label-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-kni/poison-pill
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/cluster-csi-snapshot-controller-operator
-  - openshift/cluster-csi-snapshot-controller-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/openshift-tests
-  - openshift/openshift-tests
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/openshift-tests-private
-  - openshift/openshift-tests-private
-  review_acts_as_lgtm: true
-- repos:
-  - jianzhangbjz/learn-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/csi-driver-nfs
-  - openshift/csi-driver-nfs
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/csi-driver-manila-operator
-  - openshift/csi-driver-manila-operator
-  review_acts_as_lgtm: true
-- repos:
-  - open-cluster-management
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/aws-pod-identity-webhook
-  - openshift/aws-pod-identity-webhook
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/bond-cni
-  - openshift/bond-cni
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/kubernetes-nmstate
-  - openshift/kubernetes-nmstate
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/cincinnati-operator
-  - openshift/cincinnati-operator
-  review_acts_as_lgtm: true
-- repos:
-  - devfile
-  review_acts_as_lgtm: true
-- repos:
-  - code-ready/crc
-  - openshift-priv/crc
-  review_acts_as_lgtm: true
-- repos:
-  - code-ready/snc
-  - openshift-priv/egress-router-cni
-  - openshift/egress-router-cni
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/assisted-installer
-  - openshift-priv/assisted-installer-agent
-  - openshift-priv/assisted-service
-  - openshift-priv/assisted-test-infra
-  - openshift/assisted-installer
-  - openshift/assisted-installer-agent
-  - openshift/assisted-service
-  - openshift/assisted-test-infra
-  review_acts_as_lgtm: true
-- repos:
-  - che-incubator/chectl
-  review_acts_as_lgtm: true
-- repos:
-  - che-incubator/che-test-harness
-- repos:
-  - kata-containers/runtime
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/csi-driver-projected-resource
-  - openshift/csi-driver-projected-resource
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/redhat-subscription-injection-webhook
-  - openshift/redhat-subscription-injection-webhook
-  review_acts_as_lgtm: true
-- repos:
-  - ansible-collections/community.okd
-  - openshift-priv/community.okd
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/openstack-cinder-csi-driver-operator
-  - openshift/openstack-cinder-csi-driver-operator
-  review_acts_as_lgtm: true
-- repos:
-  - kubevirt/must-gather
-  - openshift-priv/must-gather
-  review_acts_as_lgtm: true
-- repos:
-  - kubevirt/must-gather
-  - openshift-priv/must-gather
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/osd-metrics-exporter
-  - openshift/osd-metrics-exporter
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/procfs
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/okd-machine-os
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/gcp-pd-csi-driver-operator
-  - openshift/gcp-pd-csi-driver-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/gcp-pd-csi-driver
-  - openshift/gcp-pd-csi-driver
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/egress-router-cni
-  - openshift/egress-router-cni
-  review_acts_as_lgtm: true
-- repos:
-  - app-sre/deployment-validation-operator
-  review_acts_as_lgtm: true
-- repos:
-  - freeipa/freeipa-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/vsphere-problem-detector
-  - openshift/vsphere-problem-detector
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/special-resource-operator
-  - openshift/special-resource-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/app-netutil
-  - openshift/app-netutil
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/cluster-cloud-controller-manager-operator
-  - openshift/cluster-cloud-controller-manager-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openstack-k8s-operators/osp-director-operator
-  review_acts_as_lgtm: true
-- repos:
-  - 3scale/3scale-operator
-  - openshift-priv/hypershift
-  - openshift/hypershift
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/rook
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/azure-disk-csi-driver-operator
-  - openshift/azure-disk-csi-driver-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/azure-disk-csi-driver
-  - openshift/azure-disk-csi-driver
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/cloud-network-config-controller
-  - openshift/cloud-network-config-controller
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/operator-framework-olm
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/oc-compliance
-  review_acts_as_lgtm: true
-- repos:
-  - openshift/ceph-csi
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/driver-toolkit
-  - openshift/driver-toolkit
-  review_acts_as_lgtm: true
-- repos:
-  - eclipse-che/che-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/vmware-vsphere-csi-driver-operator
-  - openshift/vmware-vsphere-csi-driver-operator
-  review_acts_as_lgtm: true
-- repos:
-  - openshift-priv/vmware-vsphere-csi-driver
-  - openshift/vmware-vsphere-csi-driver
-  review_acts_as_lgtm: true
 override:
   allow_top_level_owners: true
 owners:
   filenames:
+    openshift/contour:
+      owners: DOWNSTREAM_OWNERS
+      owners_aliases: DOWNSTREAM_OWNERS_ALIASES
+    openshift/contour-operator:
+      owners: DOWNSTREAM_OWNERS
+      owners_aliases: DOWNSTREAM_OWNERS_ALIASES
+    openshift/external-dns:
+      owners: DOWNSTREAM_OWNERS
+      owners_aliases: DOWNSTREAM_OWNERS_ALIASES
     openshift/kubernetes:
       owners: DOWNSTREAM_OWNERS
       owners_aliases: DOWNSTREAM_OWNERS_ALIASES
-  labels_blacklist:
+  labels_denylist:
   - approved
   - lgtm
-plugins:
-  3scale/3scale-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - golint
-    - hold
-    - jira
-    - label
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-  ComplianceAsCode/content:
-    plugins:
-    - assign
-    - dog
-    - help
-    - hold
-    - label
-    - shrug
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-  ansible-collections/community.okd:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  app-sre/deployment-validation-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  che-incubator/che-test-harness:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  che-incubator/chectl:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  code-ready/crc:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  code-ready/snc:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  codeready-toolchain/api:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  codeready-toolchain/host-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  codeready-toolchain/member-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  codeready-toolchain/registration-service:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  codeready-toolchain/toolchain-common:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  codeready-toolchain/toolchain-e2e:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  containers/buildah:
-    plugins:
-    - approve
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  containers/common:
-    plugins:
-    - approve
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  containers/dnsname:
-    plugins:
-    - approve
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  containers/podman:
-    plugins:
-    - approve
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  coreos/bootupd:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  coreos/coreos-assembler:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  coreos/rpm-ostree:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - help
-    - hold
-    - label
-    - override
-    - retitle
-    - shrug
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  cri-o:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - cat
-    - dco
-    - dog
-    - heart
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - owners-label
-    - override
-    - retitle
-    - release-note
-    - shrug
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  devfile:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  eclipse-che/che-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  freeipa/freeipa-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  integr8ly/ansible-tower-configuration:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  integr8ly/application-monitoring-operator:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  integr8ly/cloud-resource-operator:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  integr8ly/delorean:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  integr8ly/grafana-operator:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  integr8ly/heimdall:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  integr8ly/installation:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  integr8ly/integreatly-operator:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  integr8ly/rhmi-utils:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  integr8ly/workload-web-app:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  jianzhangbjz/learn-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-    - approve
-  kata-containers/kata-containers:
-    plugins:
-    - trigger
-  kata-containers/runtime:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  kiegroup/kie-cloud-operator:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - golint
-    - heart
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - milestone
-    - milestonestatus
-    - owners-label
-    - override
-    - retitle
-    - shrug
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  kube-reporting:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  kube-reporting/ghostunnel:
-    plugins:
-    - approve
-  kube-reporting/hadoop:
-    plugins:
-    - approve
-  kube-reporting/helm:
-    plugins:
-    - approve
-  kube-reporting/hive:
-    plugins:
-    - approve
-  kube-reporting/metering-operator:
-    plugins:
-    - approve
-  kube-reporting/presto:
-    plugins:
-    - approve
-  kubernetes-incubator:
-    plugins:
-    - trigger
-  kubernetes-sigs/security-profiles-operator:
-    plugins:
-    - trigger
-  kubevirt/common-templates:
-    plugins:
-    - trigger
-  kubevirt/hyperconverged-cluster-operator:
-    plugins:
-    - trigger
-  kubevirt/kubevirt: {}
-  kubevirt/kubevirt-ssp-operator:
-    plugins:
-    - trigger
-  kubevirt/kubevirt-tekton-tasks:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  kubevirt/must-gather:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  kubevirt/node-maintenance-operator:
-    plugins:
-    - trigger
-  kubevirt/ssp-operator:
-    plugins:
-    - trigger
-  monstorak/monstorak-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  open-cluster-management:
-    plugins:
-    - approve
-    - assign
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - owners-label
-    - retitle
-    - trigger
-    - verify-owners
-    - wip
-  open-cluster-management/api:
-    plugins:
-    - dco
-  open-cluster-management/registration:
-    plugins:
-    - dco
-  open-cluster-management/registration-operator:
-    plugins:
-    - dco
-  open-cluster-management/website:
-    plugins:
-    - dco
-  open-cluster-management/work:
-    plugins:
-    - dco
-  opendatahub-io/manifests:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - golint
-    - heart
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - milestone
-    - milestonestatus
-    - owners-label
-    - override
-    - retitle
-    - shrug
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  opendatahub-io/odh-manifests:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - golint
-    - heart
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - milestone
-    - milestonestatus
-    - owners-label
-    - override
-    - retitle
-    - shrug
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  opendatahub-io/opendatahub-operator:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - golint
-    - heart
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - milestone
-    - milestonestatus
-    - owners-label
-    - override
-    - retitle
-    - shrug
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  openshift:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-  openshift-cnv/cnv-ci:
-    plugins:
-    - approve
-    - assign
-    - hold
-    - label
-    - lgtm
-    - trigger
-    - override
-    - verify-owners
-    - wip
-  openshift-knative:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-  openshift-kni/baremetal-deploy:
-    plugins:
-    - approve
-    - label
-    - hold
-    - assign
-    - blunderbuss
-    - lifecycle
-    - owners-label
-    - verify-owners
-    - skip
-    - override
-    - wip
-    - lgtm
-    - shrug
-    - trigger
-  openshift-kni/cnf-features-deploy:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  openshift-kni/node-label-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  openshift-kni/performance-addon-operators:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  openshift-kni/poison-pill:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  openshift-metal3/dev-scripts:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  openshift-priv:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - golint
-    - goose
-    - heart
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - owners-label
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  openshift-priv/ansible-service-broker:
-    plugins:
-    - approve
-  openshift-priv/api:
-    plugins:
-    - approve
-  openshift-priv/apiserver-library-go:
-    plugins:
-    - approve
-  openshift-priv/app-netutil:
-    plugins:
-    - approve
-  openshift-priv/aws-ebs-csi-driver:
-    plugins:
-    - approve
-  openshift-priv/aws-ebs-csi-driver-operator:
-    plugins:
-    - approve
-  openshift-priv/aws-pod-identity-webhook:
-    plugins:
-    - approve
-  openshift-priv/azure-disk-csi-driver:
-    plugins:
-    - approve
-  openshift-priv/azure-disk-csi-driver-operator:
-    plugins:
-    - approve
-  openshift-priv/baremetal-operator:
-    plugins:
-    - approve
-  openshift-priv/baremetal-runtimecfg:
-    plugins:
-    - approve
-  openshift-priv/bond-cni:
-    plugins:
-    - approve
-  openshift-priv/build-machinery-go:
-    plugins:
-    - approve
-  openshift-priv/builder:
-    plugins:
-    - approve
-  openshift-priv/cincinnati-operator:
-    plugins:
-    - approve
-  openshift-priv/client-go:
-    plugins:
-    - approve
-  openshift-priv/cloud-credential-operator:
-    plugins:
-    - approve
-  openshift-priv/cloud-network-config-controller:
-    plugins:
-    - approve
-  openshift-priv/cloud-provider-openstack:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-actuator-pkg:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-aws:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-azure:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-baremetal:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-gcp:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-kubemark:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-kubevirt:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-libvirt:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-openstack:
-    plugins:
-    - approve
-  openshift-priv/cluster-api-provider-ovirt:
-    plugins:
-    - approve
-  openshift-priv/cluster-authentication-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-autoscaler-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-baremetal-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-bootstrap:
-    plugins:
-    - approve
-  openshift-priv/cluster-cloud-controller-manager-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-config-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-csi-snapshot-controller-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-dns-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-etcd-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-image-registry-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-ingress-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-kube-apiserver-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-kube-controller-manager-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-kube-descheduler-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-kube-scheduler-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-kube-storage-version-migrator-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-logging-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-machine-approver:
-    plugins:
-    - approve
-  openshift-priv/cluster-monitoring-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-network-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-nfd-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-node-tuning-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-openshift-apiserver-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-openshift-controller-manager-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-policy-controller:
-    plugins:
-    - approve
-  openshift-priv/cluster-resource-override-admission:
-    plugins:
-    - approve
-  openshift-priv/cluster-resource-override-admission-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-samples-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-storage-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-svcat-apiserver-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-svcat-controller-manager-operator:
-    plugins:
-    - approve
-  openshift-priv/cluster-update-keys:
-    plugins:
-    - approve
-  openshift-priv/cluster-version-operator:
-    plugins:
-    - approve
-  openshift-priv/compliance-operator:
-    plugins:
-    - approve
-  openshift-priv/configmap-reload:
-    plugins:
-    - approve
-  openshift-priv/console:
-    plugins:
-    - approve
-  openshift-priv/console-operator:
-    plugins:
-    - approve
-  openshift-priv/coredns:
-    plugins:
-    - approve
-  openshift-priv/crd-schema-gen:
-    plugins:
-    - approve
-  openshift-priv/csi-cluster-driver-registrar:
-    plugins:
-    - approve
-  openshift-priv/csi-driver-manila-operator:
-    plugins:
-    - approve
-  openshift-priv/csi-driver-nfs:
-    plugins:
-    - approve
-  openshift-priv/csi-driver-projected-resource:
-    plugins:
-    - approve
-  openshift-priv/csi-driver-registrar:
-    plugins:
-    - approve
-  openshift-priv/csi-external-attacher:
-    plugins:
-    - approve
-  openshift-priv/csi-external-provisioner:
-    plugins:
-    - approve
-  openshift-priv/csi-external-resizer:
-    plugins:
-    - approve
-  openshift-priv/csi-external-snapshotter:
-    plugins:
-    - approve
-  openshift-priv/csi-livenessprobe:
-    plugins:
-    - approve
-  openshift-priv/csi-node-driver-registrar:
-    plugins:
-    - approve
-  openshift-priv/csi-operator:
-    plugins:
-    - approve
-  openshift-priv/driver-toolkit:
-    plugins:
-    - approve
-  openshift-priv/egress-router-cni:
-    plugins:
-    - approve
-  openshift-priv/elasticsearch-operator:
-    plugins:
-    - approve
-  openshift-priv/elasticsearch-proxy:
-    plugins:
-    - approve
-  openshift-priv/etcd:
-    plugins:
-    - approve
-  openshift-priv/external-storage:
-    plugins:
-    - approve
-  openshift-priv/federation-v2-operator:
-    plugins:
-    - approve
-  openshift-priv/file-integrity-operator:
-    plugins:
-    - approve
-  openshift-priv/gatekeeper:
-    plugins:
-    - approve
-  openshift-priv/gatekeeper-operator:
-    plugins:
-    - approve
-  openshift-priv/gcp-pd-csi-driver:
-    plugins:
-    - approve
-  openshift-priv/gcp-pd-csi-driver-operator:
-    plugins:
-    - approve
-  openshift-priv/grafana:
-    plugins:
-    - approve
-  openshift-priv/ib-sriov-cni:
-    plugins:
-    - approve
-  openshift-priv/image-registry:
-    plugins:
-    - approve
-  openshift-priv/images:
-    plugins:
-    - approve
-  openshift-priv/insights-operator:
-    plugins:
-    - approve
-  openshift-priv/installer:
-    plugins:
-    - approve
-  openshift-priv/ironic-hardware-inventory-recorder-image:
-    plugins:
-    - approve
-  openshift-priv/ironic-image:
-    plugins:
-    - approve
-  openshift-priv/ironic-inspector-image:
-    plugins:
-    - approve
-  openshift-priv/ironic-ipa-downloader:
-    plugins:
-    - approve
-  openshift-priv/ironic-rhcos-downloader:
-    plugins:
-    - approve
-  openshift-priv/ironic-static-ip-manager:
-    plugins:
-    - approve
-  openshift-priv/jenkins:
-    plugins:
-    - approve
-  openshift-priv/jenkins-client-plugin:
-    plugins:
-    - approve
-  openshift-priv/jenkins-openshift-login-plugin:
-    plugins:
-    - approve
-  openshift-priv/jenkins-sync-plugin:
-    plugins:
-    - approve
-  openshift-priv/k8s-prometheus-adapter:
-    plugins:
-    - approve
-  openshift-priv/kube-rbac-proxy:
-    plugins:
-    - approve
-  openshift-priv/kube-state-metrics:
-    plugins:
-    - approve
-  openshift-priv/kubecsr:
-    plugins:
-    - approve
-  openshift-priv/kubefed:
-    plugins:
-    - approve
-  openshift-priv/kubefed-operator:
-    plugins:
-    - approve
-  openshift-priv/kubernetes:
-    plugins:
-    - approve
-  openshift-priv/kubernetes-autoscaler:
-    plugins:
-    - approve
-  openshift-priv/kubernetes-kube-storage-version-migrator:
-    plugins:
-    - approve
-  openshift-priv/kubernetes-metrics-server:
-    plugins:
-    - approve
-  openshift-priv/kubernetes-nmstate:
-    plugins:
-    - approve
-  openshift-priv/kuryr-kubernetes:
-    plugins:
-    - approve
-  openshift-priv/leader-elector:
-    plugins:
-    - approve
-  openshift-priv/library-go:
-    plugins:
-    - approve
-  openshift-priv/linuxptp-daemon:
-    plugins:
-    - approve
-  openshift-priv/local-storage-operator:
-    plugins:
-    - approve
-  openshift-priv/loki:
-    plugins:
-    - approve
-  openshift-priv/machine-api-operator:
-    plugins:
-    - approve
-  openshift-priv/machine-config-operator:
-    plugins:
-    - approve
-  openshift-priv/mdns-publisher:
-    plugins:
-    - approve
-  openshift-priv/metal3-smart-exporter:
-    plugins:
-    - approve
-  openshift-priv/multus-cni:
-    plugins:
-    - approve
-  openshift-priv/must-gather:
-    plugins:
-    - approve
-  openshift-priv/network-metrics-daemon:
-    plugins:
-    - approve
-  openshift-priv/network-tools:
-    plugins:
-    - approve
-  openshift-priv/node-feature-discovery:
-    plugins:
-    - approve
-  openshift-priv/node-problem-detector:
-    plugins:
-    - approve
-  openshift-priv/node-problem-detector-operator:
-    plugins:
-    - approve
-  openshift-priv/node_exporter:
-    plugins:
-    - approve
-  openshift-priv/oauth-apiserver:
-    plugins:
-    - approve
-  openshift-priv/oauth-proxy:
-    plugins:
-    - approve
-  openshift-priv/oauth-server:
-    plugins:
-    - approve
-  openshift-priv/oc:
-    plugins:
-    - approve
-  openshift-priv/ocs-operator:
-    plugins:
-    - approve
-  openshift-priv/openshift-ansible:
-    plugins:
-    - approve
-  openshift-priv/openshift-apiserver:
-    plugins:
-    - approve
-  openshift-priv/openshift-controller-manager:
-    plugins:
-    - approve
-  openshift-priv/openshift-state-metrics:
-    plugins:
-    - approve
-  openshift-priv/openshift-tests:
-    plugins:
-    - approve
-  openshift-priv/openshift-tests-private:
-    plugins:
-    - approve
-  openshift-priv/openshift-tuned:
-    plugins:
-    - approve
-  openshift-priv/openstack-cinder-csi-driver-operator:
-    plugins:
-    - approve
-  openshift-priv/origin:
-    plugins:
-    - approve
-  openshift-priv/origin-aggregated-logging:
-    plugins:
-    - approve
-  openshift-priv/osd-metrics-exporter:
-    plugins:
-    - approve
-  openshift-priv/osin:
-    plugins:
-    - approve
-  openshift-priv/ovirt-csi-driver:
-    plugins:
-    - approve
-  openshift-priv/ovirt-csi-driver-operator:
-    plugins:
-    - approve
-  openshift-priv/ovn-kubernetes:
-    plugins:
-    - approve
-  openshift-priv/prom-label-proxy:
-    plugins:
-    - approve
-  openshift-priv/prometheus:
-    plugins:
-    - approve
-  openshift-priv/prometheus-alertmanager:
-    plugins:
-    - approve
-  openshift-priv/prometheus-operator:
-    plugins:
-    - approve
-  openshift-priv/ptp-operator:
-    plugins:
-    - approve
-  openshift-priv/redhat-subscription-injection-webhook:
-    plugins:
-    - approve
-  openshift-priv/route-override-cni:
-    plugins:
-    - approve
-  openshift-priv/router:
-    plugins:
-    - approve
-  openshift-priv/runtime-utils:
-    plugins:
-    - approve
-  openshift-priv/sdn:
-    plugins:
-    - approve
-  openshift-priv/service-ca-operator:
-    plugins:
-    - approve
-  openshift-priv/service-catalog:
-    plugins:
-    - approve
-  openshift-priv/sig-storage-local-static-provisioner:
-    plugins:
-    - approve
-  openshift-priv/special-resource-operator:
-    plugins:
-    - approve
-  openshift-priv/sriov-cni:
-    plugins:
-    - approve
-  openshift-priv/sriov-dp-admission-controller:
-    plugins:
-    - approve
-  openshift-priv/sriov-network-device-plugin:
-    plugins:
-    - approve
-  openshift-priv/sriov-network-operator:
-    plugins:
-    - approve
-  openshift-priv/telemeter:
-    plugins:
-    - approve
-  openshift-priv/template-service-broker:
-    plugins:
-    - approve
-  openshift-priv/template-service-broker-operator:
-    plugins:
-    - approve
-  openshift-priv/thanos:
-    plugins:
-    - approve
-  openshift-priv/vertical-pod-autoscaler-operator:
-    plugins:
-    - approve
-  openshift-priv/vmware-vsphere-csi-driver:
-    plugins:
-    - approve
-  openshift-priv/vmware-vsphere-csi-driver-operator:
-    plugins:
-    - approve
-  openshift-priv/vsphere-problem-detector:
-    plugins:
-    - approve
-  openshift-priv/whereabouts-cni:
-    plugins:
-    - approve
-  openshift-priv/windows-machine-config-bootstrapper:
-    plugins:
-    - approve
-  openshift-priv/windows-machine-config-operator:
-    plugins:
-    - approve
-  openshift-psap/ci-artifacts:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - owners-label
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  openshift-psap/special-resource-operator:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - owners-label
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  openshift-psap/wireguard-worker:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - owners-label
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  openshift-s2i/s2i-wildfly:
-    plugins:
-    - approve
-    - blunderbuss
-    - bugzilla
-    - heart
-    - help
-    - hold
-    - label
-    - lgtm
-    - override
-    - retitle
-    - shrug
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  openshift/ansible-service-broker:
-    plugins:
-    - approve
-  openshift/api:
-    plugins:
-    - approve
-  openshift/apiserver-library-go:
-    plugins:
-    - approve
-  openshift/app-netutil:
-    plugins:
-    - approve
-  openshift/assisted-installer:
-    plugins:
-    - approve
-  openshift/assisted-installer-agent:
-    plugins:
-    - approve
-  openshift/assisted-service:
-    plugins:
-    - approve
-  openshift/assisted-test-infra:
-    plugins:
-    - approve
-  openshift/autoheal:
-    plugins:
-    - approve
-  openshift/aws-account-operator:
-    plugins:
-    - approve
-  openshift/aws-account-shredder:
-    plugins:
-    - approve
-  openshift/aws-ebs-csi-driver:
-    plugins:
-    - approve
-  openshift/aws-ebs-csi-driver-operator:
-    plugins:
-    - approve
-  openshift/aws-efs-operator:
-    plugins:
-    - approve
-  openshift/aws-pod-identity-webhook:
-    plugins:
-    - approve
-  openshift/azure-disk-csi-driver:
-    plugins:
-    - approve
-  openshift/azure-disk-csi-driver-operator:
-    plugins:
-    - approve
-  openshift/azure-misc:
-    plugins:
-    - approve
-  openshift/baremetal-operator:
-    plugins:
-    - approve
-  openshift/baremetal-runtimecfg:
-    plugins:
-    - approve
-  openshift/boilerplate:
-    plugins:
-    - approve
-  openshift/bond-cni:
-    plugins:
-    - approve
-  openshift/build-machinery-go:
-    plugins:
-    - approve
-  openshift/builder:
-    plugins:
-    - approve
-  openshift/ceph-csi:
-    plugins:
-    - approve
-  openshift/certman-operator:
-    plugins:
-    - approve
-  openshift/ci-chat-bot:
-    plugins:
-    - approve
-  openshift/ci-docs:
-    plugins:
-    - approve
-  openshift/ci-ns-ttl-controller:
-    plugins:
-    - approve
-  openshift/ci-search:
-    plugins:
-    - approve
-  openshift/ci-tools:
-    plugins:
-    - approve
-  openshift/ci-vm-operator:
-    plugins:
-    - approve
-  openshift/cincinnati:
-    plugins:
-    - approve
-  openshift/cincinnati-graph-data:
-    plugins:
-    - approve
-  openshift/cincinnati-operator:
-    plugins:
-    - approve
-  openshift/client-go:
-    plugins:
-    - approve
-  openshift/cloud-credential-operator:
-    plugins:
-    - approve
-  openshift/cloud-ingress-operator:
-    plugins:
-    - approve
-  openshift/cloud-network-config-controller:
-    plugins:
-    - approve
-  openshift/cloud-provider-openstack:
-    plugins:
-    - approve
-  openshift/cluster-api:
-    plugins:
-    - approve
-  openshift/cluster-api-actuator-pkg:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-aws:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-azure:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-baremetal:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-gcp:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-kubemark:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-kubevirt:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-libvirt:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-openstack:
-    plugins:
-    - approve
-  openshift/cluster-api-provider-ovirt:
-    plugins:
-    - approve
-  openshift/cluster-authentication-operator:
-    plugins:
-    - approve
-  openshift/cluster-autoscaler-operator:
-    plugins:
-    - approve
-  openshift/cluster-baremetal-operator:
-    plugins:
-    - approve
-  openshift/cluster-bootstrap:
-    plugins:
-    - approve
-  openshift/cluster-cloud-controller-manager-operator:
-    plugins:
-    - approve
-  openshift/cluster-config-operator:
-    plugins:
-    - approve
-  openshift/cluster-csi-snapshot-controller-operator:
-    plugins:
-    - approve
-  openshift/cluster-dns-operator:
-    plugins:
-    - approve
-  openshift/cluster-etcd-operator:
-    plugins:
-    - approve
-  openshift/cluster-image-registry-operator:
-    plugins:
-    - approve
-  openshift/cluster-ingress-operator:
-    plugins:
-    - approve
-  openshift/cluster-kube-apiserver-operator:
-    plugins:
-    - approve
-  openshift/cluster-kube-controller-manager-operator:
-    plugins:
-    - approve
-  openshift/cluster-kube-descheduler-operator:
-    plugins:
-    - approve
-  openshift/cluster-kube-scheduler-operator:
-    plugins:
-    - approve
-  openshift/cluster-kube-storage-version-migrator-operator:
-    plugins:
-    - approve
-  openshift/cluster-logging-operator:
-    plugins:
-    - approve
-  openshift/cluster-machine-approver:
-    plugins:
-    - approve
-  openshift/cluster-monitoring-operator:
-    plugins:
-    - approve
-  openshift/cluster-network-operator:
-    plugins:
-    - approve
-  openshift/cluster-nfd-operator:
-    plugins:
-    - approve
-  openshift/cluster-node-tuning-operator:
-    plugins:
-    - approve
-  openshift/cluster-openshift-apiserver-operator:
-    plugins:
-    - approve
-  openshift/cluster-openshift-controller-manager-operator:
-    plugins:
-    - approve
-  openshift/cluster-policy-controller:
-    plugins:
-    - approve
-  openshift/cluster-resource-override-admission:
-    plugins:
-    - approve
-  openshift/cluster-resource-override-admission-operator:
-    plugins:
-    - approve
-  openshift/cluster-samples-operator:
-    plugins:
-    - approve
-  openshift/cluster-storage-operator:
-    plugins:
-    - approve
-  openshift/cluster-svcat-apiserver-operator:
-    plugins:
-    - approve
-  openshift/cluster-svcat-controller-manager-operator:
-    plugins:
-    - approve
-  openshift/cluster-update-keys:
-    plugins:
-    - approve
-  openshift/cluster-version-operator:
-    plugins:
-    - approve
-  openshift/community:
-    plugins:
-    - approve
-  openshift/compliance-operator:
-    plugins:
-    - approve
-  openshift/config:
-    plugins:
-    - config-updater
-    - approve
-  openshift/configmap-reload:
-    plugins:
-    - approve
-  openshift/configure-alertmanager-operator:
-    plugins:
-    - approve
-  openshift/console:
-    plugins:
-    - approve
-  openshift/console-operator:
-    plugins:
-    - approve
-  openshift/coredns:
-    plugins:
-    - approve
-  openshift/coredns-mdns:
-    plugins:
-    - approve
-  openshift/crd-schema-gen:
-    plugins:
-    - approve
-  openshift/csi-cluster-driver-registrar:
-    plugins:
-    - approve
-  openshift/csi-driver-manila-operator:
-    plugins:
-    - approve
-  openshift/csi-driver-nfs:
-    plugins:
-    - approve
-  openshift/csi-driver-projected-resource:
-    plugins:
-    - approve
-  openshift/csi-driver-registrar:
-    plugins:
-    - approve
-  openshift/csi-external-attacher:
-    plugins:
-    - approve
-  openshift/csi-external-provisioner:
-    plugins:
-    - approve
-  openshift/csi-external-resizer:
-    plugins:
-    - approve
-  openshift/csi-external-snapshotter:
-    plugins:
-    - approve
-  openshift/csi-livenessprobe:
-    plugins:
-    - approve
-  openshift/csi-node-driver-registrar:
-    plugins:
-    - approve
-  openshift/csi-operator:
-    plugins:
-    - approve
-  openshift/custom-domains-operator:
-    plugins:
-    - approve
-  openshift/custom-resource-status:
-    plugins:
-    - approve
-  openshift/deadmanssnitch-operator:
-    plugins:
-    - approve
-  openshift/dedicated-admin-operator:
-    plugins:
-    - approve
-  openshift/docker-distribution:
-    plugins:
-    - approve
-  openshift/driver-toolkit:
-    plugins:
-    - approve
-  openshift/egress-router-cni:
-    plugins:
-    - approve
-  openshift/elasticsearch-operator:
-    plugins:
-    - approve
-  openshift/elasticsearch-proxy:
-    plugins:
-    - approve
-  openshift/enhancements:
-    plugins:
-    - approve
-  openshift/enterprise-images:
-    plugins:
-    - approve
-  openshift/etcd:
-    plugins:
-    - approve
-  openshift/external-dns:
-    plugins:
-    - approve
-  openshift/external-storage:
-    plugins:
-    - approve
-  openshift/federation-v2-operator:
-    plugins:
-    - approve
-  openshift/file-integrity-operator:
-    plugins:
-    - approve
-  openshift/gatekeeper:
-    plugins:
-    - approve
-  openshift/gatekeeper-operator:
-    plugins:
-    - approve
-  openshift/gcp-pd-csi-driver:
-    plugins:
-    - approve
-  openshift/gcp-pd-csi-driver-operator:
-    plugins:
-    - approve
-  openshift/gcp-project-operator:
-    plugins:
-    - approve
-  openshift/grafana:
-    plugins:
-    - approve
-  openshift/hive:
-    plugins:
-    - approve
-  openshift/hive-team:
-    plugins:
-    - approve
-  openshift/hypershift:
-    plugins:
-    - approve
-  openshift/hypershift-toolkit:
-    plugins:
-    - approve
-  openshift/ib-sriov-cni:
-    plugins:
-    - approve
-  openshift/ibm-roks-toolkit:
-    plugins:
-    - approve
-  openshift/image-registry:
-    plugins:
-    - approve
-  openshift/imagebuilder:
-    plugins:
-    - approve
-  openshift/images:
-    plugins:
-    - approve
-  openshift/insights-operator:
-    plugins:
-    - approve
-  openshift/installer:
-    plugins:
-    - approve
-  openshift/ironic-hardware-inventory-recorder-image:
-    plugins:
-    - approve
-  openshift/ironic-image:
-    plugins:
-    - approve
-  openshift/ironic-inspector-image:
-    plugins:
-    - approve
-  openshift/ironic-ipa-downloader:
-    plugins:
-    - approve
-  openshift/ironic-rhcos-downloader:
-    plugins:
-    - approve
-  openshift/ironic-static-ip-manager:
-    plugins:
-    - approve
-  openshift/jenkins:
-    plugins:
-    - approve
-  openshift/jenkins-client-plugin:
-    plugins:
-    - approve
-  openshift/jenkins-openshift-login-plugin:
-    plugins:
-    - approve
-  openshift/jenkins-plugin:
-    plugins:
-    - approve
-  openshift/jenkins-sync-plugin:
-    plugins:
-    - approve
-  openshift/k8s-prometheus-adapter:
-    plugins:
-    - approve
-  openshift/knative-build:
-    plugins:
-    - approve
-  openshift/knative-caching:
-    plugins:
-    - approve
-  openshift/knative-client:
-    plugins:
-    - approve
-  openshift/knative-eventing:
-    plugins:
-    - approve
-  openshift/knative-eventing-contrib:
-    plugins:
-    - approve
-  openshift/knative-serving:
-    plugins:
-    - approve
-  openshift/kube-rbac-proxy:
-    plugins:
-    - approve
-  openshift/kube-state-metrics:
-    plugins:
-    - approve
-  openshift/kubecsr:
-    plugins:
-    - approve
-  openshift/kubefed:
-    plugins:
-    - approve
-  openshift/kubefed-operator:
-    plugins:
-    - approve
-  openshift/kubernetes:
-    plugins:
-    - approve
-  openshift/kubernetes-autoscaler:
-    plugins:
-    - approve
-  openshift/kubernetes-kube-storage-version-migrator:
-    plugins:
-    - approve
-  openshift/kubernetes-metrics-server:
-    plugins:
-    - approve
-  openshift/kubernetes-nmstate:
-    plugins:
-    - approve
-  openshift/kuryr-kubernetes:
-    plugins:
-    - approve
-  openshift/leader-elector:
-    plugins:
-    - approve
-  openshift/library:
-    plugins:
-    - approve
-  openshift/library-go:
-    plugins:
-    - approve
-  openshift/linuxptp-daemon:
-    plugins:
-    - approve
-  openshift/local-storage-operator:
-    plugins:
-    - approve
-  openshift/loki:
-    plugins:
-    - approve
-  openshift/machine-api-operator:
-    plugins:
-    - approve
-  openshift/machine-config-operator:
-    plugins:
-    - approve
-  openshift/managed-cluster-config:
-    plugins:
-    - approve
-  openshift/managed-cluster-validating-webhooks:
-    plugins:
-    - approve
-  openshift/managed-prometheus-exporter-dns:
-    plugins:
-    - approve
-  openshift/managed-prometheus-exporter-ebs-iops-reporter:
-    plugins:
-    - approve
-  openshift/managed-prometheus-exporter-stuck-ebs-vols:
-    plugins:
-    - approve
-  openshift/managed-upgrade-operator:
-    plugins:
-    - approve
-  openshift/managed-velero-operator:
-    plugins:
-    - approve
-  openshift/mdns-publisher:
-    plugins:
-    - approve
-  openshift/metal3-smart-exporter:
-    plugins:
-    - approve
-  openshift/monitor-project-lifecycle:
-    plugins:
-    - approve
-  openshift/multus-cni:
-    plugins:
-    - approve
-  openshift/must-gather:
-    plugins:
-    - approve
-  openshift/must-gather-operator:
-    plugins:
-    - approve
-  openshift/network-metrics-daemon:
-    plugins:
-    - approve
-  openshift/network-tools:
-    plugins:
-    - approve
-  openshift/node-feature-discovery:
-    plugins:
-    - approve
-  openshift/node-problem-detector:
-    plugins:
-    - approve
-  openshift/node-problem-detector-operator:
-    plugins:
-    - approve
-  openshift/node_exporter:
-    plugins:
-    - approve
-  openshift/oauth-apiserver:
-    plugins:
-    - approve
-  openshift/oauth-proxy:
-    plugins:
-    - approve
-  openshift/oauth-server:
-    plugins:
-    - approve
-  openshift/oc:
-    plugins:
-    - approve
-  openshift/oc-compliance:
-    plugins:
-    - approve
-  openshift/ocs-operator:
-    plugins:
-    - approve
-  openshift/odo:
-    plugins:
-    - approve
-    - project
-    - milestone
-    - milestonestatus
-  openshift/odo-init-image:
-    plugins:
-    - approve
-    - project
-    - milestone
-    - milestonestatus
-  openshift/okd-machine-os:
-    plugins:
-    - approve
-  openshift/online-console-extensions:
-    plugins:
-    - approve
-  openshift/online-hibernation:
-    plugins:
-    - approve
-  openshift/online-registration:
-    plugins:
-    - approve
-  openshift/openshift-ansible:
-    plugins:
-    - approve
-  openshift/openshift-apiserver:
-    plugins:
-    - approve
-  openshift/openshift-azure:
-    plugins:
-    - approve
-    - release-note
-  openshift/openshift-controller-manager:
-    plugins:
-    - approve
-  openshift/openshift-docs:
-    plugins:
-    - size
-  openshift/openshift-gitops-examples:
-    plugins:
-    - approve
-  openshift/openshift-state-metrics:
-    plugins:
-    - approve
-  openshift/openshift-tests:
-    plugins:
-    - approve
-  openshift/openshift-tests-private:
-    plugins:
-    - approve
-  openshift/openshift-tuned:
-    plugins:
-    - approve
-  openshift/openstack-cinder-csi-driver-operator:
-    plugins:
-    - approve
-  openshift/operator-framework-olm:
-    plugins:
-    - approve
-  openshift/origin:
-    plugins:
-    - approve
-  openshift/origin-aggregated-logging:
-    plugins:
-    - approve
-  openshift/origin-branding:
-    plugins:
-    - approve
-  openshift/os:
-    plugins:
-    - approve
-  openshift/osd-metrics-exporter:
-    plugins:
-    - approve
-  openshift/osdctl:
-    plugins:
-    - approve
-  openshift/osde2e:
-    plugins:
-    - approve
-  openshift/osde2e-private-providers:
-    plugins:
-    - approve
-  openshift/ose:
-    plugins:
-    - approve
-  openshift/osin:
-    plugins:
-    - approve
-  openshift/ovirt-csi-driver:
-    plugins:
-    - approve
-  openshift/ovirt-csi-driver-operator:
-    plugins:
-    - approve
-  openshift/ovn-kubernetes:
-    plugins:
-    - approve
-  openshift/pagerduty-operator:
-    plugins:
-    - approve
-  openshift/pipelines-catalog:
-    plugins:
-    - approve
-  openshift/pipelines-tutorial:
-    plugins:
-    - approve
-  openshift/pod-checkpointer-operator:
-    plugins:
-    - approve
-  openshift/private-cluster-rhapi-apischeme-updater:
-    plugins:
-    - approve
-  openshift/procfs:
-    plugins:
-    - approve
-  openshift/prom-label-proxy:
-    plugins:
-    - approve
-  openshift/prometheus:
-    plugins:
-    - approve
-  openshift/prometheus-alertmanager:
-    plugins:
-    - approve
-  openshift/prometheus-client_golang:
-    plugins:
-    - approve
-  openshift/prometheus-operator:
-    plugins:
-    - approve
-  openshift/ptp-operator:
-    plugins:
-    - approve
-  openshift/rbac-permissions-operator:
-    plugins:
-    - approve
-  openshift/redhat-subscription-injection-webhook:
-    plugins:
-    - approve
-  openshift/release:
-    plugins:
-    - config-updater
-    - approve
-  openshift/release-controller:
-    plugins:
-    - approve
-  openshift/rhcos-tools:
-    plugins:
-    - approve
-  openshift/rook:
-    plugins:
-    - approve
-  openshift/rosa:
-    plugins:
-    - approve
-  openshift/route-monitor-operator:
-    plugins:
-    - approve
-  openshift/route-override-cni:
-    plugins:
-    - approve
-  openshift/router:
-    plugins:
-    - approve
-  openshift/runtime-utils:
-    plugins:
-    - approve
-  openshift/sdn:
-    plugins:
-    - approve
-  openshift/service-ca-operator:
-    plugins:
-    - approve
-  openshift/service-catalog:
-    plugins:
-    - approve
-  openshift/sig-storage-local-static-provisioner:
-    plugins:
-    - approve
-  openshift/sippy:
-    plugins:
-    - approve
-  openshift/source-to-image:
-    plugins:
-    - approve
-  openshift/special-resource-operator:
-    plugins:
-    - approve
-  openshift/splunk-forwarder-operator:
-    plugins:
-    - approve
-  openshift/sre-ssh-proxy-container:
-    plugins:
-    - approve
-  openshift/sriov-cni:
-    plugins:
-    - approve
-  openshift/sriov-dp-admission-controller:
-    plugins:
-    - approve
-  openshift/sriov-network-device-plugin:
-    plugins:
-    - approve
-  openshift/sriov-network-operator:
-    plugins:
-    - approve
-  openshift/sriov-tests:
-    plugins:
-    - approve
-  openshift/static-config-operator:
-    plugins:
-    - approve
-  openshift/tektoncd-catalog:
-    plugins:
-    - approve
-  openshift/tektoncd-cli:
-    plugins:
-    - approve
-  openshift/tektoncd-pipeline:
-    plugins:
-    - approve
-  openshift/tektoncd-pipeline-operator:
-    plugins:
-    - approve
-  openshift/tektoncd-triggers:
-    plugins:
-    - approve
-  openshift/telemeter:
-    plugins:
-    - approve
-  openshift/template-service-broker:
-    plugins:
-    - approve
-  openshift/template-service-broker-operator:
-    plugins:
-    - approve
-  openshift/thanos:
-    plugins:
-    - approve
-  openshift/verification-tests:
-    plugins:
-    - approve
-  openshift/vertical-pod-autoscaler-operator:
-    plugins:
-    - approve
-  openshift/vmware-vsphere-csi-driver:
-    plugins:
-    - approve
-  openshift/vmware-vsphere-csi-driver-operator:
-    plugins:
-    - approve
-  openshift/vsphere-problem-detector:
-    plugins:
-    - approve
-  openshift/whereabouts-cni:
-    plugins:
-    - approve
-  openshift/windows-machine-config-bootstrapper:
-    plugins:
-    - approve
-  openshift/windows-machine-config-operator:
-    plugins:
-    - approve
-  openstack-k8s-operators/osp-director-operator:
-    plugins:
-    - assign
-    - blunderbuss
-    - bugzilla
-    - cat
-    - dog
-    - heart
-    - golint
-    - goose
-    - help
-    - hold
-    - jira
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - pony
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - owners-label
-    - wip
-    - yuks
-    - approve
-  operator-framework:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  operator-framework/community-operators:
-    plugins:
-    - bugzilla
-    - owners-label
-  operator-framework/olm-docs:
-    plugins:
-    - approve
-    - owners-label
-  operator-framework/operator-lib:
-    plugins:
-    - approve
-    - owners-label
-  operator-framework/operator-lifecycle-manager:
-    plugins:
-    - approve
-    - bugzilla
-  operator-framework/operator-marketplace:
-    plugins:
-    - approve
-    - bugzilla
-  operator-framework/operator-registry:
-    plugins:
-    - approve
-    - bugzilla
-  ostreedev/ostree:
-    plugins:
-    - assign
-    - cat
-    - dog
-    - heart
-    - help
-    - hold
-    - label
-    - override
-    - retitle
-    - shrug
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  red-hat-data-services/opendatahub-operator:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - golint
-    - heart
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - milestone
-    - milestonestatus
-    - owners-label
-    - override
-    - retitle
-    - shrug
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  redhat-developer:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  redhat-developer/devconsole-api:
-    plugins:
-    - approve
-  redhat-developer/devconsole-operator:
-    plugins:
-    - approve
-  redhat-developer/git-service:
-    plugins:
-    - approve
-  redhat-developer/gitops-backend:
-    plugins:
-    - approve
-    - goose
-    - pony
-    - owners-label
-  redhat-developer/gitops-operator:
-    plugins:
-    - approve
-    - goose
-    - pony
-    - owners-label
-  redhat-developer/helm:
-    plugins:
-    - approve
-  redhat-developer/jenkins-operator:
-    plugins:
-    - approve
-  redhat-developer/jenkins-operator-bundle:
-    plugins:
-    - approve
-  redhat-developer/kam:
-    plugins:
-    - approve
-    - goose
-    - pony
-    - owners-label
-  redhat-developer/openshift-jenkins-operator:
-    plugins:
-    - approve
-  redhat-developer/service-binding-operator:
-    plugins:
-    - approve
-  redhat-operator-ecosystem:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  redhat-operator-ecosystem/playground:
-    plugins:
-    - approve
-  redhat-operator-ecosystem/release:
-    plugins:
-    - config-updater
-    - approve
-  shipwright-io:
-    plugins:
-    - assign
-    - blunderbuss
-    - cat
-    - dog
-    - heart
-    - golint
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - override
-    - retitle
-    - shrug
-    - sigmention
-    - skip
-    - trigger
-    - verify-owners
-    - wip
-    - yuks
-  shipwright-io/build:
-    plugins:
-    - approve
-    - release-note
-    - require-matching-label
-  shipwright-io/cli:
-    plugins:
-    - approve
-  shipwright-io/operator:
-    plugins:
-    - approve
-    - release-note
-    - require-matching-label
-  shipwright-io/website:
-    plugins:
-    - approve
-  tmckayus:
-    plugins:
-    - trigger
-    - welcome
-  tnozicka/openshift-acme:
-    plugins:
-    - approve
-    - assign
-    - blunderbuss
-    - branchcleaner
-    - golint
-    - heart
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - milestone
-    - milestonestatus
-    - override
-    - owners-label
-    - override
-    - owners-label
-    - release-note
-    - shrug
-    - skip
-    - stage
-    - trigger
-    - verify-owners
-    - welcome
-    - wip
-    - yuks
 project_config:
   project_org_configs:
     openshift:

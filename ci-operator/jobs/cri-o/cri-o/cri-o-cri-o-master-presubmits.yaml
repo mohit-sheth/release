@@ -5,7 +5,7 @@ presubmits:
     context: ci/kata-jenkins
     labels:
       master: jenkins.katacontainers.io
-    name: kata-containers-crio-PR
+    name: kata-containers-2-crio-PR
     rerun_command: /test kata-containers
     skip_branches:
     - gh-pages

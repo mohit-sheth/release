@@ -1,27 +1,37 @@
 base_images:
-  boskos:
-    name: boskos
-    namespace: ci
-    tag: latest
   cli:
-    name: "4.7"
+    name: "4.8"
     namespace: ocp
     tag: cli
-  installer:
-    name: "4.7"
-    namespace: ocp
-    tag: installer
+  golangci-lint:
+    name: golangci-lint
+    namespace: ci
+    tag: v1.37.1
   os:
     name: centos
     namespace: origin
     tag: "8"
 binary_build_commands: make production-install
 build_root:
-  image_stream_tag:
-    name: release
-    namespace: openshift
-    tag: golang-1.16-vault-typescript
+  from_repository: true
+  use_build_cache: true
 images:
+- context_dir: images/sprint-automation/
+  from: os
+  inputs:
+    bin:
+      paths:
+      - destination_dir: .
+        source_path: /go/bin/sprint-automation
+  to: sprint-automation
+- context_dir: images/pod-scaler/
+  from: os
+  inputs:
+    bin:
+      paths:
+      - destination_dir: .
+        source_path: /go/bin/pod-scaler
+  to: pod-scaler
 - context_dir: images/cvp-trigger/
   from: os
   inputs:
@@ -134,6 +144,17 @@ images:
       - destination_dir: .
         source_path: /go/bin/dptp-controller-manager
   to: dptp-controller-manager
+- dockerfile_literal: |-
+    FROM centos:8
+    ADD dptp-pools-cm /usr/bin/dptp-pools-cm
+    ENTRYPOINT ["dptp-pools-cm"]
+  from: os
+  inputs:
+    bin:
+      paths:
+      - destination_dir: .
+        source_path: /go/bin/dptp-pools-cm
+  to: dptp-pools-cm
 - context_dir: images/autoconfigbrancher/
   from: os
   inputs:
@@ -159,6 +180,8 @@ images:
         source_path: /go/bin/determinize-prow-config
       - destination_dir: .
         source_path: /go/bin/registry-replacer
+      - destination_dir: .
+        source_path: /go/bin/ci-operator-yaml-creator
   to: auto-config-brancher
 - context_dir: images/prowjobdispatcher
   from: os
@@ -204,18 +227,6 @@ images:
       - destination_dir: .
         source_path: /go/bin/determinize-peribolos
   to: determinize-peribolos
-- dockerfile_path: images/ipi-deprovision/Dockerfile
-  from: os
-  inputs:
-    cli:
-      paths:
-      - destination_dir: usr/bin
-        source_path: /usr/bin/oc
-    installer:
-      paths:
-      - destination_dir: usr/bin
-        source_path: /usr/bin/openshift-install
-  to: ipi-deprovision
 - context_dir: images/applyconfig
   from: os
   inputs:
@@ -228,14 +239,6 @@ images:
       - destination_dir: usr/bin
         source_path: /usr/bin/oc
   to: applyconfig
-- context_dir: images/autobumper
-  from: os
-  inputs:
-    bin:
-      paths:
-      - destination_dir: .
-        source_path: /go/bin/autobumper
-  to: autobumper
 - context_dir: images/autoowners
   from: os
   inputs:
@@ -418,14 +421,6 @@ images:
       - destination_dir: .
         source_path: /go/bin/ocp-build-data-enforcer
   to: ocp-build-data-enforcer
-- context_dir: test/images/e2e-bin/
-  from: test-bin
-  inputs:
-    boskos:
-      paths:
-      - destination_dir: boskos/
-        source_path: /app
-  to: e2e-bin
 - dockerfile_literal: |-
     FROM centos:8
     ADD vault-subpath-proxy /usr/bin/vault-subpath-proxy
@@ -437,9 +432,41 @@ images:
       - destination_dir: .
         source_path: /go/bin/vault-subpath-proxy
   to: vault-subpath-proxy
+- dockerfile_literal: |-
+    FROM centos:8
+    ADD cluster-display /usr/bin/cluster-display
+    ENTRYPOINT ["/usr/bin/cluster-display"]
+  from: os
+  inputs:
+    bin:
+      paths:
+      - destination_dir: .
+        source_path: /go/bin/cluster-display
+  to: cluster-display
+- dockerfile_literal: |-
+    FROM centos:8
+    ADD vault-secret-collection-manager /usr/bin/vault-secret-collection-manager
+    ENTRYPOINT ["/usr/bin/vault-secret-collection-manager"]
+  from: os
+  inputs:
+    bin:
+      paths:
+      - destination_dir: .
+        source_path: /go/bin/vault-secret-collection-manager
+  to: vault-secret-collection-manager
+- dockerfile_literal: |-
+    FROM centos:8
+    RUN  dnf install -y git && dnf clean all && rm -rf /var/cache/dnf
+    ADD ci-operator-yaml-creator /usr/bin/ci-operator-yaml-creator
+    ENTRYPOINT ["ci-operator-yaml-creator"]
+  from: os
+  inputs:
+    bin:
+      paths:
+      - destination_dir: .
+        source_path: /go/bin/ci-operator-yaml-creator
+  to: ci-operator-yaml-creator
 promotion:
-  excluded_images:
-  - e2e-bin
   namespace: ci
   tag: latest
 resources:
@@ -470,7 +497,7 @@ tests:
     test:
     - as: e2e
       commands: |
-        GCS_CREDENTIALS_FILE=/tmp/gcs/service-account.json REMOTE_REGISTRY_SECRET_DIR=/tmp/import-secret LOCAL_REGISTRY_SECRET_DIR=/tmp/pull-secret KUBECONFIG=/auth/kubeconfig make e2e
+        GCS_CREDENTIALS_FILE=/tmp/gcs/service-account.json REMOTE_REGISTRY_SECRET_DIR=/tmp/import-secret LOCAL_REGISTRY_SECRET_DIR=/tmp/pull-secret KUBECONFIG=/auth/kubeconfig HIVE_KUBECONFIG=/tmp/hive/kubeconfig make e2e
       credentials:
       - mount_path: /auth
         name: ci-operator
@@ -487,7 +514,65 @@ tests:
       - mount_path: /tmp/gcs
         name: gce-sa-credentials-gcs-publisher
         namespace: test-credentials
-      from: e2e-bin
+      - mount_path: /tmp/hive
+        name: hive-hive-credentials
+        namespace: test-credentials
+      from: test-bin
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+- as: e2e-oo
+  steps:
+    test:
+    - as: e2e-oo
+      commands: |
+        GCS_CREDENTIALS_FILE=/tmp/gcs/service-account.json REMOTE_REGISTRY_SECRET_DIR=/tmp/import-secret LOCAL_REGISTRY_SECRET_DIR=/tmp/pull-secret KUBECONFIG=/auth/kubeconfig make e2e TAGS=e2e_framework,optional_operators
+      credentials:
+      - mount_path: /auth
+        name: ci-operator
+        namespace: test-credentials
+      - mount_path: /tmp/pull-secret
+        name: registry-pull-credentials
+        namespace: test-credentials
+      - mount_path: /etc/push-secret
+        name: registry-push-credentials-ci-central
+        namespace: test-credentials
+      - mount_path: /tmp/import-secret
+        name: ci-pull-credentials
+        namespace: test-credentials
+      - mount_path: /tmp/gcs
+        name: gce-sa-credentials-gcs-publisher
+        namespace: test-credentials
+      from: test-bin
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+- as: e2e-oo-post
+  postsubmit: true
+  steps:
+    test:
+    - as: e2e-oo-post
+      commands: |
+        GCS_CREDENTIALS_FILE=/tmp/gcs/service-account.json REMOTE_REGISTRY_SECRET_DIR=/tmp/import-secret LOCAL_REGISTRY_SECRET_DIR=/tmp/pull-secret KUBECONFIG=/auth/kubeconfig make e2e TAGS=e2e_framework,optional_operators
+      credentials:
+      - mount_path: /auth
+        name: ci-operator
+        namespace: test-credentials
+      - mount_path: /tmp/pull-secret
+        name: registry-pull-credentials
+        namespace: test-credentials
+      - mount_path: /etc/push-secret
+        name: registry-push-credentials-ci-central
+        namespace: test-credentials
+      - mount_path: /tmp/import-secret
+        name: ci-pull-credentials
+        namespace: test-credentials
+      - mount_path: /tmp/gcs
+        name: gce-sa-credentials-gcs-publisher
+        namespace: test-credentials
+      from: test-bin
       resources:
         requests:
           cpu: 100m
@@ -496,10 +581,18 @@ tests:
   commands: make check-breaking-changes
   container:
     from: test-bin
+- as: checkconfig
+  commands: make validate-checkconfig
+  container:
+    from: test-bin
 - as: validate-vendor
   commands: make validate-vendor
   container:
     from: src
+- as: lint
+  commands: make lint
+  container:
+    from: golangci-lint
 zz_generated_metadata:
   branch: master
   org: openshift

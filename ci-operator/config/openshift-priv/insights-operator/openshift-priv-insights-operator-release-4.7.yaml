@@ -56,10 +56,10 @@ tests:
   steps:
     cluster_profile: gcp
     workflow: openshift-e2e-gcp
-- as: e2e-gcp-upgrade
+- as: e2e-agnostic-upgrade
   steps:
-    cluster_profile: gcp
-    workflow: openshift-upgrade-gcp
+    cluster_profile: azure4
+    workflow: openshift-upgrade-azure
 - as: insights-operator-e2e-tests
   steps:
     cluster_profile: gcp
@@ -71,38 +71,6 @@ tests:
       cli: latest
       commands: make test-e2e
       from: src
-      resources:
-        requests:
-          cpu: 100m
-    workflow: ipi-gcp
-- as: insights-operator-e2e-tests-periodic
-  cron: 0 0 * * *
-  steps:
-    cluster_profile: gcp
-    pre:
-    - chain: ipi-gcp-pre
-    - ref: insights-live
-    test:
-    - as: test
-      cli: latest
-      commands: make test-e2e
-      from: src
-      resources:
-        requests:
-          cpu: 100m
-    workflow: ipi-gcp
-- as: insights-operator-tests-periodic
-  cron: 0 0 * * *
-  steps:
-    cluster_profile: gcp
-    pre:
-    - chain: ipi-gcp-pre
-    - ref: insights-live
-    test:
-    - as: test
-      cli: latest
-      commands: pytest.sh
-      from: insights-operator-tests
       resources:
         requests:
           cpu: 100m

@@ -40,6 +40,32 @@
             annotations: {
               message: '{{ $labels.login }} may run out of API quota before the next reset. Check the <https://grafana-prow-monitoring.apps.ci.l2s4.p1.openshiftapps.com/d/d72fe8d0400b2912e319b1e95d0ab1b3/github-cache?orgId=1|dashboard>',
             },
+          },
+          {
+            alert: 'ghproxy-running-out-github-tokens-in-a-hour',
+            expr: |||
+              github_token_usage{token_hash=~"openshift-ci - .*"} + deriv(github_token_usage{token_hash=~"openshift-ci - .*"}[20m]) * github_token_reset  / 1e9 < 100
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'critical',
+            },
+            annotations: {
+              message: '{{ $labels.token_hash }} may run out of API quota before the next reset. Check the <https://grafana-prow-monitoring.apps.ci.l2s4.p1.openshiftapps.com/d/d72fe8d0400b2912e319b1e95d0ab1b3/github-cache?orgId=1|dashboard>',
+            },
+          },
+          {
+            alert: 'ghproxy-90-inode-percent',
+            expr: |||
+              ghcache_disk_inode_used / ghcache_disk_inode_total * 100 > 90
+            |||,
+            'for': '5m',
+            labels: {
+              severity: 'critical',
+            },
+            annotations: {
+              message: '{{ $labels.token_hash }} uses 90% of the available inodes. Check <ghcache_disk_inode_used / ghcache_disk_inode_total * 100 |prometheus>',
+            },
           }
         ],
       },

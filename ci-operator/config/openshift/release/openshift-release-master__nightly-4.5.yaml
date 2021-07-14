@@ -56,47 +56,28 @@ tests:
   cron: 0 0 * * 1
   steps:
     cluster_profile: packet
-    pre:
-    - ref: baremetalds-packet-setup
-    - ref: ipi-install-rbac
-    - ref: baremetalds-devscripts-conf-compact
-    - ref: baremetalds-devscripts-setup
+    env:
+      DEVSCRIPTS_CONFIG: |
+        IP_STACK=v6
+        NUM_WORKERS=0
     workflow: baremetalds-e2e
 - as: e2e-aws-proxy
   cron: 0 0 */2 * *
   steps:
     cluster_profile: aws
     workflow: openshift-e2e-aws-proxy
-- as: e2e-vsphere
-  cron: 0 1,9,17 * * *
-  steps:
-    cluster_profile: vsphere
-    workflow: openshift-e2e-vsphere
-- as: e2e-vsphere-serial
-  cron: 30 1,9,17 * * *
-  steps:
-    cluster_profile: vsphere
-    workflow: openshift-e2e-vsphere-serial
-- as: e2e-vsphere-upi
-  cron: 15 1,9,17 * * *
-  steps:
-    cluster_profile: vsphere
-    workflow: openshift-e2e-vsphere-upi
-- as: e2e-vsphere-upi-serial
-  cron: 45 1,9,17 * * *
-  steps:
-    cluster_profile: vsphere
-    workflow: openshift-e2e-vsphere-upi-serial
 - as: e2e-aws
   interval: 12h
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws
 - as: e2e-ovirt
   cron: 0 4,21 * * *
   steps:
     cluster_profile: ovirt
-    workflow: openshift-e2e-ovirt-conformance-without-csi
+    workflow: openshift-e2e-ovirt-conformance-release-4.4-4.5
 - as: e2e-gcp
   interval: 12h
   steps:
@@ -110,7 +91,9 @@ tests:
 - as: console-aws
   interval: 48h
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     test:
     - as: e2e-test
       cli: latest
@@ -126,11 +109,14 @@ tests:
 - as: cluster-logging-operator-e2e
   interval: 24h
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     test:
     - as: e2e-test
       cli: latest
-      commands: FAKE_HOME_DIR=/tmp/home LOG_DIR=${ARTIFACT_DIR}/logging-logs ARTIFACT_DIR=${ARTIFACT_DIR}/logging-artifacts make test-e2e-olm
+      commands: FAKE_HOME_DIR=/tmp/home LOG_DIR=${ARTIFACT_DIR}/logging-logs ARTIFACT_DIR=${ARTIFACT_DIR}/logging-artifacts
+        make test-e2e-olm
       from: cluster-logging-operator-e2e
       resources:
         limits:
@@ -152,8 +138,9 @@ tests:
 - as: e2e-aws-fips
   interval: 48h
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
     env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
       FIPS_ENABLED: "true"
     pre:
     - chain: ipi-aws-pre
@@ -183,8 +170,9 @@ tests:
 - as: e2e-aws-fips-serial
   cron: '@yearly'
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
     env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
       FIPS_ENABLED: "true"
       TEST_SUITE: openshift/conformance/serial
     pre:
@@ -202,6 +190,18 @@ tests:
     - chain: ipi-gcp-pre
     - ref: fips-check
     workflow: openshift-e2e-gcp
+- as: e2e-aws-serial
+  interval: 24h
+  steps:
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
+    workflow: openshift-e2e-aws-serial
+- as: e2e-azure
+  interval: 12h
+  steps:
+    cluster_profile: azure4
+    workflow: openshift-e2e-azure
 zz_generated_metadata:
   branch: master
   org: openshift

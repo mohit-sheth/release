@@ -79,6 +79,23 @@ data:
       region = "us-east-1"
       stream_name = "{{ kubernetes.pod_node_name }}"
       encoding.codec = "json"
+
+    # Release-controller logs
+    [transforms.release_controllers]
+      type = "filter"
+      inputs = ["kubernetes"]
+      condition.type = "check_fields"
+      condition."kubernetes.pod_namespace.eq" = "ci"
+      condition."kubernetes.pod_name.starts_with" = "release-controller-"
+      condition."kubernetes.container_name.eq" = ["controller"]
+
+    [sinks.rc_aws_cloudwatch_logs]
+      type = "aws_cloudwatch_logs"
+      inputs = ["release_controllers"]
+      group_name = "app-ci-logs/{{ kubernetes.pod_labels.app }}"
+      region = "us-east-1"
+      stream_name = "{{ kubernetes.pod_name }}"
+      encoding.codec = "text"
 ---
 # Vector agent on each node where it collects logs from pods.
 apiVersion: apps/v1
@@ -98,13 +115,13 @@ spec:
     metadata:
       labels:
         name: vector-agent
-        rev: "14"
+        rev: "15"
     spec:
       hostNetwork: true
       serviceAccountName: vector-log-shipper
       containers:
       - name: vector
-        image: docker.io/timberio/vector:0.11.1-alpine
+        image: vector:0.14.X-alpine
         args:
         - --watch-config=/etc/vector/vector.toml
         env:
@@ -205,3 +222,27 @@ users:
 - system:serviceaccount:prow-logging:vector-log-shipper
 volumes:
 - '*'
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: vector
+  namespace: prow-logging
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: 0.11.1-alpine
+    from:
+      kind: DockerImage
+      # Mirror of docker.io/timberio/vector:0.11.1-alpine because the cluster hit the ratelimit for that
+      name: quay.io/droslean/vector:0.11.1-alpine
+    referencePolicy:
+      type: Local
+  - name: 0.14.X-alpine
+    from:
+      kind: DockerImage
+      # Mirror of docker.io/timberio/vector::0.14.X-alpine because the cluster hit the ratelimit for that
+      name: quay.io/alvaroaleman/vector:0.14.X-alpine
+    referencePolicy:
+      type: Local

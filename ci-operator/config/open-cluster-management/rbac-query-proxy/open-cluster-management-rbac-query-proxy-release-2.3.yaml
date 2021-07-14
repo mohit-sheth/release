@@ -3,25 +3,28 @@ base_images:
     name: ubi-minimal
     namespace: ocp
     tag: "8"
-  open-cluster-management_builder_go1.15-linux-amd64:
+  open-cluster-management_builder_go1.15-linux:
     name: builder
     namespace: open-cluster-management
-    tag: go1.15-linux-amd64
+    tag: go1.15-linux
+  open-cluster-management_builder_go1.16-linux:
+    name: builder
+    namespace: open-cluster-management
+    tag: go1.16-linux
 build_root:
   image_stream_tag:
     name: builder
     namespace: open-cluster-management
-    tag: go1.15-linux-amd64
+    tag: go1.15-linux
 images:
 - dockerfile_path: Dockerfile.prow
   from: base
   inputs:
-    open-cluster-management_builder_go1.15-linux-amd64:
+    open-cluster-management_builder_go1.16-linux:
       as:
-      - registry.ci.openshift.org/open-cluster-management/builder:go1.15-linux-amd64
+      - registry.ci.openshift.org/open-cluster-management/builder:go1.16-linux
   to: rbac-query-proxy
 promotion:
-  disabled: true
   name: "2.3"
   namespace: open-cluster-management
 resources:
@@ -51,7 +54,9 @@ tests:
       commands: |
         export COMPONENT_IMAGE_NAME=${IMAGE_FORMAT//\/stable:\$\{component\}//pipeline:rbac-query-proxy}
         export SELF="make -f Makefile.prow"
-        make -f Makefile.prow e2e-tests
+        set -o pipefail
+        make -f Makefile.prow e2e-tests 2>&1 | tee ${ARTIFACT_DIR}/e2e_tests_out.log
+        set +o pipefail
       env:
       - default: oc
         name: KUBECTL

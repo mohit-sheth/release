@@ -1,9 +1,14 @@
 ref:
   as: openshift-e2e-test
   from: tests
+  grace_period: 10m
   commands: openshift-e2e-test-commands.sh
   timeout: 10800s
   env:
+  - name: TEST_ARGS
+    default: ""
+    documentation: |-
+      Additional arguments to be passed to 'openshift-test'
   - name: TEST_TYPE
     default: "suite"
     documentation: |
@@ -25,9 +30,13 @@ ref:
                   TEST_UPGRADE_OPTIONS. All product releases must pass the conformance suite after
                   an upgrade completes or have explicit logic in their test to tolerate behavior after
                   upgrade.
+      * 'upgrade-paused' - Perform an upgrade to the images defined by OPENSHIFT_UPGRADE_RELEASE_IMAGE_OVERRIDE with paused worker pool.
   - name: TEST_SUITE
     default: openshift/conformance/parallel
     documentation: The test suite to run.  Use 'openshift-test run --help' to list available suites.
+  - name: TEST_UPGRADE_SUITE
+    default: all
+    documentation: The test suite to run in upgrade tests.  Use 'openshift-test run --help' to list available suites.
   - name: TEST_SKIPS
     default: ""
     documentation: Regular expression (POSIX basic regular expression) of tests to skip.

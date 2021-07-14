@@ -52,7 +52,7 @@ tests:
   cron: 0 5,22 * * *
   steps:
     cluster_profile: ovirt
-    workflow: openshift-e2e-ovirt-conformance-without-csi
+    workflow: openshift-e2e-ovirt-conformance-release-4.4-4.5
 - as: e2e-gcp
   interval: 24h
   steps:
@@ -147,6 +147,16 @@ tests:
     - chain: ipi-aws-pre
     - ref: fips-check
     workflow: openshift-upgrade-aws
+- as: e2e-aws-serial
+  interval: 24h
+  steps:
+    cluster_profile: aws
+    workflow: openshift-e2e-aws-serial
+- as: e2e-azure
+  interval: 24h
+  steps:
+    cluster_profile: azure4
+    workflow: openshift-e2e-azure
 zz_generated_metadata:
   branch: master
   org: openshift

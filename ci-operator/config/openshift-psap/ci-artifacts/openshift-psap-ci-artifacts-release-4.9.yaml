@@ -12,9 +12,12 @@ images:
 - dockerfile_path: build/Dockerfile
   from: os
   to: ci-artifacts
-promotion:
-  name: "4.9"
-  namespace: ocp
+releases:
+  latest:
+    candidate:
+      product: ocp
+      stream: nightly
+      version: "4.8"
 resources:
   '*':
     limits:
@@ -22,17 +25,15 @@ resources:
     requests:
       cpu: 2000m
       memory: 2Gi
-tag_specification:
-  name: "4.9"
-  namespace: ocp
 tests:
-- as: gpu-operator-e2e
+- as: gpu-operator-e2e-master
+  cron: 0 */23 * * *
   steps:
     cluster_profile: aws
     test:
     - as: nightly
       cli: latest
-      commands: run gpu-ci
+      commands: run gpu-operator test_master_branch
       credentials:
       - mount_path: /var/run/psap-entitlement-secret
         name: psap-entitlement-secret

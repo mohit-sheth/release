@@ -2,35 +2,19 @@
 # See the OWNERS docs: https://git.k8s.io/community/contributors/guide/owners.md
 
 approvers:
-- aditya-konarde
-- arilivigni
 - crawford
-- jfchevrette
-- jmelis
 - jottofar
 - lalatendumohanty
 - lucab
-- maorfr
-- pbergene
 - pratikmahajan
-- rrati
-- skryzhny
 - vrutkovs
 - wking
 options: {}
 reviewers:
-- aditya-konarde
-- arilivigni
 - crawford
-- jfchevrette
-- jmelis
 - jottofar
 - lalatendumohanty
 - lucab
-- maorfr
-- pbergene
 - pratikmahajan
-- rrati
-- skryzhny
 - vrutkovs
 - wking

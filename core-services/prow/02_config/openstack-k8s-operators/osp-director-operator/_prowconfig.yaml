@@ -1,0 +1,25 @@
+branch-protection:
+  orgs:
+    openstack-k8s-operators:
+      repos:
+        osp-director-operator:
+          required_status_checks:
+            contexts:
+            - continuous-integration/jenkins/pr-merge
+            - dpulls
+            - govet, golint and gotest (1.14.x, ubuntu-latest)
+            - golangci (1.14.x, ubuntu-latest)
+tide:
+  queries:
+  - labels:
+    - approved
+    - lgtm
+    missingLabels:
+    - backports/unvalidated-commits
+    - bugzilla/invalid-bug
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - needs-rebase
+    repos:
+    - openstack-k8s-operators/osp-director-operator

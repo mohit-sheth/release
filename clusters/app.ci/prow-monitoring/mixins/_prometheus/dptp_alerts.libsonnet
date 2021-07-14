@@ -5,9 +5,32 @@
         name: 'plank-infra',
         rules: [
           {
+            alert: 'ci-tools-postsubmit-failures',
+            expr: |||
+              sum by (job_name) (
+                rate(
+                  prowjob_state_transitions{job="prow-controller-manager",job_name!~"rehearse.*",state="failure"}[5m]
+                )
+              )
+              * on (job_name) group_left max by (job_name) (prow_job_labels{job_agent="kubernetes",label_ci_openshift_io_metadata_target="e2e-oo-post"}) > 0
+            |||,
+            'for': '1m',
+            labels: {
+              severity: 'critical',
+            },
+            annotations: {
+              message: 'ci-tools postsubmit {{ $labels.job_name }} has failures. Check <https://prow.ci.openshift.org/?job={{ $labels.job_name }}|deck>.',
+            },
+          },
+          {
             alert: 'plank-job-with-infra-role-failures',
             expr: |||
-              sum(rate(prowjob_state_transitions{job="prow-controller-manager",job_name!~"rehearse.*",state="failure"}[5m])) by (job_name) * on (job_name) group_left prow_job_labels{job_agent="kubernetes",label_ci_openshift_io_role="infra"} > 0
+              sum by (job_name) (
+                rate(
+                  prowjob_state_transitions{job="prow-controller-manager",job_name!~"rehearse.*",state="failure"}[5m]
+                )
+              )
+              * on (job_name) group_left max by (job_name) (prow_job_labels{job_agent="kubernetes",label_ci_openshift_io_role="infra"}) > 0
             |||,
             'for': '1m',
             labels: {
@@ -20,7 +43,12 @@
           {
             alert: 'plank-job-with-infra-internal-role-failures',
             expr: |||
-              sum(rate(prowjob_state_transitions{job="prow-controller-manager",job_name!~"rehearse.*",state="failure"}[5m])) by (job_name) * on (job_name) group_left prow_job_labels{job_agent="kubernetes",label_ci_openshift_io_role="infra-internal"} > 0
+              sum by (job_name) (
+                rate(
+                  prowjob_state_transitions{job="prow-controller-manager",job_name!~"rehearse.*",state="failure"}[5m]
+                )
+              )
+              * on (job_name) group_left max by (job_name) (prow_job_labels{job_agent="kubernetes",label_ci_openshift_io_role="infra-internal"}) > 0
             |||,
             'for': '1m',
             labels: {

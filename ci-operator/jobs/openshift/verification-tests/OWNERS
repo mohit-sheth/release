@@ -3,11 +3,12 @@
 
 approvers:
 - akostadinov
+- jhou1
 - liangxia
 - pruan-rht
 options: {}
 reviewers:
-- akostadinov
+- jianli-rh
 - liangxia
 - pruan-rht
 - yanpzhan

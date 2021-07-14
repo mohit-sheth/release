@@ -11,7 +11,6 @@ build_root:
     tag: golang-1.13
 canonical_go_repository: github.com/openshift/openshift-tests
 promotion:
-  disabled: true
   name: 4.8-priv
   namespace: ocp-private
 releases:
@@ -47,7 +46,8 @@ tests:
     test:
     - as: bin-test
       cli: latest
-      commands: ./bin/extended-platform-tests run all --dry-run|grep "Critical"|./bin/extended-platform-tests run -f -
+      commands: ./bin/extended-platform-tests run all --dry-run|grep "Critical"|./bin/extended-platform-tests
+        run -f -
       from: bin
       resources:
         requests:

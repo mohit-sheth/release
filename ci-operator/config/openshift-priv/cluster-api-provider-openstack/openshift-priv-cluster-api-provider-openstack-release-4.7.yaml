@@ -28,7 +28,7 @@ build_root:
   image_stream_tag:
     name: release
     namespace: openshift
-    tag: golang-1.13
+    tag: golang-1.15
 canonical_go_repository: sigs.k8s.io/cluster-api-provider-openstack
 images:
 - dockerfile_path: Dockerfile.rhel
@@ -70,6 +70,12 @@ tests:
   steps:
     cluster_profile: openstack
     workflow: openshift-upgrade-openstack-loki
+- as: e2e-openstack
+  steps:
+    cluster_profile: openstack-vexxhost
+    env:
+      TEST_SUITE: openshift/conformance/parallel
+    workflow: openshift-e2e-openstack-ipi
 zz_generated_metadata:
   branch: release-4.7
   org: openshift-priv

@@ -61,8 +61,8 @@ items:
       spec:
         containers:
         - name: ghproxy
-          image: gcr.io/k8s-prow/ghproxy:v20210318-eec798552c
-          imagePullPolicy: Always
+          image: gcr.io/k8s-prow/ghproxy:v20210714-ac233fa9c6
+          imagePullPolicy: IfNotPresent
           args:
           - --cache-dir=/cache
           - --cache-sizeGB=19

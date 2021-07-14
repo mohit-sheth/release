@@ -1,0 +1,182 @@
+base_images:
+  assisted-installer:
+    name: ocm-2.3
+    namespace: openshift
+    tag: assisted-installer
+  assisted-installer-agent:
+    name: ocm-2.3
+    namespace: openshift
+    tag: assisted-installer-agent
+  assisted-installer-controller:
+    name: ocm-2.3
+    namespace: openshift
+    tag: assisted-installer-controller
+  assisted-service-scripts:
+    name: assisted
+    namespace: ocp-kni
+    tag: assisted-service-scripts
+  assisted-test-infra:
+    name: assisted-test
+    namespace: ocp-kni
+    tag: assisted-test-infra
+  coreos_centos:
+    name: coreos-centos8-buildroot
+    namespace: coreos
+    tag: latest
+  dev-scripts:
+    name: test
+    namespace: ocp-kni
+    tag: dev-scripts
+  openshift_release_golang-1.15:
+    name: release
+    namespace: openshift
+    tag: golang-1.15
+  openshift_release_golang-1.16:
+    name: release
+    namespace: openshift
+    tag: golang-1.16
+  postgresql-12-centos7:
+    name: postgresql-12-centos7
+    namespace: ocp-kni
+    tag: latest
+build_root:
+  image_stream_tag:
+    name: release
+    namespace: openshift
+    tag: golang-1.16
+images:
+- dockerfile_path: Dockerfile.assisted-service
+  from: coreos_centos
+  inputs:
+    openshift_release_golang-1.15:
+      as:
+      - registry.ci.openshift.org/openshift/release:golang-1.15
+  to: assisted-service
+operator:
+  bundles:
+  - dockerfile_path: deploy/olm-catalog/bundle.Dockerfile
+  substitutions:
+  - pullspec: quay.io/ocpmetal/assisted-service:ocm-2.3
+    with: assisted-service
+  - pullspec: quay.io/ocpmetal/assisted-installer:ocm-2.3
+    with: assisted-installer
+  - pullspec: quay.io/ocpmetal/assisted-installer-agent:ocm-2.3
+    with: assisted-installer-agent
+  - pullspec: quay.io/ocpmetal/assisted-installer-controller:ocm-2.3
+    with: assisted-installer-controller
+  - pullspec: quay.io/ocpmetal/postgresql-12-centos7:latest
+    with: postgresql-12-centos7
+promotion:
+  name: ocm-2.3
+  namespace: openshift
+resources:
+  '*':
+    requests:
+      cpu: 100m
+      memory: 200Mi
+tag_specification:
+  name: "4.8"
+  namespace: ocp
+test_binary_build_commands: |
+  make build-openshift-ci-test-bin
+  curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.36.0
+  go mod vendor
+  mkdir /.cache && chmod 775 -R /.cache && chmod 775 -R $GOPATH
+tests:
+- as: lint
+  commands: export GOLANGCI_LINT_CACHE=/tmp/.cache && export GOPROXY=https://proxy.golang.org
+    && make lint
+  container:
+    from: test-bin
+- as: subsystem-aws
+  cluster_claim:
+    architecture: amd64
+    cloud: aws
+    owner: openshift-ci
+    product: ocp
+    timeout: 1h0m0s
+    version: "4.8"
+  steps:
+    test:
+    - as: subsystem-deploy-and-run
+      cli: latest
+      commands: |
+        export BUILD_TYPE=CI
+        export REPORTS=${ARTIFACT_DIR}
+        export TARGET=oc
+
+        make deploy-on-openshift-ci
+        make test
+      dependencies:
+      - env: SERVICE
+        name: assisted-service
+      from: test-bin
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+    workflow: generic-claim
+- as: subsystem-kubeapi-aws
+  cluster_claim:
+    architecture: amd64
+    cloud: aws
+    owner: openshift-ci
+    product: ocp
+    timeout: 1h0m0s
+    version: "4.8"
+  steps:
+    test:
+    - as: subsystem-deploy-and-run
+      cli: latest
+      commands: |
+        export BUILD_TYPE=CI
+        export REPORTS=${ARTIFACT_DIR}
+        export TARGET=oc
+        export GENERATE_CRD=false
+
+        make deploy-on-openshift-ci
+        make enable-kube-api-for-subsystem
+        make test-kube-api
+      dependencies:
+      - env: SERVICE
+        name: assisted-service
+      from: test-bin
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+    workflow: generic-claim
+- as: e2e-metal-assisted-operator-disconnected
+  steps:
+    cluster_profile: packet
+    env:
+      DISCONNECTED: "true"
+      IP_STACK: v6
+    workflow: baremetalds-assisted-operator
+- as: e2e-metal-assisted-operator-ztp
+  steps:
+    cluster_profile: packet
+    env:
+      IP_STACK: v4
+    workflow: baremetalds-assisted-operator-ztp
+- as: e2e-metal-assisted-kube-api
+  steps:
+    cluster_profile: packet
+    env:
+      ASSISTED_CONFIG: |
+        SERVICE_BASE_REF=ocm-2.3
+        NUM_MASTERS=1
+        NUM_WORKERS=0
+        IPv6=yes
+        IPv4=no
+        PROXY=yes
+        ADDITIONAL_PARAMS="--with-static-network-config"
+        ISO_IMAGE_TYPE=minimal-iso
+        KUBE_API=yes
+        OPENSHIFT_VERSION=4.8
+        ENABLE_KUBE_API=true
+    workflow: baremetalds-assisted-install
+zz_generated_metadata:
+  branch: ocm-2.3
+  org: openshift
+  repo: assisted-service

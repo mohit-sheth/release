@@ -7,12 +7,9 @@ approvers:
 - matousjobanek
 - sbose78
 - sbryzak
-- tinakurian
 options: {}
 reviewers:
-- akashshinde
 - alexeykazakov
-- avni-sharma
 - baijum
 - dhritishikhar
 - ldimaggi
@@ -20,4 +17,3 @@ reviewers:
 - michaelkleinhenz
 - sbose78
 - sbryzak
-- tinakurian

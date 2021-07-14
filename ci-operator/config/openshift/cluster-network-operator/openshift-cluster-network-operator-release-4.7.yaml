@@ -62,7 +62,11 @@ tests:
   container:
     from: src
 - as: verify
-  commands: "export GOLANGCI_LINT_VERSION=$(cat .golangciversion 2&> /dev/null || echo \"1.23.8\")  \nexport GOLANGCI_LINT_CACHE=/tmp/.cache\ncurl -sfL \"https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCI_LINT_VERSION:?'golangci-lint version is unset'}/golangci-lint-${GOLANGCI_LINT_VERSION}-linux-amd64.tar.gz\" | tar -C /go/bin -zx --strip-components=1 \"golangci-lint-${GOLANGCI_LINT_VERSION}-linux-amd64/golangci-lint\"\n ./hack/verify-style.sh\n"
+  commands: "export GOLANGCI_LINT_VERSION=$(cat .golangciversion 2&> /dev/null ||
+    echo \"1.23.8\")  \nexport GOLANGCI_LINT_CACHE=/tmp/.cache\ncurl -sfL \"https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCI_LINT_VERSION:?'golangci-lint
+    version is unset'}/golangci-lint-${GOLANGCI_LINT_VERSION}-linux-amd64.tar.gz\"
+    | tar -C /go/bin -zx --strip-components=1 \"golangci-lint-${GOLANGCI_LINT_VERSION}-linux-amd64/golangci-lint\"\n
+    ./hack/verify-style.sh\n"
   container:
     from: src
 - as: e2e-gcp
@@ -75,8 +79,8 @@ tests:
     workflow: openshift-upgrade-gcp-ovn
 - as: e2e-agnostic-upgrade
   steps:
-    cluster_profile: gcp
-    workflow: openshift-upgrade-gcp
+    cluster_profile: azure4
+    workflow: openshift-upgrade-azure
 - as: e2e-aws-sdn-multi
   steps:
     cluster_profile: aws
@@ -105,8 +109,14 @@ tests:
   steps:
     cluster_profile: aws
     test:
+    - ref: windows-e2e-operator-test
+    workflow: ipi-aws-ovn-hybrid
+- as: e2e-vsphere-windows
+  steps:
+    cluster_profile: vsphere
+    test:
     - ref: windows-e2e-operator-test-with-custom-vxlan-port
-    workflow: ipi-aws-ovn-hybrid-custom-vxlan-port
+    workflow: ipi-vsphere-ovn-hybrid-custom-vxlan-port
 - as: e2e-vsphere-ovn
   steps:
     cluster_profile: vsphere
@@ -119,6 +129,14 @@ tests:
   steps:
     cluster_profile: gcp
     workflow: openshift-e2e-gcp-ovn
+- as: e2e-openstack-kuryr
+  steps:
+    cluster_profile: openstack-kuryr
+    env:
+      NETWORK_TYPE: Kuryr
+    test:
+    - ref: openstack-noop
+    workflow: openshift-e2e-openstack-ipi
 zz_generated_metadata:
   branch: release-4.7
   org: openshift

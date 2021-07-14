@@ -1,7 +1,7 @@
 presubmits:
   kubevirt/hyperconverged-cluster-operator:
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.9
     cluster: build01
@@ -14,6 +14,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-ci-index
     rerun_command: /test ci-index
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|Makefile|go\.mod|go\.sum)$
     spec:
       containers:
       - args:
@@ -49,7 +50,105 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )ci-index,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    branches:
+    - release-4.9
+    cluster: build01
+    context: ci/prow/ci-index-hco-upgrade-bundle
+    decorate: true
+    decoration_config:
+      skip_cloning: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-ci-index-hco-upgrade-bundle
+    rerun_command: /test ci-index-hco-upgrade-bundle
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|Makefile|go\.mod|go\.sum)$
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --report-credentials-file=/etc/report/credentials
+        - --target=ci-index-hco-upgrade-bundle
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )ci-index-hco-upgrade-bundle,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    branches:
+    - release-4.9
+    cluster: build01
+    context: ci/prow/ci-index-hco-upgrade-prev-bundle
+    decorate: true
+    decoration_config:
+      skip_cloning: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-ci-index-hco-upgrade-prev-bundle
+    rerun_command: /test ci-index-hco-upgrade-prev-bundle
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|Makefile|go\.mod|go\.sum)$
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --report-credentials-file=/etc/report/credentials
+        - --target=ci-index-hco-upgrade-prev-bundle
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )ci-index-hco-upgrade-prev-bundle,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
     branches:
     - release-4.9
     cluster: build01
@@ -62,6 +161,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-image-index-aws
     rerun_command: /test hco-e2e-image-index-aws
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|tests/.*|Makefile|go\.mod|go\.sum)$
     spec:
       containers:
       - args:
@@ -115,7 +215,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )hco-e2e-image-index-aws,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.9
     cluster: build01
@@ -128,6 +228,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-image-index-azure
     rerun_command: /test hco-e2e-image-index-azure
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|tests/.*|Makefile|go\.mod|go\.sum)$
     spec:
       containers:
       - args:
@@ -181,7 +282,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )hco-e2e-image-index-azure,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.9
     cluster: build01
@@ -194,6 +295,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-image-index-gcp
     rerun_command: /test hco-e2e-image-index-gcp
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|tests/.*|Makefile|go\.mod|go\.sum)$
     spec:
       containers:
       - args:
@@ -249,19 +351,20 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )hco-e2e-image-index-gcp,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.9
     cluster: build01
-    context: ci/prow/hco-e2e-upgrade-aws
+    context: ci/prow/hco-e2e-kv-smoke-azure
     decorate: true
     decoration_config:
       skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-upgrade-aws
-    rerun_command: /test hco-e2e-upgrade-aws
+    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-kv-smoke-azure
+    rerun_command: /test hco-e2e-kv-smoke-azure
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|tests/.*|Makefile|go\.mod|go\.sum)$
     spec:
       containers:
       - args:
@@ -269,8 +372,8 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --lease-server-credentials-file=/etc/boskos/credentials
         - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/usr/local/hco-e2e-upgrade-aws-cluster-profile
-        - --target=hco-e2e-upgrade-aws
+        - --secret-dir=/usr/local/hco-e2e-kv-smoke-azure-cluster-profile
+        - --target=hco-e2e-kv-smoke-azure
         command:
         - ci-operator
         image: ci-operator:latest
@@ -283,73 +386,7 @@ presubmits:
         - mountPath: /etc/boskos
           name: boskos
           readOnly: true
-        - mountPath: /usr/local/hco-e2e-upgrade-aws-cluster-profile
-          name: cluster-profile
-        - mountPath: /secrets/gcs
-          name: gcs-credentials
-          readOnly: true
-        - mountPath: /etc/pull-secret
-          name: pull-secret
-          readOnly: true
-        - mountPath: /etc/report
-          name: result-aggregator
-          readOnly: true
-      serviceAccountName: ci-operator
-      volumes:
-      - name: boskos
-        secret:
-          items:
-          - key: credentials
-            path: credentials
-          secretName: boskos-credentials
-      - name: cluster-profile
-        projected:
-          sources:
-          - secret:
-              name: cluster-secrets-aws
-      - name: pull-secret
-        secret:
-          secretName: registry-pull-credentials
-      - name: result-aggregator
-        secret:
-          secretName: result-aggregator
-    trigger: (?m)^/test( | .* )hco-e2e-upgrade-aws,?($|\s.*)
-  - agent: kubernetes
-    always_run: true
-    branches:
-    - release-4.9
-    cluster: build01
-    context: ci/prow/hco-e2e-upgrade-azure
-    decorate: true
-    decoration_config:
-      skip_cloning: true
-    labels:
-      ci-operator.openshift.io/prowgen-controlled: "true"
-      pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-upgrade-azure
-    rerun_command: /test hco-e2e-upgrade-azure
-    spec:
-      containers:
-      - args:
-        - --gcs-upload-secret=/secrets/gcs/service-account.json
-        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
-        - --lease-server-credentials-file=/etc/boskos/credentials
-        - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/usr/local/hco-e2e-upgrade-azure-cluster-profile
-        - --target=hco-e2e-upgrade-azure
-        command:
-        - ci-operator
-        image: ci-operator:latest
-        imagePullPolicy: Always
-        name: ""
-        resources:
-          requests:
-            cpu: 10m
-        volumeMounts:
-        - mountPath: /etc/boskos
-          name: boskos
-          readOnly: true
-        - mountPath: /usr/local/hco-e2e-upgrade-azure-cluster-profile
+        - mountPath: /usr/local/hco-e2e-kv-smoke-azure-cluster-profile
           name: cluster-profile
         - mountPath: /secrets/gcs
           name: gcs-credentials
@@ -379,21 +416,22 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )hco-e2e-upgrade-azure,?($|\s.*)
+    trigger: (?m)^/test( | .* )hco-e2e-kv-smoke-azure,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.9
     cluster: build01
-    context: ci/prow/hco-e2e-upgrade-prev-aws
+    context: ci/prow/hco-e2e-kv-smoke-gcp
     decorate: true
     decoration_config:
       skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-upgrade-prev-aws
-    rerun_command: /test hco-e2e-upgrade-prev-aws
+    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-kv-smoke-gcp
+    rerun_command: /test hco-e2e-kv-smoke-gcp
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|tests/.*|Makefile|go\.mod|go\.sum)$
     spec:
       containers:
       - args:
@@ -401,8 +439,8 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --lease-server-credentials-file=/etc/boskos/credentials
         - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/usr/local/hco-e2e-upgrade-prev-aws-cluster-profile
-        - --target=hco-e2e-upgrade-prev-aws
+        - --secret-dir=/usr/local/hco-e2e-kv-smoke-gcp-cluster-profile
+        - --target=hco-e2e-kv-smoke-gcp
         command:
         - ci-operator
         image: ci-operator:latest
@@ -415,7 +453,76 @@ presubmits:
         - mountPath: /etc/boskos
           name: boskos
           readOnly: true
-        - mountPath: /usr/local/hco-e2e-upgrade-prev-aws-cluster-profile
+        - mountPath: /usr/local/hco-e2e-kv-smoke-gcp-cluster-profile
+          name: cluster-profile
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: cluster-profile
+        projected:
+          sources:
+          - secret:
+              name: cluster-secrets-gcp
+          - configMap:
+              name: cluster-profile-gcp
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )hco-e2e-kv-smoke-gcp,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    branches:
+    - release-4.9
+    cluster: build01
+    context: ci/prow/hco-e2e-upgrade-index-aws
+    decorate: true
+    decoration_config:
+      skip_cloning: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-upgrade-index-aws
+    rerun_command: /test hco-e2e-upgrade-index-aws
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|Makefile|go\.mod|go\.sum)$
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/usr/local/hco-e2e-upgrade-index-aws-cluster-profile
+        - --target=hco-e2e-upgrade-index-aws
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /usr/local/hco-e2e-upgrade-index-aws-cluster-profile
           name: cluster-profile
         - mountPath: /secrets/gcs
           name: gcs-credentials
@@ -445,21 +552,22 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )hco-e2e-upgrade-prev-aws,?($|\s.*)
+    trigger: (?m)^/test( | .* )hco-e2e-upgrade-index-aws,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - release-4.9
     cluster: build01
-    context: ci/prow/hco-e2e-upgrade-prev-azure
+    context: ci/prow/hco-e2e-upgrade-index-azure
     decorate: true
     decoration_config:
       skip_cloning: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-upgrade-prev-azure
-    rerun_command: /test hco-e2e-upgrade-prev-azure
+    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-upgrade-index-azure
+    rerun_command: /test hco-e2e-upgrade-index-azure
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|Makefile|go\.mod|go\.sum)$
     spec:
       containers:
       - args:
@@ -467,8 +575,8 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --lease-server-credentials-file=/etc/boskos/credentials
         - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/usr/local/hco-e2e-upgrade-prev-azure-cluster-profile
-        - --target=hco-e2e-upgrade-prev-azure
+        - --secret-dir=/usr/local/hco-e2e-upgrade-index-azure-cluster-profile
+        - --target=hco-e2e-upgrade-index-azure
         command:
         - ci-operator
         image: ci-operator:latest
@@ -481,7 +589,7 @@ presubmits:
         - mountPath: /etc/boskos
           name: boskos
           readOnly: true
-        - mountPath: /usr/local/hco-e2e-upgrade-prev-azure-cluster-profile
+        - mountPath: /usr/local/hco-e2e-upgrade-index-azure-cluster-profile
           name: cluster-profile
         - mountPath: /secrets/gcs
           name: gcs-credentials
@@ -511,9 +619,143 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )hco-e2e-upgrade-prev-azure,?($|\s.*)
+    trigger: (?m)^/test( | .* )hco-e2e-upgrade-index-azure,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    branches:
+    - release-4.9
+    cluster: build01
+    context: ci/prow/hco-e2e-upgrade-prev-index-aws
+    decorate: true
+    decoration_config:
+      skip_cloning: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-upgrade-prev-index-aws
+    rerun_command: /test hco-e2e-upgrade-prev-index-aws
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|Makefile|go\.mod|go\.sum)$
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/usr/local/hco-e2e-upgrade-prev-index-aws-cluster-profile
+        - --target=hco-e2e-upgrade-prev-index-aws
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /usr/local/hco-e2e-upgrade-prev-index-aws-cluster-profile
+          name: cluster-profile
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: cluster-profile
+        projected:
+          sources:
+          - secret:
+              name: cluster-secrets-aws
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )hco-e2e-upgrade-prev-index-aws,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    branches:
+    - release-4.9
+    cluster: build01
+    context: ci/prow/hco-e2e-upgrade-prev-index-azure
+    decorate: true
+    decoration_config:
+      skip_cloning: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-hco-e2e-upgrade-prev-index-azure
+    rerun_command: /test hco-e2e-upgrade-prev-index-azure
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|Makefile|go\.mod|go\.sum)$
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/usr/local/hco-e2e-upgrade-prev-index-azure-cluster-profile
+        - --target=hco-e2e-upgrade-prev-index-azure
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /usr/local/hco-e2e-upgrade-prev-index-azure-cluster-profile
+          name: cluster-profile
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: cluster-profile
+        projected:
+          sources:
+          - secret:
+              name: cluster-secrets-azure4
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )hco-e2e-upgrade-prev-index-azure,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
     branches:
     - release-4.9
     cluster: build01
@@ -526,6 +768,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-kubevirt-hyperconverged-cluster-operator-release-4.9-images
     rerun_command: /test images
+    run_if_changed: ^(build/.*|cmd/.*|deploy/crds/.*|deploy/index-image/.*|hack/.*|pkg/.*|Makefile|go\.mod|go\.sum)$
     spec:
       containers:
       - args:
@@ -533,7 +776,6 @@ presubmits:
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --report-credentials-file=/etc/report/credentials
         - --target=[images]
-        - --target=[release:latest]
         - --target=src
         command:
         - ci-operator

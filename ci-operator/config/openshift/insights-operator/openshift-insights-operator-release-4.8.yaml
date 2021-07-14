@@ -19,6 +19,10 @@ base_images:
     name: builder
     namespace: ocp
     tag: rhel-8-golang-1.15-openshift-4.8
+  ocp_builder_rhel-8-golang-1.16-openshift-4.8:
+    name: builder
+    namespace: ocp
+    tag: rhel-8-golang-1.16-openshift-4.8
   ocp_builder_rhel-8-golang-openshift-4.6:
     name: builder
     namespace: ocp
@@ -31,16 +35,15 @@ build_root:
   image_stream_tag:
     name: release
     namespace: openshift
-    tag: golang-1.14
+    tag: golang-1.16
 images:
 - from: base
   inputs:
-    ocp_builder_rhel-8-golang-1.15-openshift-4.8:
+    ocp_builder_rhel-8-golang-1.16-openshift-4.8:
       as:
-      - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.8
+      - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.16-openshift-4.8
   to: insights-operator
 promotion:
-  disabled: true
   name: "4.8"
   namespace: ocp
 resources:
@@ -52,18 +55,23 @@ tag_specification:
   name: "4.8"
   namespace: ocp
 tests:
+- as: lint
+  commands: |
+    GOLANGCI_LINT_CACHE=/tmp/golangci-cache make lint
+  container:
+    from: src
 - as: unit
-  commands: make test-unit
+  commands: make test
   container:
     from: src
 - as: e2e
   steps:
     cluster_profile: gcp
     workflow: openshift-e2e-gcp
-- as: e2e-gcp-upgrade
+- as: e2e-agnostic-upgrade
   steps:
-    cluster_profile: gcp
-    workflow: openshift-upgrade-gcp
+    cluster_profile: azure4
+    workflow: openshift-upgrade-azure
 - as: insights-operator-e2e-tests
   steps:
     cluster_profile: gcp
@@ -73,8 +81,8 @@ tests:
     test:
     - as: test
       cli: latest
-      commands: make test-e2e
-      from: src
+      commands: pytest.sh -m "not ui"
+      from: insights-operator-tests
       resources:
         requests:
           cpu: 100m
@@ -89,13 +97,13 @@ tests:
     test:
     - as: test
       cli: latest
-      commands: make test-e2e
-      from: src
+      commands: pytest.sh --junitxml=${ARTIFACT_DIR}/test-report.xml
+      from: insights-operator-tests
       resources:
         requests:
           cpu: 100m
     workflow: ipi-gcp
-- as: insights-operator-tests-periodic
+- as: insights-operator-test-time-periodic
   cron: 0 0 * * *
   steps:
     cluster_profile: gcp
@@ -105,7 +113,7 @@ tests:
     test:
     - as: test
       cli: latest
-      commands: pytest.sh
+      commands: pytest.sh -k "test_archive_uploaded_and_result_received"
       from: insights-operator-tests
       resources:
         requests:

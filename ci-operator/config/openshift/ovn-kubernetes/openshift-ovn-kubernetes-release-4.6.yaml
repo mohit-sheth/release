@@ -29,10 +29,10 @@ images:
   inputs:
     ocp_4.6_cli:
       as:
-      - registry.svc.ci.openshift.org/ocp/4.6:cli
+      - registry.ci.openshift.org/ocp/4.6:cli
     ocp_builder_rhel-8-golang-1.15-openshift-4.6:
       as:
-      - registry.svc.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.6
+      - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.6
   to: ovn-kubernetes
 promotion:
   name: "4.6"
@@ -81,16 +81,6 @@ tests:
     test:
     - ref: windows-e2e-operator-test
     workflow: ipi-aws-ovn-hybrid
-- as: e2e-aws-ovn-windows-custom-vxlan
-  steps:
-    cluster_profile: aws
-    test:
-    - ref: windows-e2e-operator-test-with-custom-vxlan-port
-    workflow: ipi-aws-ovn-hybrid-custom-vxlan-port
-- as: e2e-vsphere-ovn
-  steps:
-    cluster_profile: vsphere
-    workflow: openshift-e2e-vsphere-ovn
 - as: e2e-azure-ovn
   steps:
     cluster_profile: azure4

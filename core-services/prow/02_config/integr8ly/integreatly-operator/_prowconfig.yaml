@@ -1,0 +1,23 @@
+branch-protection:
+  orgs:
+    integr8ly:
+      repos:
+        integreatly-operator:
+          exclude:
+          - master
+          - release-*
+          - MGDAPI-1192-3
+          protect: false
+tide:
+  queries:
+  - labels:
+    - approved
+    - lgtm
+    missingLabels:
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/product-pre-release
+    - do-not-merge/work-in-progress
+    - needs-rebase
+    repos:
+    - integr8ly/integreatly-operator

@@ -1,0 +1,121 @@
+base_images:
+  builder-go1.16-linux:
+    name: builder
+    namespace: open-cluster-management
+    tag: go1.16-linux
+  repo-brancher:
+    name: repo-brancher
+    namespace: ci
+    tag: latest
+binary_build_commands: make build
+build_root:
+  image_stream_tag:
+    name: builder
+    namespace: open-cluster-management
+    tag: go1.16-linux
+images:
+- dockerfile_path: Dockerfile.prow
+  inputs:
+    builder-go1.16-linux:
+      as:
+      - registry.ci.openshift.org/open-cluster-management/builder:go1.15-linux-amd64
+  to: helloprow-go
+promotion:
+  name: "2.3"
+  namespace: open-cluster-management
+resources:
+  '*':
+    requests:
+      cpu: 100m
+      memory: 200Mi
+tests:
+- as: sleep-test
+  steps:
+    test:
+    - as: sleep
+      commands: |
+        sleep 86400
+      from: src
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+- as: fast-forward
+  commands: |
+    git clone -b master https://github.com/openshift/release.git /tmp/release
+    repo-brancher \
+        --config-dir=/tmp/release/ci-operator/config/open-cluster-management/helloprow-go/ \
+        --username=acm-cicd \
+        --token-path=/etc/github/token \
+        --current-promotion-namespace=open-cluster-management \
+        --fast-forward \
+        --confirm \
+        --current-release=2.3 \
+        --future-release=2.4
+  container:
+    from: repo-brancher
+  postsubmit: true
+  secrets:
+  - mount_path: /etc/github
+    name: acm-cicd-github
+- as: e2e-cluster
+  steps:
+    dependencies:
+      COMPONENT_IMAGE_REF: helloprow-go
+    env:
+      CLUSTERPOOL_GROUP_NAME: acm-cicd-prow
+      CLUSTERPOOL_HOST_NAMESPACE: cicd
+      CLUSTERPOOL_HOST_PROW_KUBE_SECRET: acm-cicd-clusterpool-shared
+      CLUSTERPOOL_LIST_INCLUSION_FILTER: prow
+    test:
+    - as: test
+      commands: |
+        export SELF="make -f Makefile.prow"
+        make -f Makefile.prow test-e2e
+      from: src
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+    workflow: ocm-e2e-clusterpool
+- as: e2e-kind
+  steps:
+    env:
+      AWS_CREDENTIALS_SECRET: ocm-cicd-aws-kind
+    test:
+    - as: test
+      commands: |
+        echo "IMAGE_REF=$IMAGE_REF"
+        export SELF="make -f Makefile.prow"
+        make -f Makefile.prow test-kind
+      dependencies:
+      - env: IMAGE_REF
+        name: helloprow-go
+      from: src
+      resources:
+        requests:
+          cpu: 100m
+          memory: 200Mi
+    workflow: ocm-e2e-kind
+- as: pr-image-mirror
+  steps:
+    dependencies:
+      SOURCE_IMAGE_REF: helloprow-go
+    env:
+      IMAGE_REPO: helloprow-go
+      REGISTRY_ORG: open-cluster-management
+    workflow: ocm-ci-image-mirror
+- as: latest-image-mirror
+  postsubmit: true
+  steps:
+    dependencies:
+      SOURCE_IMAGE_REF: helloprow-go
+    env:
+      IMAGE_REPO: helloprow-go
+      IMAGE_TAG: latest
+      REGISTRY_ORG: open-cluster-management
+    workflow: ocm-ci-image-mirror
+zz_generated_metadata:
+  branch: main
+  org: open-cluster-management
+  repo: helloprow-go

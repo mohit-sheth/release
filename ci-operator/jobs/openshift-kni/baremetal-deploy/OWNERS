@@ -4,6 +4,7 @@
 filters:
   .*:
     approvers:
+    - directedsoul1
     - iranzo
     - rlopez133
     reviewers:
@@ -14,13 +15,11 @@ filters:
     - kind/installer
   ^documentation/.*:
     approvers:
-    - iranzo
-    - rlopez133
+    - johnwilkins
     labels:
     - kind/documentation
     reviewers:
-    - iranzo
-    - rlopez133
+    - johnwilkins
   ^features/.*:
     reviewers:
     - abays

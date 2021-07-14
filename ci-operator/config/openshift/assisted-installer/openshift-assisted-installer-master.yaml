@@ -23,32 +23,28 @@ base_images:
     name: release
     namespace: openshift
     tag: golang-1.15
-binary_build_commands: go mod vendor
+  openshift_release_golang-1.16:
+    name: release
+    namespace: openshift
+    tag: golang-1.16
 build_root:
   project_image:
     dockerfile_path: Dockerfile.assisted-installer-build
 images:
 - dockerfile_path: Dockerfile.assisted-installer
-  from: openshift_release_golang-1.15
+  from: openshift_release_golang-1.16
   inputs:
-    openshift_release_golang-1.15:
+    openshift_release_golang-1.16:
       as:
-      - registry.ci.openshift.org/openshift/release:golang-1.15
+      - registry.ci.openshift.org/openshift/release:golang-1.16
   to: assisted-installer
 - dockerfile_path: Dockerfile.assisted-installer-controller
-  from: openshift_release_golang-1.15
+  from: openshift_release_golang-1.16
   inputs:
-    openshift_release_golang-1.15:
+    openshift_release_golang-1.16:
       as:
-      - registry.ci.openshift.org/openshift/release:golang-1.15
+      - registry.ci.openshift.org/openshift/release:golang-1.16
   to: assisted-installer-controller
-- dockerfile_path: Dockerfile.assisted-installer-controller-ocp
-  from: openshift_release_golang-1.15
-  inputs:
-    openshift_release_golang-1.15:
-      as:
-      - registry.ci.openshift.org/openshift/release:golang-1.15
-  to: assisted-installer-controller-ocp
 promotion:
   name: assisted
   namespace: ocp-kni
@@ -60,48 +56,60 @@ resources:
 tag_specification:
   name: "4.8"
   namespace: ocp
+test_binary_build_commands: |
+  go mod vendor
+  mkdir /.cache && chmod 775 -R /.cache ${GOPATH}
 tests:
 - as: lint
-  commands: export GOLANGCI_LINT_CACHE=/tmp/golangci-cache make lint
+  commands: |
+    export GOLANGCI_LINT_CACHE=/tmp/.cache
+    export GOPROXY=https://proxy.golang.org
+    make lint
   container:
-    from: bin
+    from: test-bin
 - as: format-check
   commands: make format-check
   container:
-    from: bin
+    from: test-bin
 - as: unit-test
   commands: make REPORTS=${ARTIFACT_DIR} unit-test
   container:
-    from: bin
+    from: test-bin
 - as: e2e-metal-assisted
   steps:
     cluster_profile: packet
-    dependencies:
-      ASSISTED_CONTROLLER_IMAGE: pipeline:assisted-installer-controller
-      ASSISTED_INSTALLER_IMAGE: pipeline:assisted-installer
-    workflow: baremetalds-assisted-install
-- as: e2e-metal-assisted-onprem
-  steps:
-    cluster_profile: packet
-    dependencies:
-      ASSISTED_CONTROLLER_IMAGE: pipeline:assisted-installer-controller
-      ASSISTED_INSTALLER_IMAGE: pipeline:assisted-installer
     env:
       ASSISTED_CONFIG: |
-        DEPLOY_TARGET=onprem
+        TEST_FUNC=test_install
+        MAKEFILE_TARGET="create_full_environment run test_parallel"
     workflow: baremetalds-assisted-install
 - as: e2e-metal-assisted-ipv6
   steps:
     cluster_profile: packet
-    dependencies:
-      ASSISTED_CONTROLLER_IMAGE: pipeline:assisted-installer-controller
-      ASSISTED_INSTALLER_IMAGE: pipeline:assisted-installer
     env:
       ASSISTED_CONFIG: |
+        OPENSHIFT_VERSION=4.8
         IPv6=yes
-        IPv4=no
-        VIP_DHCP_ALLOCATION=no
-        PROXY=yes
+        TEST_FUNC=test_install
+        MAKEFILE_TARGET="create_full_environment run test_parallel"
+    workflow: baremetalds-assisted-install
+- as: e2e-metal-assisted-single-node
+  steps:
+    cluster_profile: packet
+    env:
+      ASSISTED_CONFIG: |
+        OPENSHIFT_VERSION=4.8
+        NUM_MASTERS=1
+        TEST_FUNC=test_install
+        MAKEFILE_TARGET="create_full_environment run test_parallel"
+    workflow: baremetalds-assisted-install
+- as: e2e-metal-assisted-olm
+  steps:
+    cluster_profile: packet
+    env:
+      ASSISTED_CONFIG: |
+        TEST_FUNC=test_olm_operator
+        MAKEFILE_TARGET="create_full_environment run test_parallel"
     workflow: baremetalds-assisted-install
 zz_generated_metadata:
   branch: master

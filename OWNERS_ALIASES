@@ -257,6 +257,7 @@ aliases:
   - adduarte
   - iamemilio
   - mandre
+  - mdbooth
   - pierreprinetti
   openstack-reviewers:
   - EmilienM
@@ -264,6 +265,7 @@ aliases:
   - adduarte
   - iamemilio
   - mandre
+  - mdbooth
   - pierreprinetti
   productivity-approvers:
   - alanfx
@@ -400,4 +402,26 @@ aliases:
   - janoszen
   - sandrobonazzola
   - dougsland
-
+  technical-release-team:
+  - ravisantoshgudimetla
+  - joelsmith
+  - petr-muller
+  - dmage
+  - cheesesashimi
+  - frobware
+  - hasbro17
+  - ingvagabund
+  - joelddiaz
+  - stbenjam
+  assisted-cicd:
+  - djzager
+  - celebdor
+  - eranco74
+  - filanov
+  - flaper87
+  - lranjbar
+  - osherdp
+  - ronniel1
+  - romfreiman
+  - tsorya
+  - yuvigold

@@ -1,6 +1,6 @@
 base_images:
   cli:
-    name: "4.8"
+    name: "4.9"
     namespace: ocp
     tag: cli
 binary_build_commands: make all
@@ -8,9 +8,9 @@ build_root:
   image_stream_tag:
     name: release
     namespace: openshift
-    tag: golang-1.13
+    tag: golang-1.16
 promotion:
-  name: "4.8"
+  name: "4.9"
   namespace: ocp
 releases:
   latest:
@@ -45,7 +45,8 @@ tests:
     test:
     - as: critical-test
       cli: latest
-      commands: ./bin/extended-platform-tests run all --dry-run|grep -iv "VMonly"|grep -E "OLM.*Critical"|./bin/extended-platform-tests run -f -
+      commands: ./bin/extended-platform-tests run all --dry-run|grep -iv "VMonly"|grep
+        -E "OLM.*Critical"|./bin/extended-platform-tests run -f -
       from: bin
       resources:
         requests:

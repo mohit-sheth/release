@@ -1,0 +1,9 @@
+approve:
+- commandHelpLink: ""
+  repos:
+  - openshift/cluster-baremetal-operator
+  require_self_approval: false
+plugins:
+  openshift/cluster-baremetal-operator:
+    plugins:
+    - approve

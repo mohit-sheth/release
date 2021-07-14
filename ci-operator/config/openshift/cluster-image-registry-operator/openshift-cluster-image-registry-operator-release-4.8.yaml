@@ -37,7 +37,6 @@ images:
       - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.8
   to: cluster-image-registry-operator
 promotion:
-  disabled: true
   name: "4.8"
   namespace: ocp
 resources:
@@ -133,6 +132,12 @@ tests:
   steps:
     cluster_profile: ovirt
     workflow: openshift-e2e-ovirt-minimal
+- as: e2e-openstack
+  steps:
+    cluster_profile: openstack-vexxhost
+    env:
+      TEST_SUITE: experimental/reliability/minimal
+    workflow: openshift-e2e-openstack-ipi
 zz_generated_metadata:
   branch: release-4.8
   org: openshift

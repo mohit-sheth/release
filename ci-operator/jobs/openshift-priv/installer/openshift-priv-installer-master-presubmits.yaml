@@ -7,8 +7,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -82,8 +80,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws-disruptive
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -101,16 +97,8 @@ presubmits:
         - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/usr/local/e2e-aws-disruptive-cluster-profile
         - --target=e2e-aws-disruptive
-        - --template=/usr/local/e2e-aws-disruptive
         command:
         - ci-operator
-        env:
-        - name: CLUSTER_TYPE
-          value: aws
-        - name: JOB_NAME_SAFE
-          value: e2e-aws-disruptive
-        - name: TEST_COMMAND
-          value: setup_ssh_bastion; TEST_SUITE=openshift/disruptive run-tests; TEST_SUITE=openshift/conformance/parallel run-tests
         image: ci-operator:latest
         imagePullPolicy: Always
         name: ""
@@ -129,9 +117,6 @@ presubmits:
         - mountPath: /usr/local/github-credentials
           name: github-credentials-openshift-ci-robot-private-git-cloner
           readOnly: true
-        - mountPath: /usr/local/e2e-aws-disruptive
-          name: job-definition
-          subPath: cluster-launch-installer-e2e.yaml
         - mountPath: /etc/pull-secret
           name: pull-secret
           readOnly: true
@@ -154,9 +139,6 @@ presubmits:
       - name: github-credentials-openshift-ci-robot-private-git-cloner
         secret:
           secretName: github-credentials-openshift-ci-robot-private-git-cloner
-      - configMap:
-          name: prow-job-cluster-launch-installer-e2e
-        name: job-definition
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -171,8 +153,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws-fips
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -246,8 +226,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws-proxy
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -321,8 +299,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws-shared-vpc
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -396,8 +372,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws-single-node
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -471,8 +445,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws-upgrade
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -546,8 +518,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws-upi
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -635,8 +605,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-aws-workers-rhel7
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -710,8 +678,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-azure
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -783,10 +749,81 @@ presubmits:
     branches:
     - master
     cluster: build01
+    context: ci/prow/e2e-azure-resourcegroup
+    decorate: true
+    hidden: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-priv-installer-master-e2e-azure-resourcegroup
+    path_alias: github.com/openshift/installer
+    rerun_command: /test e2e-azure-resourcegroup
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --oauth-token-path=/usr/local/github-credentials/oauth
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/usr/local/e2e-azure-resourcegroup-cluster-profile
+        - --target=e2e-azure-resourcegroup
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /usr/local/e2e-azure-resourcegroup-cluster-profile
+          name: cluster-profile
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /usr/local/github-credentials
+          name: github-credentials-openshift-ci-robot-private-git-cloner
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: cluster-profile
+        projected:
+          sources:
+          - secret:
+              name: cluster-secrets-azure4
+      - name: github-credentials-openshift-ci-robot-private-git-cloner
+        secret:
+          secretName: github-credentials-openshift-ci-robot-private-git-cloner
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-azure-resourcegroup,?($|\s.*)
+  - agent: kubernetes
+    always_run: true
+    branches:
+    - master
+    cluster: build01
     context: ci/prow/e2e-azure-shared-vpc
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -860,8 +897,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-azure-upi
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -949,8 +984,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-crc
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1026,8 +1059,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-gcp
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1103,8 +1134,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-gcp-shared-vpc
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1180,8 +1209,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-gcp-upgrade
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1257,8 +1284,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-gcp-upi
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1334,8 +1359,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-gcp-upi-xpn
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1412,8 +1435,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-kubevirt
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1487,8 +1508,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-libvirt
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1564,8 +1583,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-metal-assisted
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1641,8 +1658,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-metal-ipi
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1718,8 +1733,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-metal-ipi-ovn-dualstack
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1795,8 +1808,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-metal-ipi-ovn-ipv6
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1872,8 +1883,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-metal-ipi-virtualmedia
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -1949,8 +1958,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-metal-single-node-live-iso
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2024,17 +2031,15 @@ presubmits:
     branches:
     - master
     cluster: build01
-    context: ci/prow/e2e-openstack-ipi
+    context: ci/prow/e2e-openstack
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
-    name: pull-ci-openshift-priv-installer-master-e2e-openstack-ipi
+    name: pull-ci-openshift-priv-installer-master-e2e-openstack
     path_alias: github.com/openshift/installer
-    rerun_command: /test e2e-openstack-ipi
+    rerun_command: /test e2e-openstack
     spec:
       containers:
       - args:
@@ -2043,8 +2048,8 @@ presubmits:
         - --lease-server-credentials-file=/etc/boskos/credentials
         - --oauth-token-path=/usr/local/github-credentials/oauth
         - --report-credentials-file=/etc/report/credentials
-        - --secret-dir=/usr/local/e2e-openstack-ipi-cluster-profile
-        - --target=e2e-openstack-ipi
+        - --secret-dir=/usr/local/e2e-openstack-cluster-profile
+        - --target=e2e-openstack
         command:
         - ci-operator
         image: ci-operator:latest
@@ -2057,7 +2062,7 @@ presubmits:
         - mountPath: /etc/boskos
           name: boskos
           readOnly: true
-        - mountPath: /usr/local/e2e-openstack-ipi-cluster-profile
+        - mountPath: /usr/local/e2e-openstack-cluster-profile
           name: cluster-profile
         - mountPath: /secrets/gcs
           name: gcs-credentials
@@ -2083,7 +2088,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-openstack
+              name: cluster-secrets-openstack-vexxhost
       - name: github-credentials-openshift-ci-robot-private-git-cloner
         secret:
           secretName: github-credentials-openshift-ci-robot-private-git-cloner
@@ -2093,7 +2098,153 @@ presubmits:
       - name: result-aggregator
         secret:
           secretName: result-aggregator
-    trigger: (?m)^/test( | .* )e2e-openstack-ipi,?($|\s.*)
+    trigger: (?m)^/test( | .* )e2e-openstack,?($|\s.*)
+  - agent: kubernetes
+    always_run: true
+    branches:
+    - master
+    cluster: build01
+    context: ci/prow/e2e-openstack-kuryr
+    decorate: true
+    hidden: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-priv-installer-master-e2e-openstack-kuryr
+    path_alias: github.com/openshift/installer
+    rerun_command: /test e2e-openstack-kuryr
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --oauth-token-path=/usr/local/github-credentials/oauth
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/usr/local/e2e-openstack-kuryr-cluster-profile
+        - --target=e2e-openstack-kuryr
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /usr/local/e2e-openstack-kuryr-cluster-profile
+          name: cluster-profile
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /usr/local/github-credentials
+          name: github-credentials-openshift-ci-robot-private-git-cloner
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: cluster-profile
+        projected:
+          sources:
+          - secret:
+              name: cluster-secrets-openstack-kuryr
+      - name: github-credentials-openshift-ci-robot-private-git-cloner
+        secret:
+          secretName: github-credentials-openshift-ci-robot-private-git-cloner
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-openstack-kuryr,?($|\s.*)
+  - agent: kubernetes
+    always_run: true
+    branches:
+    - master
+    cluster: build01
+    context: ci/prow/e2e-openstack-parallel
+    decorate: true
+    hidden: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-priv-installer-master-e2e-openstack-parallel
+    path_alias: github.com/openshift/installer
+    rerun_command: /test e2e-openstack-parallel
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --oauth-token-path=/usr/local/github-credentials/oauth
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/usr/local/e2e-openstack-parallel-cluster-profile
+        - --target=e2e-openstack-parallel
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /usr/local/e2e-openstack-parallel-cluster-profile
+          name: cluster-profile
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /usr/local/github-credentials
+          name: github-credentials-openshift-ci-robot-private-git-cloner
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: cluster-profile
+        projected:
+          sources:
+          - secret:
+              name: cluster-secrets-openstack-vexxhost
+      - name: github-credentials-openshift-ci-robot-private-git-cloner
+        secret:
+          secretName: github-credentials-openshift-ci-robot-private-git-cloner
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-openstack-parallel,?($|\s.*)
   - agent: kubernetes
     always_run: true
     branches:
@@ -2101,8 +2252,6 @@ presubmits:
     cluster: build01
     context: ci/prow/e2e-ovirt
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2178,8 +2327,6 @@ presubmits:
     cluster: vsphere
     context: ci/prow/e2e-vsphere
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2253,8 +2400,6 @@ presubmits:
     cluster: vsphere
     context: ci/prow/e2e-vsphere-upi
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2328,8 +2473,6 @@ presubmits:
     cluster: build01
     context: ci/prow/gofmt
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2385,8 +2528,6 @@ presubmits:
     cluster: build01
     context: ci/prow/golint
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2442,8 +2583,6 @@ presubmits:
     cluster: build01
     context: ci/prow/govet
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2499,8 +2638,6 @@ presubmits:
     cluster: build01
     context: ci/prow/images
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2556,8 +2693,6 @@ presubmits:
     cluster: build01
     context: ci/prow/openstack-manifests
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2631,8 +2766,6 @@ presubmits:
     cluster: build01
     context: ci/prow/unit
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2688,8 +2821,6 @@ presubmits:
     cluster: build01
     context: ci/prow/verify-codegen
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"
@@ -2745,8 +2876,6 @@ presubmits:
     cluster: build01
     context: ci/prow/verify-vendor
     decorate: true
-    decoration_config:
-      skip_cloning: true
     hidden: true
     labels:
       ci-operator.openshift.io/prowgen-controlled: "true"

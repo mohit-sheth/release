@@ -1,38 +1,26 @@
 base_images:
   base:
-    name: "4.8"
+    name: "4.9"
     namespace: ocp
     tag: base
   dev-scripts:
     name: test
     namespace: ocp-kni
     tag: dev-scripts
-  ocp_builder_golang-1.13:
-    name: builder
-    namespace: ocp
-    tag: golang-1.13
-  ocp_builder_golang-1.14:
-    name: builder
-    namespace: ocp
-    tag: golang-1.14
-  ocp_builder_rhel-8-golang-1.15-openshift-4.6:
-    name: builder
-    namespace: ocp
-    tag: rhel-8-golang-1.15-openshift-4.6
-  ocp_builder_rhel-8-golang-1.15-openshift-4.7:
-    name: builder
-    namespace: ocp
-    tag: rhel-8-golang-1.15-openshift-4.7
   ocp_builder_rhel-8-golang-1.15-openshift-4.8:
     name: builder
     namespace: ocp
     tag: rhel-8-golang-1.15-openshift-4.8
-  ocp_builder_rhel-8-golang-openshift-4.6:
+  ocp_builder_rhel-8-golang-1.16-openshift-4.8:
     name: builder
     namespace: ocp
-    tag: rhel-8-golang-openshift-4.6
+    tag: rhel-8-golang-1.16-openshift-4.8
+  ocp_builder_rhel-8-golang-1.16-openshift-4.9:
+    name: builder
+    namespace: ocp
+    tag: rhel-8-golang-1.16-openshift-4.9
   tools:
-    name: "4.8"
+    name: "4.9"
     namespace: ocp
     tag: tools
 binary_build_commands: make build
@@ -40,7 +28,7 @@ build_root:
   image_stream_tag:
     name: release
     namespace: openshift
-    tag: golang-1.14
+    tag: rhel-8-release-golang-1.16-openshift-4.8
 images:
 - dockerfile_path: images/tests/Dockerfile.rhel
   from: tools
@@ -48,6 +36,9 @@ images:
     ocp_builder_rhel-8-golang-1.15-openshift-4.8:
       as:
       - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.8
+    ocp_builder_rhel-8-golang-1.16-openshift-4.9:
+      as:
+      - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.16-openshift-4.9
   to: tests
 - dockerfile_path: images/hello-openshift/Dockerfile.rhel
   from: base
@@ -57,7 +48,7 @@ images:
       - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.8
   to: hello-openshift
 promotion:
-  name: "4.8"
+  name: "4.9"
   namespace: ocp
 resources:
   '*':
@@ -77,7 +68,7 @@ resources:
       cpu: "3"
       memory: 8Gi
 tag_specification:
-  name: "4.8"
+  name: "4.9"
   namespace: ocp
 tests:
 - as: verify
@@ -92,15 +83,19 @@ tests:
     from: src
 - as: e2e-aws
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws-loki
 - as: e2e-gcp
   steps:
-    cluster_profile: gcp
+    cluster_profile: gcp-openshift-gce-devel-ci-2
     workflow: openshift-e2e-gcp-loki
 - as: e2e-aws-ovn
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws-ovn
 - as: e2e-azure
   steps:
@@ -108,60 +103,71 @@ tests:
     workflow: openshift-e2e-azure
 - as: e2e-agnostic-cmd
   steps:
-    cluster_profile: gcp
-    workflow: openshift-e2e-gcp-cmd
+    cluster_profile: azure4
+    env:
+      TEST_SUITE: openshift/test-cmd
+    workflow: openshift-e2e-azure
 - as: e2e-gcp-builds
   steps:
-    cluster_profile: gcp
+    cluster_profile: gcp-openshift-gce-devel-ci-2
     workflow: openshift-e2e-gcp-builds
 - as: e2e-aws-disruptive
-  commands: setup_ssh_bastion; TEST_SUITE=openshift/disruptive run-tests; TEST_LIMIT_START_TIME="$(date +%s)" TEST_SUITE=openshift/conformance/parallel run-tests
-  openshift_installer:
-    cluster_profile: aws
+  steps:
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
+    workflow: openshift-e2e-aws-disruption
 - as: e2e-gcp-disruptive
-  commands: setup_ssh_bastion; TEST_SUITE=openshift/disruptive run-tests; TEST_LIMIT_START_TIME="$(date +%s)" TEST_SUITE=openshift/conformance/parallel run-tests
-  openshift_installer:
-    cluster_profile: gcp
+  steps:
+    cluster_profile: gcp-openshift-gce-devel-ci-2
+    workflow: openshift-e2e-gcp-disruption
 - as: e2e-aws-proxy
   steps:
     cluster_profile: aws
-    env:
-      TEST_SKIPS: ""
     workflow: openshift-e2e-aws-proxy
 - as: e2e-aws-jenkins
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws-jenkins
 - as: e2e-gcp-image-ecosystem
   steps:
-    cluster_profile: gcp
+    cluster_profile: gcp-openshift-gce-devel-ci-2
     workflow: openshift-e2e-gcp-image-ecosystem
 - as: e2e-aws-image-registry
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws-image-registry
 - as: e2e-gcp-upgrade
   steps:
-    cluster_profile: gcp
+    cluster_profile: gcp-openshift-gce-devel-ci-2
     workflow: openshift-upgrade-gcp
 - as: e2e-gcp-csi
   steps:
-    cluster_profile: gcp
+    cluster_profile: gcp-openshift-gce-devel-ci-2
     workflow: openshift-e2e-gcp-csi
 - as: e2e-aws-upgrade
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
     env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
       TEST_TYPE: upgrade
       TEST_UPGRADE_OPTIONS: abort-at=100
     workflow: openshift-upgrade-aws
 - as: e2e-aws-serial
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws-serial
 - as: e2e-aws-csi
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws-csi
 - as: e2e-vsphere
   steps:
@@ -171,8 +177,9 @@ tests:
     workflow: openshift-e2e-vsphere-upi
 - as: e2e-aws-fips
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
     env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
       FIPS_ENABLED: "true"
       TEST_SUITE: openshift/conformance/parallel
     pre:
@@ -183,7 +190,9 @@ tests:
     workflow: ipi-aws
 - as: e2e-aws-multitenant
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws-sdn-multi
 - as: e2e-metal-ipi
   steps:
@@ -215,8 +224,33 @@ tests:
     workflow: baremetalds-e2e-virtualmedia
 - as: e2e-aws-single-node
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
     workflow: openshift-e2e-aws-single-node
+- as: e2e-aws-single-node-serial
+  steps:
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
+      TEST_SUITE: openshift/conformance/serial
+    workflow: openshift-e2e-aws-single-node
+- as: e2e-openstack
+  steps:
+    cluster_profile: openstack-vexxhost
+    env:
+      TEST_SUITE: openshift/conformance/parallel
+    workflow: openshift-e2e-openstack-ipi
+- as: e2e-openstack-serial
+  steps:
+    cluster_profile: openstack-vexxhost
+    env:
+      TEST_SUITE: openshift/conformance/serial
+    workflow: openshift-e2e-openstack-ipi
+- as: e2e-aws-csi-migration
+  steps:
+    cluster_profile: aws
+    workflow: openshift-e2e-aws-csi-migration
 zz_generated_metadata:
   branch: master
   org: openshift

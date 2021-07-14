@@ -3,6 +3,10 @@ base_images:
     name: ubi-minimal
     namespace: ocp
     tag: "8"
+  open-cluster-management_builder_go1.16-linux:
+    name: builder
+    namespace: open-cluster-management
+    tag: go1.16-linux
   registration:
     name: "2.3"
     namespace: open-cluster-management
@@ -14,17 +18,20 @@ base_images:
 binary_build_commands: make build --warn-undefined-variables
 build_root:
   image_stream_tag:
-    name: release
-    namespace: openshift
-    tag: golang-1.15
+    name: builder
+    namespace: open-cluster-management
+    tag: go1.16-linux
 images:
 - dockerfile_path: Dockerfile
   from: base
+  inputs:
+    open-cluster-management_builder_go1.16-linux:
+      as:
+      - registry.ci.openshift.org/open-cluster-management/builder:go1.16-linux
   to: registration-operator
 promotion:
   additional_images:
     registration-operator-src: src
-  disabled: true
   name: "2.3"
   namespace: open-cluster-management
 resources:
@@ -56,7 +63,7 @@ tests:
     from: bin
 - as: unit
   commands: |
-    make test-unit JUNITFILE=${ARTIFACT_DIR}/junit_report.xml --warn-undefined-variables
+    make test-unit --warn-undefined-variables
   container:
     from: test-bin
 - as: integration

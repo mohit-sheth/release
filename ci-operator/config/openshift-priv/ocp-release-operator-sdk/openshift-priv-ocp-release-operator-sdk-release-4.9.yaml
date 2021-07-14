@@ -1,29 +1,26 @@
 base_images:
-  ocp_builder_rhel-8-golang-1.15-openshift-4.6:
-    name: builder
-    namespace: ocp
-    tag: rhel-8-golang-1.15-openshift-4.6
   ocp_builder_rhel-8-golang-1.15-openshift-4.7:
     name: builder
     namespace: ocp
     tag: rhel-8-golang-1.15-openshift-4.7
-  ocp_builder_rhel-8-golang-openshift-4.6:
+  ocp_builder_rhel-8-golang-1.16-openshift-4.8:
     name: builder
     namespace: ocp
-    tag: rhel-8-golang-openshift-4.6
+    tag: rhel-8-golang-1.16-openshift-4.8
+  ocp_builder_rhel-8-golang-openshift-4.8:
+    name: builder
+    namespace: ocp
+    tag: rhel-8-golang-openshift-4.8
   os:
     name: builder
     namespace: ocp
-    tag: rhel-8-base-openshift-4.6
+    tag: rhel-8-base-openshift-4.8
   os-minimal:
     name: builder
     namespace: ocp
-    tag: rhel-8-base-openshift-4.6
+    tag: rhel-8-base-openshift-4.8
 build_root:
-  image_stream_tag:
-    name: release
-    namespace: openshift
-    tag: rhel-8-release-golang-1.15-openshift-4.6
+  from_repository: true
 canonical_go_repository: github.com/openshift/ocp-release-operator-sdk
 images:
 - dockerfile_path: ci/dockerfiles/builder.Dockerfile
@@ -57,7 +54,8 @@ images:
       as:
       - osdk-builder
   to: osdk-ansible-e2e
-- dockerfile_path: testdata/ansible/advanced-molecule-operator/Dockerfile
+- context_dir: test/ansible/advanced-molecule-operator
+  dockerfile_path: Dockerfile
   from: ansible-operator
   to: osdk-ansible-full-e2e
 - dockerfile_path: ci/dockerfiles/helm-e2e.Dockerfile
@@ -68,6 +66,7 @@ images:
       - osdk-builder
   to: osdk-helm-e2e
 promotion:
+  disabled: true
   excluded_images:
   - osdk-builder
   - osdk-ansible-e2e
@@ -89,6 +88,8 @@ test_binary_build_commands: make build/operator-sdk-dev-x86_64-linux-gnu
 tests:
 - as: unit
   commands: |
+    echo "patch upstream"
+    make -f ci/prow.Makefile patch
     echo "running unit tests"
     make test-unit
   container:

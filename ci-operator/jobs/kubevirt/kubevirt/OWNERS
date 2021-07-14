@@ -5,15 +5,16 @@ filters:
   .*:
     approvers:
     - alonakaplan
-    - codificat
     - davidvossel
     - dhiller
     - fabiand
     - jean-edouard
+    - mazzystr
     - rmohr
     - stu-gott
     - vladikr
     reviewers:
+    - acardace
     - alonakaplan
     - davidvossel
     - dhiller
@@ -23,6 +24,7 @@ filters:
     - phoracek
     - rmohr
     - stu-gott
+    - vatsalparekh
     - vladikr
   pkg/virt-api/.*:
     reviewers:

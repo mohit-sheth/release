@@ -2,8 +2,8 @@
 # See the OWNERS docs: https://git.k8s.io/community/contributors/guide/owners.md
 
 approvers:
+- alebedev87
 - candita
-- danehans
 - frobware
 - ironcladlou
 - knobunc
@@ -12,8 +12,8 @@ approvers:
 - sgreene570
 options: {}
 reviewers:
+- alebedev87
 - candita
-- danehans
 - frobware
 - ironcladlou
 - knobunc

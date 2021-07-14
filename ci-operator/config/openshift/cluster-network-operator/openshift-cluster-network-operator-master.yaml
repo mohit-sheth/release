@@ -1,6 +1,6 @@
 base_images:
   base:
-    name: "4.8"
+    name: "4.9"
     namespace: ocp
     tag: base
   dev-scripts:
@@ -23,6 +23,10 @@ base_images:
     name: builder
     namespace: ocp
     tag: rhel-8-golang-1.15-openshift-4.7
+  ocp_builder_rhel-8-golang-1.16-openshift-4.8:
+    name: builder
+    namespace: ocp
+    tag: rhel-8-golang-1.16-openshift-4.8
   ocp_builder_rhel-8-golang-openshift-4.6:
     name: builder
     namespace: ocp
@@ -33,20 +37,17 @@ base_images:
     tag: golang-1.13
 binary_build_commands: hack/build-go.sh
 build_root:
-  image_stream_tag:
-    name: release
-    namespace: openshift
-    tag: golang-1.15
+  from_repository: true
 images:
 - dockerfile_path: Dockerfile.rhel7
   from: base
   inputs:
-    ocp_builder_rhel-8-golang-1.15-openshift-4.7:
+    ocp_builder_rhel-8-golang-1.16-openshift-4.8:
       as:
-      - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.7
+      - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.16-openshift-4.8
   to: cluster-network-operator
 promotion:
-  name: "4.8"
+  name: "4.9"
   namespace: ocp
 resources:
   '*':
@@ -54,7 +55,7 @@ resources:
       cpu: 100m
       memory: 200Mi
 tag_specification:
-  name: "4.8"
+  name: "4.9"
   namespace: ocp
 tests:
 - as: unit
@@ -62,7 +63,11 @@ tests:
   container:
     from: src
 - as: verify
-  commands: "export GOLANGCI_LINT_VERSION=$(cat .golangciversion 2&> /dev/null || echo \"1.23.8\")  \nexport GOLANGCI_LINT_CACHE=/tmp/.cache\ncurl -sfL \"https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCI_LINT_VERSION:?'golangci-lint version is unset'}/golangci-lint-${GOLANGCI_LINT_VERSION}-linux-amd64.tar.gz\" | tar -C /go/bin -zx --strip-components=1 \"golangci-lint-${GOLANGCI_LINT_VERSION}-linux-amd64/golangci-lint\"\n ./hack/verify-style.sh\n"
+  commands: "export GOLANGCI_LINT_VERSION=$(cat .golangciversion 2&> /dev/null ||
+    echo \"1.23.8\")  \nexport GOLANGCI_LINT_CACHE=/tmp/.cache\ncurl -sfL \"https://github.com/golangci/golangci-lint/releases/download/v${GOLANGCI_LINT_VERSION:?'golangci-lint
+    version is unset'}/golangci-lint-${GOLANGCI_LINT_VERSION}-linux-amd64.tar.gz\"
+    | tar -C /go/bin -zx --strip-components=1 \"golangci-lint-${GOLANGCI_LINT_VERSION}-linux-amd64/golangci-lint\"\n
+    ./hack/verify-style.sh\n"
   container:
     from: src
 - as: e2e-gcp
@@ -75,8 +80,8 @@ tests:
     workflow: openshift-upgrade-gcp-ovn
 - as: e2e-agnostic-upgrade
   steps:
-    cluster_profile: gcp
-    workflow: openshift-upgrade-gcp
+    cluster_profile: azure4
+    workflow: openshift-upgrade-azure
 - as: e2e-aws-sdn-multi
   steps:
     cluster_profile: aws
@@ -101,12 +106,20 @@ tests:
         IP_STACK=v6
         NETWORK_TYPE=OVNKubernetes
     workflow: baremetalds-e2e
+- as: e2e-metal-ipi-ovn-ipv6-ipsec
+  steps:
+    cluster_profile: packet
+    env:
+      DEVSCRIPTS_CONFIG: |
+        IP_STACK=v6
+        NETWORK_TYPE=OVNKubernetes
+    workflow: baremetalds-e2e-ovn-ipsec
 - as: e2e-aws-ovn-windows
   steps:
     cluster_profile: aws
     test:
-    - ref: windows-e2e-operator-test-with-custom-vxlan-port
-    workflow: ipi-aws-ovn-hybrid-custom-vxlan-port
+    - ref: windows-e2e-operator-test
+    workflow: ipi-aws-ovn-hybrid
 - as: e2e-vsphere-ovn
   steps:
     cluster_profile: vsphere
@@ -129,6 +142,14 @@ tests:
     test:
     - ref: windows-e2e-operator-test-with-custom-vxlan-port
     workflow: ipi-vsphere-ovn-hybrid-custom-vxlan-port
+- as: e2e-openstack-kuryr
+  steps:
+    cluster_profile: openstack-kuryr
+    env:
+      NETWORK_TYPE: Kuryr
+    test:
+    - ref: openstack-noop
+    workflow: openshift-e2e-openstack-ipi
 zz_generated_metadata:
   branch: master
   org: openshift

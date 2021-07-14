@@ -3,17 +3,14 @@
 
 approvers:
 - david-martin
-- davidffrench
-- jameelb
 - jessesarn
-- mikenairn
 - pb82
 - philbrookes
 - pmccarthy
-- wei-lee
 options: {}
 reviewers:
-- damienomurchu
+- briangallagher
+- cathaloconnorrh
 - david-martin
 - davidffrench
 - jameelb

@@ -46,21 +46,8 @@ tests:
     test:
     - as: bin-test
       cli: latest
-      commands: ./bin/extended-platform-tests run openshift/conformance/parallel --run "High-24829"
-      from: bin
-      resources:
-        requests:
-          cpu: "2"
-          memory: 4Gi
-    workflow: ipi-aws
-- as: sanity
-  cron: 0 */8 * * *
-  steps:
-    cluster_profile: aws
-    test:
-    - as: periodic-e2e-test
-      cli: latest
-      commands: make nightly-test
+      commands: ./bin/extended-platform-tests run openshift/conformance/parallel --run
+        "High-24829"
       from: bin
       resources:
         requests:

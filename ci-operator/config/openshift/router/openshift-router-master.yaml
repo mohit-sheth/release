@@ -1,6 +1,6 @@
 base_images:
   base:
-    name: "4.8"
+    name: "4.9"
     namespace: ocp
     tag: base
   dev-scripts:
@@ -23,6 +23,14 @@ base_images:
     name: builder
     namespace: ocp
     tag: rhel-8-golang-1.15-openshift-4.8
+  ocp_builder_rhel-8-golang-1.16-openshift-4.8:
+    name: builder
+    namespace: ocp
+    tag: rhel-8-golang-1.16-openshift-4.8
+  ocp_builder_rhel-8-golang-1.16-openshift-4.9:
+    name: builder
+    namespace: ocp
+    tag: rhel-8-golang-1.16-openshift-4.9
   ocp_builder_rhel-8-golang-openshift-4.6:
     name: builder
     namespace: ocp
@@ -32,17 +40,14 @@ base_images:
     namespace: ocp
     tag: rhel-8-golang-openshift-4.6
 build_root:
-  image_stream_tag:
-    name: release
-    namespace: openshift
-    tag: rhel-8-release-golang-1.15-openshift-4.6
+  from_repository: true
 images:
 - dockerfile_path: images/router/base/Dockerfile.rhel
   from: base
   inputs:
-    ocp_builder_rhel-8-golang-1.15-openshift-4.8:
+    ocp_builder_rhel-8-golang-1.16-openshift-4.9:
       as:
-      - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.8
+      - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.16-openshift-4.9
   optional: true
   to: haproxy-router-base
 - dockerfile_path: images/router/haproxy/Dockerfile.rhel8
@@ -52,7 +57,7 @@ images:
   from: haproxy-router-base
   to: f5-router
 promotion:
-  name: "4.8"
+  name: "4.9"
   namespace: ocp
 resources:
   '*':
@@ -60,7 +65,7 @@ resources:
       cpu: 100m
       memory: 200Mi
 tag_specification:
-  name: "4.8"
+  name: "4.9"
   namespace: ocp
 tests:
 - as: verify
@@ -73,8 +78,8 @@ tests:
     from: src
 - as: e2e-agnostic
   steps:
-    cluster_profile: gcp
-    workflow: openshift-e2e-gcp
+    cluster_profile: azure4
+    workflow: openshift-e2e-azure
 - as: e2e-metal-ipi-ovn-ipv6
   steps:
     cluster_profile: packet
@@ -91,6 +96,10 @@ tests:
         IP_STACK=v4v6
         NETWORK_TYPE=OVNKubernetes
     workflow: baremetalds-e2e
+- as: e2e-aws-serial
+  steps:
+    cluster_profile: aws
+    workflow: openshift-e2e-aws-serial
 - as: e2e-metal-ipi-ovn-router
   steps:
     cluster_profile: packet
@@ -144,8 +153,8 @@ tests:
     workflow: baremetalds-e2e
 - as: e2e-upgrade
   steps:
-    cluster_profile: gcp
-    workflow: openshift-upgrade-gcp
+    cluster_profile: azure4
+    workflow: openshift-upgrade-azure
 zz_generated_metadata:
   branch: master
   org: openshift

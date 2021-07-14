@@ -5,6 +5,7 @@ approvers:
 - abhat
 - danwinship
 - dcbw
+- jacobtanenbaum
 - knobunc
 - rcarrillocruz
 - squeed
@@ -14,11 +15,9 @@ reviewers:
 - abhat
 - alexanderconstantinescu
 - aojea
-- danielmellado
 - danwinship
 - dcbw
 - jacobtanenbaum
-- juanluisvaladas
 - rcarrillocruz
 - squeed
 - trozet

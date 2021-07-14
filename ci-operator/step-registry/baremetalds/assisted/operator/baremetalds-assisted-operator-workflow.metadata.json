@@ -1,0 +1,8 @@
+{
+	"path": "baremetalds/assisted/operator/baremetalds-assisted-operator-workflow.yaml",
+	"owners": {
+		"approvers": [
+			"assisted-cicd"
+		]
+	}
+}

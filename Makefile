@@ -1,6 +1,6 @@
 SHELL=/usr/bin/env bash -o errexit
 
-.PHONY: help check check-boskos check-core check-services dry-core core dry-services services all
+.PHONY: help check check-boskos check-core check-services dry-core core dry-services services all update template-allowlist release-controllers checkconfig jobs ci-operator-config registry-metadata boskos-config prow-config validate-step-registry new-repo branch-cut prow-config
 
 CONTAINER_ENGINE ?= docker
 
@@ -52,10 +52,9 @@ template-allowlist:
 
 release-controllers:
 	./hack/generators/release-controllers/generate-release-controllers.py .
-.PHONY: release-controllers
 
 checkconfig:
-	$(CONTAINER_ENGINE) run --rm -v "$(CURDIR):/release:z" gcr.io/k8s-prow/checkconfig:v20210104-12dd8ae74d --config-path /release/core-services/prow/02_config/_config.yaml --job-config-path /release/ci-operator/jobs/ --plugin-config /release/core-services/prow/02_config/_plugins.yaml --strict --exclude-warning long-job-names --exclude-warning mismatched-tide-lenient
+	$(CONTAINER_ENGINE) run --rm -v "$(CURDIR):/release:z" gcr.io/k8s-prow/checkconfig:v20210714-ac233fa9c6 --config-path /release/core-services/prow/02_config/_config.yaml --job-config-path /release/ci-operator/jobs/ --plugin-config /release/core-services/prow/02_config/_plugins.yaml --supplemental-plugin-config-dir /release/core-services/prow/02_config --strict --exclude-warning long-job-names --exclude-warning mismatched-tide-lenient
 
 jobs:
 	$(CONTAINER_ENGINE) pull registry.ci.openshift.org/ci/ci-operator-prowgen:latest
@@ -73,15 +72,14 @@ registry-metadata:
 
 boskos-config:
 	cd core-services/prow/02_config && ./generate-boskos.py
-.PHONY: boskos-config
 
 prow-config:
 	$(CONTAINER_ENGINE) pull registry.ci.openshift.org/ci/determinize-prow-config:latest
-	$(CONTAINER_ENGINE) run --rm -v "$(CURDIR)/core-services/prow/02_config:/config:z" registry.ci.openshift.org/ci/determinize-prow-config:latest --prow-config-dir /config
+	$(CONTAINER_ENGINE) run --rm -v "$(CURDIR)/core-services/prow/02_config:/config:z" registry.ci.openshift.org/ci/determinize-prow-config:latest --prow-config-dir /config --sharded-prow-config-base-dir /config --sharded-plugin-config-base-dir /config
 
 branch-cut:
 	$(CONTAINER_ENGINE) pull registry.ci.openshift.org/ci/config-brancher:latest
-	$(CONTAINER_ENGINE) run --rm -v "$(CURDIR)/ci-operator:/ci-operator:z" registry.ci.openshift.org/ci/config-brancher:latest --config-dir /ci-operator/config --org=$(ORG) --repo=$(REPO) --current-release=4.3 --future-release=4.4 --bump-release=4.4 --confirm
+	$(CONTAINER_ENGINE) run --rm -v "$(CURDIR)/ci-operator:/ci-operator:z" registry.ci.openshift.org/ci/config-brancher:latest --config-dir /ci-operator/config --current-release=4.8 --future-release=4.9 --bump-release=4.9 --confirm
 	$(MAKE) update
 
 new-repo:
@@ -114,7 +112,7 @@ all: roles prow projects
 roles: cluster-operator-roles
 .PHONY: roles
 
-prow: ci-ns prow-jobs
+prow: ci-ns
 .PHONY: prow
 
 ci-ns:
@@ -124,20 +122,6 @@ ci-ns:
 openshift-ns:
 	oc project openshift
 .PHONY: openshift-ns
-
-prow-jobs: prow-artifacts
-	$(MAKE) apply WHAT=ci-operator/templates/os.yaml
-.PHONY: prow-jobs
-
-prow-artifacts:
-	oc create ns ci-pr-images -o yaml --dry-run | oc apply -f -
-	oc policy add-role-to-group system:image-puller system:unauthenticated -n ci-pr-images
-	oc policy add-role-to-group system:image-puller system:authenticated -n ci-pr-images
-	oc tag --source=docker centos:7 openshift/centos:7 --scheduled
-
-	oc create ns ci-rpms -o yaml --dry-run | oc apply -f -
-	oc apply -f ci-operator/infra/openshift/origin/
-.PHONY: prow-artifacts
 
 prow-release-controller-definitions:
 	hack/annotate.sh
@@ -280,3 +264,9 @@ serviceaccount-secret-rotation:
 ci-secret-bootstrap-config:
 	hack/generate-pull-secret-entries.py core-services/ci-secret-bootstrap/_config.yaml
 .PHONY: ci-secret-bootstrap-config
+
+# generate the manifets for cluster pools admins
+# example: make TEAM=hypershift OWNERS=dmace,petr new-pool-admins
+new-pool-admins:
+	hack/generate_new_pool_admins.sh $(TEAM) $(OWNERS)
+.PHONY: new-pool-admins

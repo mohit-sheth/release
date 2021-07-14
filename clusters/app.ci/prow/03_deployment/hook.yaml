@@ -39,26 +39,63 @@ items:
       protocol: TCP
       targetPort: 9090
     type: ClusterIP
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    namespace: ci
+    name: hook-apps
+  spec:
+    port:
+      targetPort: 8888
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: hook-apps
+- apiVersion: v1
+  kind: Service
+  metadata:
+    namespace: ci
+    name: hook-apps
+    labels:
+      app: prow
+      component: hook-apps
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "8888"
+  spec:
+    selector:
+      app: prow
+      component: hook-apps
+    ports:
+    - name: main
+      port: 8888
+    - name: metrics
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
+    type: ClusterIP
 - apiVersion: apps/v1
   kind: Deployment
   metadata:
     namespace: ci
-    name: hook
+    name: hook-apps
     labels:
       app: prow
-      component: hook
+      component: hook-apps
   spec:
     replicas: 2
     revisionHistoryLimit: 2
     selector:
       matchLabels:
         app: prow
-        component: hook
+        component: hook-apps
     template:
       metadata:
         labels:
           app: prow
-          component: hook
+          component: hook-apps
       spec:
         affinity:
           podAntiAffinity:
@@ -70,18 +107,20 @@ items:
                   - key: component
                     operator: In
                     values:
-                    - hook
+                    - hook-apps
                 topologyKey: "kubernetes.io/hostname"
         serviceAccountName: hook
         containers:
         - name: hook
-          image: gcr.io/k8s-prow/hook:v20210318-eec798552c
+          image: gcr.io/k8s-prow/hook:v20210714-ac233fa9c6
           args:
           - --config-path=/etc/config/config.yaml
-          - --github-token-path=/etc/github/oauth
-          - --hmac-secret-file=/etc/webhook/hmac
+          - --supplemental-prow-config-dir=/etc/config
+          - --hmac-secret-file=/etc/github/hmac
           - --dry-run=false
           - --job-config-path=/etc/job-config
+          - --github-app-id=$(GITHUB_APP_ID)
+          - --github-app-private-key-path=/etc/github/cert
           - --github-endpoint=http://ghproxy
           - --github-endpoint=https://api.github.com
           - --github-graphql-endpoint=http://ghproxy/graphql
@@ -91,10 +130,16 @@ items:
           - --jira-username=dptp-bot
           - --jira-password-file=/etc/jira/password
           - --projected-token-file=/var/sa-token/token
+          - --supplemental-plugin-config-dir=/etc/plugins
           env:
           # Multiple configs can only be passed via the env var and not via the flag
           - name: KUBECONFIG
-            value: /etc/build-farm-credentials/api.ci.kubeconfig:/etc/build-farm-credentials/app.ci.kubeconfig:/etc/build-farm-credentials/build01.kubeconfig:/etc/build-farm-credentials/build02.kubeconfig:/etc/build-farm-credentials/vsphere.kubeconfig
+            value: /etc/build-farm-credentials/app.ci.kubeconfig:/etc/build-farm-credentials/build01.kubeconfig:/etc/build-farm-credentials/build02.kubeconfig:/etc/build-farm-credentials/vsphere.kubeconfig:/etc/build-farm-credentials/arm01.kubeconfig
+          - name: GITHUB_APP_ID
+            valueFrom:
+              secretKeyRef:
+                name: openshift-prow-github-app
+                key: appid
           ports:
             - name: main
               containerPort: 8888
@@ -103,10 +148,7 @@ items:
           volumeMounts:
           - name: service-account-token
             mountPath: /var/sa-token
-          - name: hmac
-            mountPath: /etc/webhook
-            readOnly: true
-          - name: oauth
+          - name: github-app-credentials
             mountPath: /etc/github
             readOnly: true
           - name: config
@@ -185,12 +227,9 @@ items:
             sources:
             - serviceAccountToken:
                 path: token
-        - name: hmac
+        - name: github-app-credentials
           secret:
-            secretName: github-webhook-credentials
-        - name: oauth
-          secret:
-            secretName: github-credentials-openshift-ci-robot
+            secretName: openshift-prow-github-app
         - name: bugzilla
           secret:
             secretName: bugzilla-credentials-openshift-bugzilla-robot
@@ -245,10 +284,10 @@ items:
         - name: build-farm-credentials
           secret:
             items:
-            - key: sa.hook.api.ci.config
-              path: api.ci.kubeconfig
             - key: sa.hook.app.ci.config
               path: app.ci.kubeconfig
+            - key: sa.hook.arm01.config
+              path: arm01.kubeconfig
             - key: sa.hook.build01.config
               path: build01.kubeconfig
             - key: sa.hook.build02.config

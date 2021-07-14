@@ -3,11 +3,11 @@
 
 approvers:
 - bparees
+- christianvogt
 - rhamilto
 - spadgett
 options: {}
 reviewers:
-- alecmerdler
 - jhadvig
 - rhamilto
 - spadgett

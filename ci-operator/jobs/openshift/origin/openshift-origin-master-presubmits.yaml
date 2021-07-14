@@ -59,9 +59,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
-          - configMap:
-              name: cluster-profile-gcp
+              name: cluster-secrets-azure4
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -128,7 +126,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -195,7 +193,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -204,7 +202,74 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-csi,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
+    branches:
+    - master
+    cluster: build02
+    context: ci/prow/e2e-aws-csi-migration
+    decorate: true
+    decoration_config:
+      skip_cloning: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-origin-master-e2e-aws-csi-migration
+    optional: true
+    rerun_command: /test e2e-aws-csi-migration
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/usr/local/e2e-aws-csi-migration-cluster-profile
+        - --target=e2e-aws-csi-migration
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /usr/local/e2e-aws-csi-migration-cluster-profile
+          name: cluster-profile
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: cluster-profile
+        projected:
+          sources:
+          - secret:
+              name: cluster-secrets-aws
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-aws-csi-migration,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
     branches:
     - master
     cluster: build02
@@ -227,16 +292,8 @@ presubmits:
         - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/usr/local/e2e-aws-disruptive-cluster-profile
         - --target=e2e-aws-disruptive
-        - --template=/usr/local/e2e-aws-disruptive
         command:
         - ci-operator
-        env:
-        - name: CLUSTER_TYPE
-          value: aws
-        - name: JOB_NAME_SAFE
-          value: e2e-aws-disruptive
-        - name: TEST_COMMAND
-          value: setup_ssh_bastion; TEST_SUITE=openshift/disruptive run-tests; TEST_LIMIT_START_TIME="$(date +%s)" TEST_SUITE=openshift/conformance/parallel run-tests
         image: ci-operator:latest
         imagePullPolicy: Always
         name: ""
@@ -252,9 +309,6 @@ presubmits:
         - mountPath: /secrets/gcs
           name: gcs-credentials
           readOnly: true
-        - mountPath: /usr/local/e2e-aws-disruptive
-          name: job-definition
-          subPath: cluster-launch-installer-e2e.yaml
         - mountPath: /etc/pull-secret
           name: pull-secret
           readOnly: true
@@ -273,10 +327,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
-      - configMap:
-          name: prow-job-cluster-launch-installer-e2e
-        name: job-definition
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -342,7 +393,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -409,7 +460,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -431,6 +482,7 @@ presubmits:
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-origin-master-e2e-aws-jenkins
     rerun_command: /test e2e-aws-jenkins
+    run_if_changed: ^(test/extended/builds/pipeline_jenkins_e2e.go)|^(test/extended/testdata/jenkins-plugin)|^(examples/jenkins)
     spec:
       containers:
       - args:
@@ -475,7 +527,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -542,7 +594,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -609,7 +661,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -742,7 +794,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -809,7 +861,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -817,6 +869,73 @@ presubmits:
         secret:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-aws-single-node,?($|\s.*)
+  - agent: kubernetes
+    always_run: false
+    branches:
+    - master
+    cluster: build02
+    context: ci/prow/e2e-aws-single-node-serial
+    decorate: true
+    decoration_config:
+      skip_cloning: true
+    labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
+      pj-rehearse.openshift.io/can-be-rehearsed: "true"
+    name: pull-ci-openshift-origin-master-e2e-aws-single-node-serial
+    optional: true
+    rerun_command: /test e2e-aws-single-node-serial
+    spec:
+      containers:
+      - args:
+        - --gcs-upload-secret=/secrets/gcs/service-account.json
+        - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
+        - --lease-server-credentials-file=/etc/boskos/credentials
+        - --report-credentials-file=/etc/report/credentials
+        - --secret-dir=/usr/local/e2e-aws-single-node-serial-cluster-profile
+        - --target=e2e-aws-single-node-serial
+        command:
+        - ci-operator
+        image: ci-operator:latest
+        imagePullPolicy: Always
+        name: ""
+        resources:
+          requests:
+            cpu: 10m
+        volumeMounts:
+        - mountPath: /etc/boskos
+          name: boskos
+          readOnly: true
+        - mountPath: /usr/local/e2e-aws-single-node-serial-cluster-profile
+          name: cluster-profile
+        - mountPath: /secrets/gcs
+          name: gcs-credentials
+          readOnly: true
+        - mountPath: /etc/pull-secret
+          name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
+          readOnly: true
+      serviceAccountName: ci-operator
+      volumes:
+      - name: boskos
+        secret:
+          items:
+          - key: credentials
+            path: credentials
+          secretName: boskos-credentials
+      - name: cluster-profile
+        projected:
+          sources:
+          - secret:
+              name: cluster-secrets-aws-2
+      - name: pull-secret
+        secret:
+          secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
+    trigger: (?m)^/test( | .* )e2e-aws-single-node-serial,?($|\s.*)
   - agent: kubernetes
     always_run: false
     branches:
@@ -876,7 +995,7 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-aws
+              name: cluster-secrets-aws-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -1009,9 +1128,9 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
+              name: cluster-secrets-gcp-openshift-gce-devel-ci-2
           - configMap:
-              name: cluster-profile-gcp
+              name: cluster-profile-gcp-openshift-gce-devel-ci-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -1078,9 +1197,9 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
+              name: cluster-secrets-gcp-openshift-gce-devel-ci-2
           - configMap:
-              name: cluster-profile-gcp
+              name: cluster-profile-gcp-openshift-gce-devel-ci-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -1147,9 +1266,9 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
+              name: cluster-secrets-gcp-openshift-gce-devel-ci-2
           - configMap:
-              name: cluster-profile-gcp
+              name: cluster-profile-gcp-openshift-gce-devel-ci-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -1158,7 +1277,7 @@ presubmits:
           secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-gcp-csi,?($|\s.*)
   - agent: kubernetes
-    always_run: true
+    always_run: false
     branches:
     - master
     cluster: build02
@@ -1181,16 +1300,8 @@ presubmits:
         - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/usr/local/e2e-gcp-disruptive-cluster-profile
         - --target=e2e-gcp-disruptive
-        - --template=/usr/local/e2e-gcp-disruptive
         command:
         - ci-operator
-        env:
-        - name: CLUSTER_TYPE
-          value: gcp
-        - name: JOB_NAME_SAFE
-          value: e2e-gcp-disruptive
-        - name: TEST_COMMAND
-          value: setup_ssh_bastion; TEST_SUITE=openshift/disruptive run-tests; TEST_LIMIT_START_TIME="$(date +%s)" TEST_SUITE=openshift/conformance/parallel run-tests
         image: ci-operator:latest
         imagePullPolicy: Always
         name: ""
@@ -1206,9 +1317,6 @@ presubmits:
         - mountPath: /secrets/gcs
           name: gcs-credentials
           readOnly: true
-        - mountPath: /usr/local/e2e-gcp-disruptive
-          name: job-definition
-          subPath: cluster-launch-installer-e2e.yaml
         - mountPath: /etc/pull-secret
           name: pull-secret
           readOnly: true
@@ -1227,12 +1335,9 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
+              name: cluster-secrets-gcp-openshift-gce-devel-ci-2
           - configMap:
-              name: cluster-profile-gcp
-      - configMap:
-          name: prow-job-cluster-launch-installer-e2e
-        name: job-definition
+              name: cluster-profile-gcp-openshift-gce-devel-ci-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -1299,9 +1404,9 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
+              name: cluster-secrets-gcp-openshift-gce-devel-ci-2
           - configMap:
-              name: cluster-profile-gcp
+              name: cluster-profile-gcp-openshift-gce-devel-ci-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -1367,9 +1472,9 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-gcp
+              name: cluster-secrets-gcp-openshift-gce-devel-ci-2
           - configMap:
-              name: cluster-profile-gcp
+              name: cluster-profile-gcp-openshift-gce-devel-ci-2
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
@@ -1662,6 +1767,7 @@ presubmits:
     decoration_config:
       skip_cloning: true
     labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-origin-master-e2e-openstack
     optional: true
@@ -1670,28 +1776,13 @@ presubmits:
       containers:
       - args:
         - --gcs-upload-secret=/secrets/gcs/service-account.json
-        - --give-pr-author-access-to-namespace=true
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --lease-server-credentials-file=/etc/boskos/credentials
-        - --repo=origin
+        - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/usr/local/e2e-openstack-cluster-profile
         - --target=e2e-openstack
-        - --template=/usr/local/e2e-openstack
         command:
         - ci-operator
-        env:
-        - name: CLUSTER_TYPE
-          value: openstack-vexxhost
-        - name: JOB_NAME_SAFE
-          value: e2e-openstack
-        - name: OPENSTACK_EXTERNAL_NETWORK
-          value: public
-        - name: OPENSTACK_FLAVOR
-          value: ci.m1.xlarge
-        - name: OS_CLOUD
-          value: openstack
-        - name: TEST_COMMAND
-          value: TEST_SUITE=openshift/conformance/parallel run-tests
         image: ci-operator:latest
         imagePullPolicy: Always
         name: ""
@@ -1707,11 +1798,11 @@ presubmits:
         - mountPath: /secrets/gcs
           name: gcs-credentials
           readOnly: true
-        - mountPath: /usr/local/e2e-openstack
-          name: job-definition
-          subPath: cluster-launch-installer-openstack-e2e.yaml
         - mountPath: /etc/pull-secret
           name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
           readOnly: true
       serviceAccountName: ci-operator
       volumes:
@@ -1725,27 +1816,13 @@ presubmits:
         projected:
           sources:
           - secret:
-              items:
-              - key: clouds.yaml
-                path: clouds.yaml
               name: cluster-secrets-openstack-vexxhost
-          - secret:
-              items:
-              - key: .awscred
-                path: .awscred
-              - key: ssh-privatekey
-                path: ssh-privatekey
-              - key: ssh-publickey
-                path: ssh-publickey
-              - key: pull-secret
-                path: pull-secret
-              name: cluster-secrets-openstack
-      - configMap:
-          name: prow-job-cluster-launch-installer-openstack-e2e
-        name: job-definition
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-openstack,?($|\s.*)
   - agent: kubernetes
     always_run: false
@@ -1757,6 +1834,7 @@ presubmits:
     decoration_config:
       skip_cloning: true
     labels:
+      ci-operator.openshift.io/prowgen-controlled: "true"
       pj-rehearse.openshift.io/can-be-rehearsed: "true"
     name: pull-ci-openshift-origin-master-e2e-openstack-serial
     optional: true
@@ -1765,22 +1843,13 @@ presubmits:
       containers:
       - args:
         - --gcs-upload-secret=/secrets/gcs/service-account.json
-        - --give-pr-author-access-to-namespace=true
         - --image-import-pull-secret=/etc/pull-secret/.dockerconfigjson
         - --lease-server-credentials-file=/etc/boskos/credentials
-        - --repo=origin
+        - --report-credentials-file=/etc/report/credentials
         - --secret-dir=/usr/local/e2e-openstack-serial-cluster-profile
         - --target=e2e-openstack-serial
-        - --template=/usr/local/e2e-openstack-serial
         command:
         - ci-operator
-        env:
-        - name: CLUSTER_TYPE
-          value: openstack
-        - name: JOB_NAME_SAFE
-          value: e2e-openstack-serial
-        - name: TEST_COMMAND
-          value: TEST_SUITE=openshift/conformance/serial run-tests
         image: ci-operator:latest
         imagePullPolicy: Always
         name: ""
@@ -1796,11 +1865,11 @@ presubmits:
         - mountPath: /secrets/gcs
           name: gcs-credentials
           readOnly: true
-        - mountPath: /usr/local/e2e-openstack-serial
-          name: job-definition
-          subPath: cluster-launch-installer-openstack-e2e.yaml
         - mountPath: /etc/pull-secret
           name: pull-secret
+          readOnly: true
+        - mountPath: /etc/report
+          name: result-aggregator
           readOnly: true
       serviceAccountName: ci-operator
       volumes:
@@ -1814,13 +1883,13 @@ presubmits:
         projected:
           sources:
           - secret:
-              name: cluster-secrets-openstack
-      - configMap:
-          name: prow-job-cluster-launch-installer-openstack-e2e
-        name: job-definition
+              name: cluster-secrets-openstack-vexxhost
       - name: pull-secret
         secret:
           secretName: registry-pull-credentials
+      - name: result-aggregator
+        secret:
+          secretName: result-aggregator
     trigger: (?m)^/test( | .* )e2e-openstack-serial,?($|\s.*)
   - agent: kubernetes
     always_run: false

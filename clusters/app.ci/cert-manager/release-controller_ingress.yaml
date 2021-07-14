@@ -10,11 +10,22 @@ spec:
     - secretName: release-controller-tls
       hosts:
         - amd64.ocp.releases.ci.openshift.org
+        - arm64.ocp.releases.ci.openshift.org
         - ppc64le.ocp.releases.ci.openshift.org
         - s390x.ocp.releases.ci.openshift.org
         - amd64.origin.releases.ci.openshift.org
+        - origin-release.ci.openshift.org
   rules:
   - host: amd64.origin.releases.ci.openshift.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: release-controller
+            port:
+              number: 80
+        pathType: ImplementationSpecific
+  - host: origin-release.ci.openshift.org
     http:
       paths:
       - backend:
@@ -29,6 +40,15 @@ spec:
       - backend:
           service:
             name: release-controller-ocp
+            port:
+              number: 80
+        pathType: ImplementationSpecific
+  - host: arm64.ocp.releases.ci.openshift.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: release-controller-ocp-arm64
             port:
               number: 80
         pathType: ImplementationSpecific

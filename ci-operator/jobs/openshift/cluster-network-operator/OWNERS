@@ -6,6 +6,7 @@ approvers:
 - danwinship
 - dcbw
 - fepan
+- jacobtanenbaum
 - knobunc
 - rcarrillocruz
 - squeed
@@ -15,7 +16,6 @@ reviewers:
 - abhat
 - alexanderconstantinescu
 - aojea
-- danielmellado
 - danwinship
 - dcbw
 - jacobtanenbaum

@@ -10,6 +10,18 @@ export GCP_SHARED_CREDENTIALS_FILE=${CLUSTER_PROFILE_DIR}/gce.json
 export HOME=/tmp/home
 export PATH=/usr/libexec/origin:$PATH
 
+# HACK: HyperShift clusters use their own profile type, but the cluster type
+# underneath is actually AWS and the type identifier is derived from the profile
+# type. For now, just treat the `hypershift` type the same as `aws` until
+# there's a clean way to decouple the notion of a cluster provider and the
+# platform type.
+#
+# See also: https://issues.redhat.com/browse/DPTP-1988
+if [[ "${CLUSTER_TYPE}" == "hypershift" ]]; then
+    export CLUSTER_TYPE="aws"
+    echo "Overriding 'hypershift' cluster type to be 'aws'"
+fi
+
 if [[ -n "${TEST_CSI_DRIVER_MANIFEST}" ]]; then
     export TEST_CSI_DRIVER_FILES=${SHARED_DIR}/${TEST_CSI_DRIVER_MANIFEST}
 fi
@@ -34,6 +46,9 @@ if [[ -f "${CLUSTER_PROFILE_DIR}/insights-live.yaml" ]]; then
 fi
 
 # if this test requires an SSH bastion and one is not installed, configure it
+KUBE_SSH_BASTION="$( oc --insecure-skip-tls-verify get node -l node-role.kubernetes.io/master -o 'jsonpath={.items[0].status.addresses[?(@.type=="ExternalIP")].address}' ):22"
+KUBE_SSH_KEY_PATH=${CLUSTER_PROFILE_DIR}/ssh-privatekey
+export KUBE_SSH_BASTION KUBE_SSH_KEY_PATH
 if [[ -n "${TEST_REQUIRES_SSH-}" ]]; then
     export SSH_BASTION_NAMESPACE=test-ssh-bastion
     echo "Setting up ssh bastion"
@@ -73,18 +88,18 @@ fi
 
 
 # set up cloud-provider-specific env vars
-KUBE_SSH_BASTION="$( oc --insecure-skip-tls-verify get node -l node-role.kubernetes.io/master -o 'jsonpath={.items[0].status.addresses[?(@.type=="ExternalIP")].address}' ):22"
-KUBE_SSH_KEY_PATH=${CLUSTER_PROFILE_DIR}/ssh-privatekey
-export KUBE_SSH_BASTION KUBE_SSH_KEY_PATH
 case "${CLUSTER_TYPE}" in
 gcp)
     export GOOGLE_APPLICATION_CREDENTIALS="${GCP_SHARED_CREDENTIALS_FILE}"
     export KUBE_SSH_USER=core
     mkdir -p ~/.ssh
     cp "${CLUSTER_PROFILE_DIR}/ssh-privatekey" ~/.ssh/google_compute_engine || true
-    export TEST_PROVIDER='{"type":"gce","region":"us-east1","multizone": true,"multimaster":true,"projectid":"openshift-gce-devel-ci"}'
+    # TODO: make openshift-tests auto-discover this from cluster config
+    PROJECT="$(oc get -o jsonpath='{.status.platformStatus.gcp.projectID}' infrastructure cluster)"
+    REGION="$(oc get -o jsonpath='{.status.platformStatus.gcp.region}' infrastructure cluster)"
+    export TEST_PROVIDER="{\"type\":\"gce\",\"region\":\"${REGION}\",\"multizone\": true,\"multimaster\":true,\"projectid\":\"${PROJECT}\"}"
     ;;
-aws)
+aws|aws-arm64)
     mkdir -p ~/.ssh
     cp "${CLUSTER_PROFILE_DIR}/ssh-privatekey" ~/.ssh/kube_aws_rsa || true
     export PROVIDER_ARGS="-provider=aws -gce-zone=us-east-1"
@@ -96,9 +111,11 @@ aws)
     ;;
 azure4) export TEST_PROVIDER=azure;;
 vsphere) export TEST_PROVIDER=vsphere;;
-openstack) export TEST_PROVIDER='{"type":"openstack"}';;
+openstack*)
+    # shellcheck disable=SC1090
+    source "${SHARED_DIR}/cinder_credentials.sh"
+    export TEST_PROVIDER='{"type":"openstack"}';;
 ovirt) export TEST_PROVIDER='{"type":"ovirt"}';;
-openstack-vexxhost) export TEST_PROVIDER='{"type":"openstack"}';;
 kubevirt) export TEST_PROVIDER='{"type":"kubevirt"}';;
 *) echo >&2 "Unsupported cluster type '${CLUSTER_TYPE}'"; exit 1;;
 esac
@@ -114,18 +131,71 @@ if [[ "${CLUSTER_TYPE}" == gcp ]]; then
     mkdir gcloudconfig
     export CLOUDSDK_CONFIG=/tmp/gcloudconfig
     gcloud auth activate-service-account --key-file="${GCP_SHARED_CREDENTIALS_FILE}"
-    gcloud config set project openshift-gce-devel-ci
+    gcloud config set project "${PROJECT}"
     popd
 fi
 
 function upgrade() {
     set -x
-    openshift-tests run-upgrade all \
-        --to-image "${OPENSHIFT_UPGRADE_RELEASE_IMAGE_OVERRIDE}" \
+    TARGET_RELEASES="${OPENSHIFT_UPGRADE_RELEASE_IMAGE_OVERRIDE:-}"
+    if [[ -f "${SHARED_DIR}/override-upgrade" ]]; then
+        TARGET_RELEASES="$(< "${SHARED_DIR}/override-upgrade")"
+        echo "Overriding upgrade target to ${TARGET_RELEASES}"
+    fi
+    openshift-tests run-upgrade "${TEST_UPGRADE_SUITE}" \
+        --to-image "${TARGET_RELEASES}" \
         --options "${TEST_UPGRADE_OPTIONS-}" \
         --provider "${TEST_PROVIDER}" \
         -o "${ARTIFACT_DIR}/e2e.log" \
-        --junit-dir "${ARTIFACT_DIR}/junit"
+        --junit-dir "${ARTIFACT_DIR}/junit" &
+    wait "$!"
+    set +x
+}
+
+function upgrade_paused() {
+    set -x
+    unset TEST_SUITE
+    TARGET_RELEASES="${OPENSHIFT_UPGRADE_RELEASE_IMAGE_OVERRIDE:-}"
+    if [[ -f "${SHARED_DIR}/override-upgrade" ]]; then
+        TARGET_RELEASES="$(< "${SHARED_DIR}/override-upgrade")"
+        echo "Overriding upgrade target to ${TARGET_RELEASES}"
+    fi
+    # Split TARGET_RELEASES by commas, producing two releases
+    OPENSHIFT_UPGRADE0_RELEASE_IMAGE_OVERRIDE="$(echo $TARGET_RELEASES | cut -f1 -d,)"
+    OPENSHIFT_UPGRADE1_RELEASE_IMAGE_OVERRIDE="$(echo $TARGET_RELEASES | cut -f2 -d,)"
+
+    oc patch mcp/worker --type merge --patch '{"spec":{"paused":true}}'
+
+    echo "Starting control-plane upgrade to ${OPENSHIFT_UPGRADE0_RELEASE_IMAGE_OVERRIDE}"
+    openshift-tests run-upgrade "${TEST_UPGRADE_SUITE}" \
+        --to-image "${OPENSHIFT_UPGRADE0_RELEASE_IMAGE_OVERRIDE}" \
+        --options "${TEST_UPGRADE_OPTIONS-}" \
+        --provider "${TEST_PROVIDER}" \
+        -o "${ARTIFACT_DIR}/e2e.log" \
+        --junit-dir "${ARTIFACT_DIR}/junit" &
+    wait "$!"
+    echo "Upgraded control-plane to ${OPENSHIFT_UPGRADE0_RELEASE_IMAGE_OVERRIDE}"
+
+    echo "Starting control-plane upgrade to ${OPENSHIFT_UPGRADE1_RELEASE_IMAGE_OVERRIDE}"
+    openshift-tests run-upgrade "${TEST_UPGRADE_SUITE}" \
+        --to-image "${OPENSHIFT_UPGRADE1_RELEASE_IMAGE_OVERRIDE}" \
+        --options "${TEST_UPGRADE_OPTIONS-}" \
+        --provider "${TEST_PROVIDER}" \
+        -o "${ARTIFACT_DIR}/e2e.log" \
+        --junit-dir "${ARTIFACT_DIR}/junit" &
+    wait "$!"
+    echo "Upgraded control-plane to ${OPENSHIFT_UPGRADE1_RELEASE_IMAGE_OVERRIDE}"
+
+    echo "Starting worker upgrade to ${OPENSHIFT_UPGRADE1_RELEASE_IMAGE_OVERRIDE}"
+    oc patch mcp/worker --type merge --patch '{"spec":{"paused":false}}'
+    openshift-tests run-upgrade all \
+        --to-image "${OPENSHIFT_UPGRADE1_RELEASE_IMAGE_OVERRIDE}" \
+        --options "${TEST_UPGRADE_OPTIONS-}" \
+        --provider "${TEST_PROVIDER}" \
+        -o "${ARTIFACT_DIR}/e2e.log" \
+        --junit-dir "${ARTIFACT_DIR}/junit" &
+    wait "$!"
+    echo "Upgraded workers to ${OPENSHIFT_UPGRADE1_RELEASE_IMAGE_OVERRIDE}"
     set +x
 }
 
@@ -142,7 +212,8 @@ function suite() {
     openshift-tests run "${TEST_SUITE}" ${TEST_ARGS:-} \
         --provider "${TEST_PROVIDER}" \
         -o "${ARTIFACT_DIR}/e2e.log" \
-        --junit-dir "${ARTIFACT_DIR}/junit"
+        --junit-dir "${ARTIFACT_DIR}/junit" &
+    wait "$!"
     set +x
 }
 
@@ -156,6 +227,9 @@ upgrade-conformance)
     ;;
 upgrade)
     upgrade
+    ;;
+upgrade-paused)
+    upgrade_paused
     ;;
 suite-conformance)
     suite

@@ -1,4 +1,20 @@
 base_images:
+  assisted-installer:
+    name: assisted
+    namespace: ocp-kni
+    tag: assisted-installer
+  assisted-installer-agent:
+    name: assisted
+    namespace: ocp-kni
+    tag: assisted-installer-agent
+  assisted-installer-controller:
+    name: assisted
+    namespace: ocp-kni
+    tag: assisted-installer-controller
+  assisted-service:
+    name: assisted
+    namespace: ocp-kni
+    tag: assisted-service
   assisted-test-infra:
     name: assisted-test
     namespace: ocp-kni
@@ -50,7 +66,6 @@ images:
       - registry.ci.openshift.org/ocp/builder:rhel-8-golang-1.15-openshift-4.8
   to: machine-config-operator
 promotion:
-  disabled: true
   name: 4.8-priv
   namespace: ocp-private
 resources:
@@ -70,6 +85,10 @@ tests:
   steps:
     cluster_profile: aws
     workflow: openshift-e2e-aws
+- as: e2e-aws-upgrade
+  steps:
+    cluster_profile: aws
+    workflow: openshift-upgrade-aws
 - as: e2e-aws-serial
   steps:
     cluster_profile: aws
@@ -79,6 +98,10 @@ tests:
     make verify
   container:
     from: src
+- as: e2e-gcp-upgrade
+  steps:
+    cluster_profile: gcp
+    workflow: openshift-upgrade-gcp
 - as: e2e-gcp-op
   steps:
     cluster_profile: gcp
@@ -93,16 +116,16 @@ tests:
     workflow: ipi-gcp
 - as: e2e-agnostic-upgrade
   steps:
-    cluster_profile: gcp
-    workflow: openshift-upgrade-gcp
+    cluster_profile: azure4
+    workflow: openshift-upgrade-azure
 - as: e2e-aws-workers-rhel7
   steps:
     cluster_profile: aws
     workflow: openshift-e2e-aws-workers-rhel7
 - as: e2e-aws-disruptive
-  commands: setup_ssh_bastion; TEST_SUITE=openshift/disruptive run-tests; TEST_SUITE=openshift/conformance/parallel run-tests
-  openshift_installer:
+  steps:
     cluster_profile: aws
+    workflow: openshift-e2e-aws-disruption
 - as: cluster-bootimages
   steps:
     cluster_profile: aws
@@ -122,6 +145,18 @@ tests:
 - as: e2e-metal-ipi
   steps:
     cluster_profile: packet
+    env:
+      DEVSCRIPTS_CONFIG: |
+        IP_STACK=v4
+        NETWORK_TYPE=OpenShiftSDN
+    workflow: baremetalds-e2e
+- as: e2e-metal-ipi-ovn-ipv6
+  steps:
+    cluster_profile: packet
+    env:
+      DEVSCRIPTS_CONFIG: |
+        IP_STACK=v6
+        NETWORK_TYPE=OVNKubernetes
     workflow: baremetalds-e2e
 - as: e2e-metal-ipi-ovn-dualstack
   steps:
@@ -135,6 +170,10 @@ tests:
   steps:
     cluster_profile: azure4
     workflow: openshift-e2e-azure
+- as: e2e-azure-upgrade
+  steps:
+    cluster_profile: azure4
+    workflow: openshift-upgrade-azure
 - as: e2e-aws-proxy
   steps:
     cluster_profile: aws
@@ -143,6 +182,10 @@ tests:
   steps:
     cluster_profile: vsphere
     workflow: openshift-e2e-vsphere
+- as: e2e-vsphere-upgrade
+  steps:
+    cluster_profile: vsphere
+    workflow: openshift-upgrade-vsphere
 - as: e2e-ovn-step-registry
   steps:
     cluster_profile: aws
@@ -155,10 +198,42 @@ tests:
   steps:
     cluster_profile: ovirt
     workflow: openshift-e2e-ovirt-minimal
+- as: e2e-ovirt-upgrade
+  steps:
+    cluster_profile: ovirt
+    workflow: openshift-upgrade-ovirt
 - as: e2e-aws-single-node
   steps:
     cluster_profile: aws
     workflow: openshift-e2e-aws-single-node
+- as: e2e-gcp-single-node
+  steps:
+    cluster_profile: gcp
+    workflow: openshift-e2e-gcp-single-node
+- as: e2e-gcp-op-single-node
+  steps:
+    cluster_profile: gcp
+    test:
+    - as: test
+      cli: latest
+      commands: make test-e2e-single-node
+      from: src
+      resources:
+        requests:
+          cpu: 100m
+    workflow: openshift-e2e-gcp-single-node
+- as: e2e-openstack
+  steps:
+    cluster_profile: openstack-vexxhost
+    env:
+      TEST_SUITE: experimental/reliability/minimal
+    workflow: openshift-e2e-openstack-ipi
+- as: e2e-openstack-parallel
+  steps:
+    cluster_profile: openstack-vexxhost
+    env:
+      TEST_SUITE: openshift/conformance/parallel
+    workflow: openshift-e2e-openstack-ipi
 zz_generated_metadata:
   branch: release-4.8
   org: openshift-priv

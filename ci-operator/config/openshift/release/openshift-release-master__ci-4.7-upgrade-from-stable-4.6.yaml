@@ -3,6 +3,10 @@ base_images:
     name: "4.6"
     namespace: ocp
     tag: openstack-installer
+  upi-installer:
+    name: "4.6"
+    namespace: ocp
+    tag: upi-installer
 releases:
   initial:
     prerelease:
@@ -24,14 +28,23 @@ tests:
 - as: e2e-aws-upgrade
   cron: '@yearly'
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
     env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
       TEST_TYPE: upgrade-conformance
+    workflow: openshift-upgrade-aws
+- as: e2e-aws-compact-upgrade
+  interval: 48h
+  steps:
+    cluster_profile: aws-2
+    env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
+      SIZE_VARIANT: compact
     workflow: openshift-upgrade-aws
 - as: e2e-gcp-upgrade
   cron: '@yearly'
   steps:
-    cluster_profile: gcp
+    cluster_profile: gcp-openshift-gce-devel-ci-2
     env:
       TEST_TYPE: upgrade-conformance
     workflow: openshift-upgrade-gcp
@@ -42,22 +55,28 @@ tests:
     env:
       TEST_TYPE: upgrade-conformance
     workflow: openshift-upgrade-azure
+- as: e2e-vsphere-upgrade
+  interval: 12h
+  steps:
+    cluster_profile: vsphere
+    workflow: openshift-upgrade-vsphere
 - as: e2e-ovirt-upgrade
-  cron: 0 3,16 * * *
+  cron: '@yearly'
   steps:
     cluster_profile: ovirt
-    workflow: openshift-upgrade-ovirt
+    workflow: openshift-upgrade-ovirt-release-4.6-4.7
 - as: e2e-aws-ovn-upgrade
   cron: '@yearly'
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
     env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
       TEST_TYPE: upgrade-conformance
     workflow: openshift-upgrade-aws-ovn
 - as: e2e-gcp-ovn-upgrade
   cron: '@yearly'
   steps:
-    cluster_profile: gcp
+    cluster_profile: gcp-openshift-gce-devel-ci-2
     env:
       TEST_TYPE: upgrade-conformance
     workflow: openshift-upgrade-gcp-ovn
@@ -74,7 +93,6 @@ tests:
     cluster_profile: openstack
     env:
       BASE_DOMAIN: shiftstack.devcluster.openshift.com
-      CONFIG_API_VERSION: v1beta4
       CONFIG_TYPE: minimal
       OPENSTACK_COMPUTE_FLAVOR: m1.s2.xlarge
       OPENSTACK_EXTERNAL_NETWORK: external
@@ -84,8 +102,9 @@ tests:
 - as: e2e-aws-upgrade-rollback
   cron: '@yearly'
   steps:
-    cluster_profile: aws
+    cluster_profile: aws-2
     env:
+      BASE_DOMAIN: aws-2.ci.openshift.org
       DELETE_MC: "false"
       TEST_TYPE: upgrade
       TEST_UPGRADE_OPTIONS: abort-at=99

@@ -1,4 +1,5 @@
 AuthorizedKeysFile /keys/authorized/authorized_keys
+ClientAliveInterval 30
 HostKey /keys/host/ssh_host_rsa_key
 HostKey /keys/host/ssh_host_dsa_key
 HostKey /keys/host/ssh_host_ecdsa_key
