@@ -3,6 +3,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 set -x
+
+# Source shared perfscale library for retry functions
+source /usr/local/share/perfscale-lib.sh
+
 cat /etc/os-release
 
 python --version
@@ -20,7 +24,7 @@ GSHEET_KEY_LOCATION="/ga-gsheet/gcp-sa-account"
 export GSHEET_KEY_LOCATION
 
 REPO_URL="https://github.com/liqcui/e2e-benchmarking";
-git clone -b sdn-ovn-migration $REPO_URL --depth 1
+retry_git_clone -b sdn-ovn-migration $REPO_URL --depth 1
 pushd e2e-benchmarking/workloads/sdn-ovn-migration
 
 # The measurable run

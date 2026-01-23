@@ -4,6 +4,9 @@ set -o nounset
 set -o pipefail
 set -x
 
+# Source shared perfscale library for retry functions
+source /usr/local/share/perfscale-lib.sh
+
 cat /etc/os-release
 
 # For disconnected or otherwise unreachable environments, we want to
@@ -33,7 +36,7 @@ TAG_OPTION="--branch $(if [ "$E2E_VERSION" == "default" ]; then echo "$LATEST_TA
 if [ ${BAREMETAL} == "true" ]; then
   bastion=$(cat ${CLUSTER_PROFILE_DIR}/address)
   ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@$bastion "rm -rf /tmp/e2e-benchmarking"
-  ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@$bastion "cd /tmp;git clone $REPO_URL $TAG_OPTION --depth 1"
+  ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@$bastion "bash -c 'cd /tmp; max_attempts=5; delay=10; attempt=1; while [ \$attempt -le \$max_attempts ]; do git clone $REPO_URL $TAG_OPTION --depth 1 && break; echo \"git clone failed (attempt \$attempt/\$max_attempts), retrying in \${delay}s...\"; sleep \$delay; delay=\$((delay * 2)); attempt=\$((attempt + 1)); done; if [ \$attempt -gt \$max_attempts ]; then echo \"git clone failed after \$max_attempts attempts\"; exit 1; fi'"
   ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@$bastion "KUBECONFIG=~/mno/kubeconfig oc delete ns netperf --wait=true --ignore-not-found=true"
   ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null root@$bastion "export ALL_SCENARIOS=false;export ES_SERVER="https://$ES_USERNAME:$ES_PASSWORD@search-ocp-qe-perf-scale-test-elk-hcm7wtsqpxy7xogbu72bor4uve.us-east-1.es.amazonaws.com";cd /tmp/e2e-benchmarking/workloads/network-perf-v2; sed -i s/--retry-all-errors//g run.sh;VIRT=true WORKLOAD=full-run.yaml ./run.sh"
 
@@ -41,7 +44,7 @@ if [ ${BAREMETAL} == "true" ]; then
   # kill the ssh tunnel so the job completes
   pkill ssh
 else
-  git clone $REPO_URL $TAG_OPTION --depth 1
+  retry_git_clone $REPO_URL $TAG_OPTION --depth 1
   pushd e2e-benchmarking/workloads/network-perf-v2
   # Clean up resources from possible previous tests.
   oc delete ns netperf --wait=true --ignore-not-found=true

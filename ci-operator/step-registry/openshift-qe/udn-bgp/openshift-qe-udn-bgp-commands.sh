@@ -33,7 +33,23 @@ bastion=$(cat ${CLUSTER_PROFILE_DIR}/address)
 ssh ${SSH_ARGS} root@"${bastion}" bash -s <<EOF
     export KUBECONFIG=/root/vmno/kubeconfig
     rm -rf ~/e2e-benchmarking
-    git clone "$REPO_URL" $TAG_OPTION --depth 1
+    # Git clone with retry for transient failures
+    max_attempts=5
+    delay=10
+    attempt=1
+    while [ \$attempt -le \$max_attempts ]; do
+        if git clone "$REPO_URL" $TAG_OPTION --depth 1; then
+            break
+        fi
+        echo "git clone failed (attempt \$attempt/\$max_attempts), retrying in \${delay}s..."
+        sleep \$delay
+        delay=\$((delay * 2))
+        attempt=\$((attempt + 1))
+        if [ \$attempt -gt \$max_attempts ]; then
+            echo "git clone failed after \$max_attempts attempts"
+            exit 1
+        fi
+    done
     pushd e2e-benchmarking/workloads/kube-burner-ocp-wrapper
     export WORKLOAD=udn-bgp
     export ITERATIONS=72

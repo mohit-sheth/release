@@ -1,6 +1,9 @@
 #!/bin/bash
 set -x
 
+# Source shared perfscale library for retry functions
+source /usr/local/share/perfscale-lib.sh
+
 if [ ${RUN_ORION} == false ]; then
   exit 0
 fi
@@ -15,7 +18,7 @@ if [[ $TAG == "latest" ]]; then
 else
     LATEST_TAG=$TAG
 fi
-git clone --branch $LATEST_TAG $ORION_REPO --depth 1
+retry_git_clone --branch $LATEST_TAG $ORION_REPO --depth 1
 pushd orion
 
 pip install -r requirements.txt

@@ -3,13 +3,17 @@ set -o errexit
 set -o nounset
 set -o pipefail
 set -x
+
+# Source shared perfscale library for retry functions
+source /usr/local/share/perfscale-lib.sh
+
 cat /etc/os-release
 oc config view
 oc projects
 pushd /tmp
 
 if [[ "$JOB_TYPE" == "presubmit" ]] && [[ "$REPO_OWNER" = "cloud-bulldozer" ]] && [[ "$REPO_NAME" = "e2e-benchmarking" ]]; then
-    git clone https://github.com/${REPO_OWNER}/${REPO_NAME}
+    retry_git_clone https://github.com/${REPO_OWNER}/${REPO_NAME}
     pushd ${REPO_NAME}
     git config --global user.email "ocp-perfscale@redhat.com"
     git config --global user.name "ocp-perfscale"
